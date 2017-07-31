@@ -4,7 +4,7 @@ The HPC Software stack testing framework (hpcswtest) is used in the INL Scientif
 An example json file is provided (hpcswtest.json_def).
 
 
-Tesing Procedure
+Testing Procedure
 ----------------
 Create a directory, execute hpcswtest executable inside created directory. If file "hpcswtest.json" is
 not contained in your current working directory then the default json file (i.e hpcswtest.json_def) will 
