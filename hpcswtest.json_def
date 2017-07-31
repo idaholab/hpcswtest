@@ -1,0 +1,676 @@
+#
+#Copyright 2017 Battelle Energy Alliance, LLC
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+#
+{
+        "falcon": {
+                   "compiler":  
+		                [
+                                 {"module_name": "none", "module_version": "none", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.5.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.8.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.1", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.2", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "5.2.0", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "5.4.0-2.26", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "6.3.0-2.27", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "Clang", "module_version": "3.6.2-GCC-4.9.3", "c_name": "clang", "cpp_name": "clang++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "11.1.080", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2011.13.367", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2013.5.192", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2015.0.090", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2015.3.187", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2016.3.067-GCC-4.9.3-2.25", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2017.1.132-GCC-6.3.0-2.27", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "11.1.080", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2011.13.367", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2013.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2015.3.187", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2016.3.067-GCC-4.9.3-2.25", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2017.1.132-GCC-6.3.0-2.27", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"}
+                                ],
+                   "mpi":  
+		                [
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.9.1", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0.1-GCC-4.9.2", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.9.2", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-iccifort-11.1.080", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-iccifort-2015.0.090", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.4.5-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-GCC-4.9.1", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.4-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.7-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.4.5-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-iccifort-2015.0.090", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.0.3.008", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.0.027", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.1.036", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.0.1.035", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.1.0.079", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.1.3.181-iccifort-2016.3.067-GCC-4.9.3-2.25", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "2017.1.132-iccifort-2017.1.132-GCC-6.3.0-2.27", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "1.5.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "3.5.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "4.5.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "5.5.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "5.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "5.5.6", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "5.5.8", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "6.2.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"},
+                                 {"module_name": "gmpt", "module_version": "6.4.0", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpiexec_mpt", "mpi_cmd_args": "none"}
+                                ],
+                   "blas":  
+		                [
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.5.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.5.4-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.7.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.7.4-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.8.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.9.1-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.13-GCC-4.9.2-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.9.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.6.233", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.12.361", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.0.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.2.0.090", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.2.3.187", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.3.3.210-iccifort-2016.3.067-GCC-4.9.3-2.25", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "2017.1.132-iimpi-2017a", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"}
+                                ],
+                   "boost":  
+		                [
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmvolf-3.5.4-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmvolf-4.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmvolf-5.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-goolf-4.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-goolf-5.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmptolf-4.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmptolf-5.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"}
+                                ],
+                   "mcnp":  
+		                [
+                                 {"module_name": "MCNP5", "module_version": "1.40-imvmklt-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.40"},
+                                 {"module_name": "MCNP5", "module_version": "1.60-imvmklt-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.60"},
+                                 {"module_name": "MCNP6", "module_version": "1.0-imvmklt-1.5.0",  "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.0"},
+                                 {"module_name": "MCNP6", "module_version": "1.1b-imvmklt-2.5.0",  "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.1b"}
+                                ],
+                   "mcnpx":  
+		                [
+                                 {"module_name": "MCNPX", "module_version": "2.6.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.6.0"},
+                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"}
+                                ],
+                   "scale":  
+		                [
+                                 {"module_name": "scale", "module_version": "6.1.3", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                ],
+                   "scale62":  
+		                [
+                                 {"module_name": "scale", "module_version": "6.2-serial", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"},
+                                 {"module_name": "scale", "module_version": "6.2-goolf-4.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                ],
+                   "helios":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.1", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.1", "helios_exe_name": "helios-2.1.1", "zenith_exe_name": "zenith-2.1.1"},
+                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"},
+                                 {"module_name": "helios", "module_version": "2.1.3", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.3", "helios_exe_name": "helios-2.1.3", "zenith_exe_name": "zenith-2.1.3"}
+                                ],
+                   "helioslint64":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.1_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.1", "helios_exe_name": "helios-2.1.1", "zenith_exe_name": "zenith-2.1.1"},
+                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"},
+                                 {"module_name": "helios", "module_version": "2.1.3_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.3", "helios_exe_name": "helios-2.1.3", "zenith_exe_name": "zenith-2.1.3"},
+                                 {"module_name": "helios", "module_version": "2.1.3b_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.3b", "helios_exe_name": "helios-2.1.3b", "zenith_exe_name": "zenith-2.1.3b"}
+                                ],
+                   "serpent":  
+		                [
+                                 {"module_name": "serpent", "module_version": "2.1.26-gmvolf-4.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
+                                 {"module_name": "serpent", "module_version": "2.1.26-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
+                                 {"module_name": "serpent", "module_version": "2.1.26-goolf-5.5.7-readinput", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
+                                 {"module_name": "serpent", "module_version": "2.1.27_SC-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27_SC"},
+                                 {"module_name": "serpent", "module_version": "2.1.27-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27"},
+                                 {"module_name": "serpent", "module_version": "2.1.28-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.28"}
+                                ],
+                   "cth":  
+		                [
+                                 {"module_name": "cth", "module_version": "11.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_cth_11.2"}
+                                ],
+                   "mc21":  
+		                [
+                                 {"module_name": "mc21", "module_version": "5.00.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_5.00.01"},
+                                 {"module_name": "mc21", "module_version": "6.01.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_6.01.01"}
+                                ],
+                   "vasp":  
+		                [
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-4.5.0", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-4.5.0-no-ngzhalf", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-4.5.0-tbdyn", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-4.5.0-vtst", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-4.5.0-std", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-4.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-4.5.0-sol", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-std", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
+                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
+                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"}
+                                ],
+                   "gaussian":
+                                [
+                                 {"module_name": "gaussian", "module_version": "03_C.02", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_03_C.02"},
+                                 {"module_name": "gaussian", "module_version": "09_E.01", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_09_E.01"}
+                                ],
+                   "abaqus":  
+		                [
+                                 {"module_name": "ABAQUS", "module_version": "6.12.2", "run_script": "sub_abaqus_6.12.2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.13.2", "run_script": "sub_abaqus_6.13.2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.14.2", "run_script": "sub_abaqus_6.14.2"},
+                                 {"module_name": "ABAQUS", "module_version": "2016", "run_script": "sub_abaqus_2016"}
+                                ],
+                   "starccm":  
+		                [
+                                 {"module_name": "STARCCM", "module_version": "10.02.010-R8", "run_script": "sub_starccm+_10.02.010-R8"},
+                                 {"module_name": "STARCCM", "module_version": "11.04.010-R8", "run_script": "sub_starccm+_11.04.010-R8"},
+                                 {"module_name": "STARCCM", "module_version": "11.06.011-R8", "run_script": "sub_starccm+_11.06.011-R8"}
+                                ],
+                   "matlab":  
+		                [
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                ],
+                   "python2":  
+		                [
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-1.5.2", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-3.5.4", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-5.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-5.5.4", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-5.5.5", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.9-gmvolf-5.5.7", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-1.5.2", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-3.5.4", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-5.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.9-goolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmptolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmptolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmptolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmptolf-5.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmptolf-5.5.6", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-imvmklt-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-imvmklt-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-imvmklt-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ],
+                   "python3":  
+		                [
+                                 {"module_name": "Python", "module_version": "3.4.2-gmvolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.4.2-goolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.5.2-gmvolf-5.5.7", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ]
+                  },
+        "fission": {
+                   "compiler":  
+		                [
+                                 {"module_name": "none", "module_version": "none", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "gcc", "module_version": "4.6.0", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "gcc", "module_version": "4.6.1", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "gcc", "module_version": "4.6.1_static", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "gcc", "module_version": "4.6.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.5.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.6.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.8.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.1", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.2", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "intel", "module_version": "11.1.073", "c_name": "icc", "cpp_name": "icpc", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "intel", "module_version": "2011.2.137", "c_name": "icc", "cpp_name": "icpc", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "intel", "module_version": "12.1.0", "c_name": "icc", "cpp_name": "icpc", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "intel", "module_version": "12.1.1", "c_name": "icc", "cpp_name": "icpc", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "intel", "module_version": "13.0", "c_name": "icc", "cpp_name": "icpc", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "11.1.080", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2011.13.367", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2013.5.192", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2013_sp1.3.174", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "11.1.080", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2011.13.367", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2013.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2013_sp1.3.174", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "pgi", "module_version": "7.2", "c_name": "pgcc", "cpp_name": "pgCC", "f_name": "pgf90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "pgi", "module_version": "10.2", "c_name": "pgcc", "cpp_name": "pgCC", "f_name": "pgf90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "pgi", "module_version": "11.9", "c_name": "pgcc", "cpp_name": "pgCC", "f_name": "pgf90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "pgi", "module_version": "12.4", "c_name": "pgcc", "cpp_name": "pgCC", "f_name": "pgf90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"}
+				],
+                   "mcnp":  
+		                [
+                                 {"module_name": "mcnp5", "module_version": "1.40", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.40"},
+                                 {"module_name": "mcnp5-pgi", "module_version": "1.40", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.40"},
+                                 {"module_name": "mcnp5", "module_version": "1.60", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.60"},
+                                 {"module_name": "mcnp5", "module_version": "1.60_new", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.60"},
+                                 {"module_name": "MCNP5", "module_version": "1.40-imvmklt-1.5.0", "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.40"},
+                                 {"module_name": "MCNP5", "module_version": "1.60-imvmklt-1.5.0", "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.60"},
+                                 {"module_name": "MCNP6", "module_version": "1.0-imvmklt-1.5.0",  "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.0"},
+                                 {"module_name": "MCNP6", "module_version": "1.1b-imvmklt-2.5.0",  "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.1b"}
+                                ],
+                   "mcnpx":  
+		                [
+                                 {"module_name": "mcnpx", "module_version": "2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.5.0"},
+                                 {"module_name": "mcnpx", "module_version": "2.6.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.6.0"},
+                                 {"module_name": "mcnpx", "module_version": "2.7.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"},
+                                 {"module_name": "MCNPX", "module_version": "2.6.0-ictcet-2.5.0", "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.6.0"},
+                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.projects", "extra_module_version1": "none", "extra_module_name2": "use.easybuild_exp_ctl", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"}
+                                ],
+                   "mpi":  
+		                [
+                                 {"module_name": "mvapich2-gcc", "module_version": "1.6", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-gcc", "module_version": "1.7", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-gcc-4.6.1_static", "module_version": "1.7", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-gcc-4.6.3", "module_version": "1.8", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-GCC-4.6.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-GCC-4.7.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.9.1", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.6.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-intel", "module_version": "1.6", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-intel", "module_version": "1.7", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-iccifort-11.1.080", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-pgi", "module_version": "1.6", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lgcc_s -lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "mvapich2-pgi", "module_version": "1.7", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-gcc", "module_version": "1.4.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-gcc", "module_version": "1.4.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-gcc-4.6.0", "module_version": "1.4.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-gcc-4.6.1", "module_version": "1.4.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-gcc-4.6.1_static", "module_version": "1.4.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.4.5-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-GCC-4.6.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-GCC-4.7.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.1-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-intel", "module_version": "1.4.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-intel", "module_version": "1.4.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-pgi", "module_version": "1.4.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "openmpi-pgi-7.2", "module_version": "1.4.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "intel-mpi", "module_version": "4.0.0.028", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "-np 2"},
+                                 {"module_name": "intel-mpi", "module_version": "4.0.2.003", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "-np 2"},
+                                 {"module_name": "impi", "module_version": "4.0.3.008", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.0.027", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.1.036", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.0.0.028", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"}
+				],
+                   "blas":  
+		                [
+                                 {"module_name": "gotoblas2-gcc-4.1.2", "module_version": "1.13", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lgoto2"},
+                                 {"module_name": "gotoblas2-gcc-4.6.0", "module_version": "1.13", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lgoto2"},
+                                 {"module_name": "openblas-gcc-4.6.1", "module_version": "v0.1alpha2.4-2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "openblas-gcc-4.6.1_s", "module_version": "v0.1alpha2.4-2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.5.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.6.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.7.3-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.6.4-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.8.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.9.1-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.6.4-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.9.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas"},
+                                 {"module_name": "intel-mkl", "module_version": "10.3.3.174", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "intel-mkl", "module_version": "11.1.073", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "intel-mkl", "module_version": "2011.2.137", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "intel-mkl", "module_version": "10.3.6", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "intel-mkl", "module_version": "11.0.0", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.6.233", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.12.361", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.0.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.1.3.174", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "acml-gfortran", "module_version": "4.4.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lacml -lm"},
+                                 {"module_name": "acml-intel", "module_version": "4.4.0", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lacml -lm"},
+                                 {"module_name": "acml-pgi", "module_version": "4.4.0", "c_name": "none", "cpp_name": "none", "f_name": "pgf90", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lacml -lm"},
+                                 {"module_name": "acml-pgi", "module_version": "5.0.0", "c_name": "none", "cpp_name": "none", "f_name": "pgf90", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lacml -lm"},
+                                 {"module_name": "atlas-gcc-4.6.1", "module_version": "3.8.4", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gmvapich2-1.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gmvapich2-2.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gmvapich2-3.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gompi-1.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gompi-2.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"},
+                                 {"module_name": "ATLAS", "module_version": "3.10.1-gompi-3.5.0-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lf77blas -latlas"}
+				],
+                   "boost":  
+		                [
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.56.0-gmvolf-4.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"}
+				],
+                   "scale":  
+		                [
+                                 {"module_name": "scale", "module_version": "6.1", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"},
+                                 {"module_name": "scale", "module_version": "6.1.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                ],
+                   "serpent":  
+		                [
+                                 {"module_name": "serpent", "module_version": "2.1.26-gmvolf-4.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
+                                 {"module_name": "serpent", "module_version": "2.1.26-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
+                                 {"module_name": "serpent", "module_version": "2.1.27-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27"},
+                                 {"module_name": "serpent", "module_version": "2.1.28-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.28"}
+                                ],
+                   "helios":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.1", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.1", "helios_exe_name": "helios-2.1.1", "zenith_exe_name": "zenith-2.1.1"},
+                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
+                                ],
+                   "helioslint64":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
+                                ],
+                   "mc21":  
+		                [
+                                 {"module_name": "mc21", "module_version": "5.00.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_5.00.01"},
+                                 {"module_name": "mc21", "module_version": "6.01.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_6.01.01"}
+                                ],
+                   "starccm":  
+		                [
+                                 {"module_name": "STARCCM", "module_version": "8.04.010", "run_script": "sub_starccm+_8.04.010"},
+                                 {"module_name": "STARCCM", "module_version": "9.04.011-R8", "run_script": "sub_starccm+_9.04.011-R8"},
+                                 {"module_name": "STARCCM", "module_version": "10.02.010-R8", "run_script": "sub_starccm+_10.02.010-R8"}
+                                ],
+                   "abaqus":  
+		                [
+                                 {"module_name": "abaqus", "module_version": "6.9-2", "run_script": "sub_abaqus_6.9-2"},
+                                 {"module_name": "abaqus", "module_version": "6.12-2", "run_script": "sub_abaqus_6.12-2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.12.2", "run_script": "sub_abaqus_6.12.2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.13.2", "run_script": "sub_abaqus_6.13.2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.14.2", "run_script": "sub_abaqus_6.14.2"}
+                                ],
+                   "vasp":  
+		                [
+                                 {"module_name": "vasp", "module_version": "5.2.11", "extra_module_name1": "none", "extra_module_version1": "none", "run_script": "sub_vasp_5.2.11"},
+                                 {"module_name": "vasp", "module_version": "5.3.2", "extra_module_name1": "none", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0", "extra_module_name1": "use.projects", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-no-ngzhalf", "extra_module_name1": "use.projects", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-tbdyn", "extra_module_name1": "use.projects", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-std", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
+                                 {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-sol", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"}
+                                ],
+                   "matlab":  
+		                [
+                                 {"module_name": "MATLAB", "module_version": "2013a", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                ],
+                   "python2":  
+		                [
+                                 {"module_name": "python", "module_version": "as-2.7", "python_modules": "numpy scipy matplotlib Bio forkmap"},
+                                 {"module_name": "python", "module_version": "2.7", "python_modules": "numpy scipy matplotlib Bio forkmap"},
+                                 {"module_name": "python", "module_version": "2.7.1", "python_modules": "numpy scipy matplotlib Bio forkmap"},
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.9-gmvolf-2.5.8", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.9-gmvolf-5.5.7", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-iomklt-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ],
+                   "python3":  
+		                [
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ]
+                  },
+        "bechler": {
+                   "compiler":  
+		                [
+                                 {"module_name": "none", "module_version": "none", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.5.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.6.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.8.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.1", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.2", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "11.1.080", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2011.13.367", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2013.5.192", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2013_sp1.3.174", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2015.0.090", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "11.1.080", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2011.13.367", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2013.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2013_sp1.3.174", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2015.0.090", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"}
+                                ],
+                   "mpi":  
+		                [
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-GCC-4.6.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-GCC-4.7.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0.1-GCC-4.9.2", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.7-iccifort-11.1.080", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "1.9-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "MVAPICH2", "module_version": "2.0-iccifort-2015.0.090", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.4.5-GCC-4.5.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-GCC-4.6.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-GCC-4.7.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.7.5-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.1-GCC-4.7.4", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-GCC-4.8.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.7-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2011.13.367", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.6.5-iccifort-2013.5.192", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "OpenMPI", "module_version": "1.8.2-iccifort-2015.0.090", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.0.3.008", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.0.027", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "4.1.1.036", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.0.0.028", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"},
+                                 {"module_name": "impi", "module_version": "5.0.1.035", "c_name": "mpiicc", "cpp_name": "mpiicpc", "f_name": "mpiifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"}
+                                ],
+                   "blas":  
+		                [
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.5.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.6.4-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.8-GCC-4.7.3-LAPACK-3.4.2", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.11-GCC-4.8.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.9.3-LAPACK-3.5.0-a", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.9.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.6.233", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "10.3.12.361", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.0.5.192", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.1.3.174", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"},
+                                 {"module_name": "imkl", "module_version": "11.2.0.090", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lm"}
+                                ],
+                   "boost":  
+		                [
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-gmvolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-4.5.0-Python-2.7.8", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.49.0-goolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-gmvolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-1.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-2.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"},
+                                 {"module_name": "Boost", "module_version": "1.55.0-goolf-3.5.0-Python-2.7.6", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"}
+                                ],
+                   "mcnp":  
+		                [
+                                ],
+                   "mcnpx":  
+		                [
+                                 {"module_name": "MCNPX", "module_version": "2.6.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.6.0"},
+                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"}
+                                ],
+                   "helios":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
+                                ],
+                   "helioslint64":  
+		                [
+                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
+                                ],
+                   "serpent":  
+		                [
+                                 {"module_name": "serpent", "module_version": "2.1.27-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27"}
+                                ],
+                   "vasp":  
+		                [
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-no-ngzhalf", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
+                                 {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-tbdyn", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"}
+                                ],
+                   "abaqus":  
+		                [
+                                 {"module_name": "ABAQUS", "module_version": "6.13.2", "run_script": "sub_abaqus_6.13.2"},
+                                 {"module_name": "ABAQUS", "module_version": "6.14.2", "run_script": "sub_abaqus_6.14.2"}
+                                ],
+                   "starccm":  
+		                [
+                                 {"module_name": "STARCCM", "module_version": "8.04.010", "run_script": "sub_starccm+_8.04.010"},
+                                 {"module_name": "STARCCM", "module_version": "9.04.011-R8", "run_script": "sub_starccm+_9.04.011-R8"},
+                                 {"module_name": "STARCCM", "module_version": "10.02.010-R8", "run_script": "sub_starccm+_10.02.010-R8"}
+                                ],
+                   "matlab":  
+		                [
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                ],
+                   "python2":  
+		                [
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-gmvolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-gmvolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.9-gmvolf-5.5.7", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-goolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.8-goolf-4.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-imvmklt-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-imvmklt-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.6-iomklt-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ],
+                   "python3":  
+		                [
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-gmvolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-1.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-2.5.0", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "3.3.3-goolf-3.5.0", "python_modules": "numpy scipy matplotlib psycopg2"}
+                                ]
+                  },
+        "falconviz": {
+                   "compiler":  
+		                [
+                                 {"module_name": "none", "module_version": "none", "c_name": "gcc", "cpp_name": "c++", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.7.4", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.8.5", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "GCC", "module_version": "4.9.3", "c_name": "gcc", "cpp_name": "c++", "f_name": "gfortran", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "icc", "module_version": "2011.13.367", "c_name": "icc", "cpp_name": "icpc", "f_name": "none", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"},
+                                 {"module_name": "ifort", "module_version": "2011.13.367", "c_name": "none", "cpp_name": "none", "f_name": "ifort", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm"}
+                                ],
+                   "mpi":  
+		                [
+                                 {"module_name": "MVAPICH2", "module_version": "2.1-GCC-4.9.3", "c_name": "mpicc", "cpp_name": "mpicxx", "f_name": "mpif90", "c_flags": "-O2", "cpp_flags": "-O2", "f_flags": "-O2", "c_link_libs": "-lm", "cpp_link_libs": "-lm", "f_link_libs": "-lm", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "none"}
+                                ],
+                   "blas":  
+		                [
+                                 {"module_name": "OpenBLAS", "module_version": "0.2.14-GCC-4.9.3-LAPACK-3.5.0", "c_name": "none", "cpp_name": "none", "f_name": "gfortran", "c_flags": "none", "cpp_flags": "none", "f_flags": "-O2", "c_link_libs": "none", "cpp_link_libs": "none", "f_link_libs": "-lopenblas -lm"}
+                                ],
+                   "boost":  
+		                [
+                                 {"module_name": "Boost", "module_version": "1.60.0-GCC-4.8.5", "c_name": "none", "cpp_name": "g++", "f_name": "none", "c_flags": "none", "cpp_flags": "-O2", "f_flags": "none", "c_link_libs": "none", "cpp_link_libs": "-lboost_filesystem -lm", "f_link_libs": "none"}
+                                ],
+                   "mcnp":  
+		                [
+                                ],
+                   "mcnpx":  
+		                [
+                                ],
+                   "helios":  
+		                [
+                                ],
+                   "helioslint64":  
+		                [
+                                ],
+                   "serpent":  
+		                [
+                                ],
+                   "vasp":  
+		                [
+                                ],
+                   "abaqus":  
+		                [
+                                 {"module_name": "ABAQUS", "module_version": "6.14.2", "run_script": "sub_abaqus_6.14.2"},
+                                 {"module_name": "ABAQUS", "module_version": "2016", "run_script": "sub_abaqus_2016"}
+                                ],
+                   "starccm":  
+		                [
+                                 {"module_name": "STARCCM", "module_version": "10.02.010-R8", "run_script": "sub_starccm+_10.02.010-R8"},
+                                 {"module_name": "STARCCM", "module_version": "10.06.010-R8", "run_script": "sub_starccm+_10.06.010-R8"},
+                                 {"module_name": "STARCCM", "module_version": "11.04.010-R8", "run_script": "sub_starccm+_11.04.010-R8"},
+                                 {"module_name": "STARCCM", "module_version": "11.06.011-R8", "run_script": "sub_starccm+_11.06.011-R8"}
+                                ],
+                   "matlab":  
+		                [
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"},
+                                 {"module_name": "MATLAB", "module_version": "2016a", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                ],
+                   "python2":  
+		                [
+                                 {"module_name": "Python", "module_version": "2.7.9-gmvolf-5.5.7", "python_modules": "numpy scipy matplotlib psycopg2"},
+                                 {"module_name": "Python", "module_version": "2.7.10-GCC-4.8.5-bare", "python_modules": ""}
+                                ],
+                   "python3":  
+		                [
+                                ]
+                  }
+}
