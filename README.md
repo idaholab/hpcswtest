@@ -4,6 +4,18 @@ The HPC Software stack testing framework (hpcswtest) is used in the INL Scientif
 An example json file is provided (hpcswtest.json_def).
 
 
+Building Dependencies
+---------------------
+Software was built with GCC 4.9.3 compilers and Boost c++ libraries version 1.60.
+
+
+Building Procedure
+------------------
+Modify Makefile as appropriate, and type
+
+make
+
+
 Testing Procedure
 ----------------
 Create a directory, execute hpcswtest executable inside created directory. If file "hpcswtest.json" is
