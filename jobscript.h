@@ -35,6 +35,11 @@ Author: Cormac Garvey
 
 #include <unistd.h>
 
+#ifdef SLURM
+#define JOBSCRIPT SlurmScript
+#else
+#define JOBSCRIPT PbsScript
+#endif
 
 namespace jobscript {
 
