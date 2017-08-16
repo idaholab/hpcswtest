@@ -6,26 +6,7 @@ An example json file is provided (hpcswtest.json_def).
 
 Tests Supported
 ---------------
-MPI libraries
-Compilers
-BLAS libraries
-Boost
-VASP
-gaussian
-abaqus
-starccm+
-matlab
-ansys
-lsdyna
-cth
-helios
-mcnp
-mcnpx
-serpent
-scale
-mc21
-python2
-python3
+MPI libraries, Compilers, BLAS libraries, Boost, VASP, gaussian, abaqus, starccm+, matlab, ansys, lsdyna, cth, helios, mcnp, mcnpx, serpent, scale, mc21, python2, python3
 
 
 Building Dependencies
