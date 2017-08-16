@@ -72,7 +72,7 @@ public class XXXX_X_X extends StarMacro {
 }; // vector starccm_inputs_
 
 
-StarccmTest::StarccmTest(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("starccm", ".java", p_s, starccm_inputs_.size(), e_n),
+StarccmTest::StarccmTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("starccm", ".java", p_s, starccm_inputs_.size(), e_n),
                                                                                    log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                    result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                    flog_(log_file_name_,std::ios_base::app),
@@ -92,14 +92,14 @@ void StarccmTest::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   copyFile("/hpc-common/software/sw_qa/scripts/Heated_Fin.sim","Heated_Fin.sim");
   int c_i = 0;
   for (auto starccm_input: starccm_inputs_) {
-    std::vector<std::string> in_strs = {getPbsScripts()[c_i].getJobName()};
+    std::vector<std::string> in_strs = {getJobScripts()[c_i].getJobName()};
     createFileFromStr(getInputFileNames()[c_i], starccm_input);
     modifyFile(getInputFileNames()[c_i], out_strs, in_strs);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], getPbsScripts()[c_i].getJobName());
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getJobScripts()[c_i].getJobName());
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

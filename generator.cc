@@ -221,7 +221,7 @@ void Generator::createTestObjects(void) {
         modules::modules_type modules({{module_name, module_version}});
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
-#endif
+#else
         jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
 #endif
         tests_.push_back(new hpcswtest::BlasTest(job_script, c_name, cpp_name, f_name, c_flags, cpp_flags, f_flags, c_link_libs, cpp_link_libs, f_link_libs));

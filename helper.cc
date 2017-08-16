@@ -86,7 +86,11 @@ std::string modules_string(modules::modules_type modules) {
   std::string cmd_str;
   
   if (!modules.empty()) {
+#ifdef SLURM
+    cmd_str = "module purge;module load " + module_name_version(modules[0]); 
+#else
     cmd_str = "module purge;module load pbs;module load " + module_name_version(modules[0]); 
+#endif
     for (auto pr=modules.begin()+1; pr != modules.end();pr++) {
      cmd_str = cmd_str + " " + module_name_version(*pr);
     } 
@@ -165,7 +169,11 @@ std::string getClusterName(void) {
 
 void checkSubmitResult(const std::string &result, std::ofstream &flog, std::ofstream &fresult) {
 //  std::cout << result << std::endl;
+#ifdef SLURM
+  std::regex script_regex(R"(^Submitted batch job \d+)", std::regex_constants::ECMAScript | std::regex_constants::icase);
+#else
   std::regex script_regex(R"(^\d+)", std::regex_constants::ECMAScript | std::regex_constants::icase);
+#endif
   if (std::regex_search(result, script_regex) && result.size() > 0){
     flog << "Job " << result << " submitted correctly," << std::endl;
     std::cout << "job " << result << " submitted correctly" << std::endl;
@@ -180,10 +188,14 @@ void checkSubmitResult(const std::string &result, std::ofstream &flog, std::ofst
 
 
 std::string removeSuffixExt(std::string str) {
-  auto period_loc = str.find("."); 
-//  std::cout << "(removeSuffixExt) " << pbs_str << " " << period_loc << std::endl; 
-  str.erase(str.begin()+period_loc, str.end());
-  return str; 
+  auto period_loc = str.find(".");
+  if (period_loc == std::string::npos) {
+    return str;
+  }
+  else {
+    str.erase(str.begin()+period_loc, str.end());
+    return str;
+  }
 }
 
 
@@ -194,13 +206,16 @@ void createFileFromStr(std::string file_name, std::string content) {
 }
 
 
-std::string subPbsScript(std::ofstream &flog, jobscript::PbsScript &pbs_script) {
+std::string subJobScript(std::ofstream &flog, jobscript::JOBSCRIPT &job_script) {
   std::string script_cmd_result;
   std::string script_cmd;
 
-  pbs_script.generate();
-//  std::cout << pbs_script.getJobScriptName() << std::endl;
-  script_cmd = "qsub -P hpc " + pbs_script.getJobScriptName() + " 2>&1";
+  job_script.generate();
+#ifdef SLURM
+  script_cmd = "sbatch " + job_script.getJobScriptName() + " 2>&1";
+#else
+  script_cmd = "qsub -P hpc " + job_script.getJobScriptName() + " 2>&1";
+#endif
   flog << "Submit Command: " << script_cmd << std::endl;
   script_cmd_result = exec(script_cmd.c_str());
   return script_cmd_result;

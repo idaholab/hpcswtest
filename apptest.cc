@@ -119,13 +119,13 @@ std::vector<jobscript::JOBSCRIPT> AppTest::calcJobScripts(const std::string &tes
     } else {
        exe_args_tmp = calcSubArgs(p_s_o, i_f_n, j_n_local);
     }
+#ifdef SLURM
+    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), e_n, exe_args_tmp, j_n_local + ".sbatch", j_n_local, p_s_o.getQueueName(), p_s_o.getWallTime());
+#else
     exe_args_tmp = exe_args_tmp + " -P hpc";
     if (p_s_o.getCpuType() != "haswell") {
       exe_args_tmp = exe_args_tmp + " -t " + p_s_o.getCpuType();
     }
-#ifdef SLURM
-    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), e_n, exe_args_tmp, j_n_local + ".sbatch", j_n_local, p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime());
-#else
     jobscript::PbsScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), e_n, exe_args_tmp, j_n_local + ".pbs", j_n_local, p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
 #endif
     p_s_o_tmp.push_back(job_script);
@@ -147,7 +147,7 @@ std::vector<jobscript::JOBSCRIPT> AppTest::calcJobScripts(const std::string &tes
     exe_args_tmp = calcExeArgs(p_s_o, i_f_n);
 //    std::cout << "(calcJobScripts) exe_args_temp = " << exe_args_tmp << std::endl;
 #ifdef SLURM
-    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), p_s_o.getExeName(), exe_args_tmp, j_n_local + ".sbatch", j_n_local, p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime());
+    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), p_s_o.getExeName(), exe_args_tmp, j_n_local + ".sbatch", j_n_local, p_s_o.getQueueName(), p_s_o.getWallTime());
 #else
     jobscript::PbsScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), p_s_o.getExeName(), exe_args_tmp, j_n_local + ".pbs", j_n_local, p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
 #endif
