@@ -31,7 +31,6 @@ Author: Cormac Garvey
 
 #include "hpcswtest.h"
 #include "helper.h"
-#include "pbsscript.h"
 
 #include <regex>
 
@@ -86,7 +85,7 @@ class SrcTest : public HpcSwTest {
     std::string compileCmd(const modules::modules_type &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &) const;
     std::string compileTest(std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &) const;
     void checkCompileResult(const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, std::ofstream &, std::ofstream &) const;
-    virtual std::string srcExeTest(std::ofstream &flog, jobscript::JOBSCRIPT &pbs_script) const;
+    virtual std::string srcExeTest(std::ofstream &flog, jobscript::JOBSCRIPT &job_script) const;
 
   private:
     std::vector<jobscript::JOBSCRIPT> calcCJobScripts(const jobscript::JOBSCRIPT &p_s) const;
@@ -110,9 +109,9 @@ class SrcTest : public HpcSwTest {
     std::vector<std::string> c_exe_args_;
     std::vector<std::string> cpp_exe_args_;
     std::vector<std::string> f_exe_args_;
-    std::vector<jobscript::JOBSCRIPT> c_pbs_scripts_;
-    std::vector<jobscript::JOBSCRIPT> cpp_pbs_scripts_;
-    std::vector<jobscript::JOBSCRIPT> f_pbs_scripts_;
+    std::vector<jobscript::JOBSCRIPT> c_job_scripts_;
+    std::vector<jobscript::JOBSCRIPT> cpp_job_scripts_;
+    std::vector<jobscript::JOBSCRIPT> f_job_scripts_;
 
 }; // class SrcTest
 
