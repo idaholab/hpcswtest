@@ -18,8 +18,8 @@ make
 
 Testing Procedure
 ----------------
-Create a directory, execute hpcswtest executable inside created directory. If file "hpcswtest.json" is
-not contained in your current working directory then the default json file (i.e hpcswtest.json_def) will 
+Create a directory, execute hpcswtest executable inside created directory. Set the environmental variable, HPCSWTEST_QUEUE to the queue you want to use.
+If file "hpcswtest.json" is not contained in your current working directory then the default json file (i.e hpcswtest.json_def) will 
 be used to execute tests.
 
 When all tests have completed, run hpcswtest_report.py inside your current working directory to create a report showing what tests passed/failed.
