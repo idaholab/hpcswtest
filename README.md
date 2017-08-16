@@ -4,6 +4,30 @@ The HPC Software stack testing framework (hpcswtest) is used in the INL Scientif
 An example json file is provided (hpcswtest.json_def).
 
 
+Tests Supported
+---------------
+MPI libraries
+Compilers
+BLAS libraries
+Boost
+VASP
+gaussian
+abaqus
+starccm+
+matlab
+ansys
+lsdyna
+cth
+helios
+mcnp
+mcnpx
+serpent
+scale
+mc21
+python2
+python3
+
+
 Building Dependencies
 ---------------------
 Software was built with GCC 4.9.3 compilers and Boost c++ libraries version 1.60.
