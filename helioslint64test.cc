@@ -928,15 +928,15 @@ std::string HeliosTest::getZenithExeName(void) {
 */
 
 
-HeliosLinT64Test::HeliosLinT64Test(const jobscript::PbsScript &p_s, const std::string &a_e_n, const std::string &h_e_n, const std::string &z_e_n, const std::string &h_t): HeliosTest(p_s, a_e_n, h_e_n, z_e_n, h_t),
+HeliosLinT64Test::HeliosLinT64Test(const jobscript::JOBSCRIPT &p_s, const std::string &a_e_n, const std::string &h_e_n, const std::string &z_e_n, const std::string &h_t): HeliosTest(p_s, a_e_n, h_e_n, z_e_n, h_t),
                                                                                                                                                                            log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                                                                                                            result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                                                                                                            flog_(log_file_name_,std::ios_base::app),
                                                                                                                                                                            fresult_(result_file_name_,std::ios_base::app) {}
 
 /*
-void HeliosTest::createHeliosPbs(jobscript::PbsScript &in_pbs) const {
-//  jobscript::PbsScript out_pbs_local(in_pbs);
+void HeliosTest::createHeliosJob(jobscript::JOBSCRIPT &in_pbs) const {
+//  jobscript::JOBSCRIPT out_pbs_local(in_pbs);
   in_pbs.setExeName(aurora_exe_name_);
   in_pbs.setExeArgs("aurora-03.inp;" + aurora_exe_name_ + " aurora-31.inp;" + "mv aurora-31.hrf helios-31.hrf;" + helios_exe_name_ + " helios-31.hrf;" + "mv helios-31.hrf zenith-31.hrf;" + zenith_exe_name_ + " zenith-31.inp");
 }
@@ -956,21 +956,21 @@ void HeliosLinT64Test::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto helios_aurora_03_input: helios_aurora_03_inputs_) {
     helios_dir = "helios_" + std::to_string(getTestNumber()) + "_" + std::to_string(c_i);
     flog_ << "Run test in directory " << helios_dir << std::endl;
     makeDir(helios_dir);
     changeDir(helios_dir);
-    jobscript::PbsScript helios_pbs(getPbsScripts()[c_i]); 
+    jobscript::JOBSCRIPT helios_pbs(getJobScripts()[c_i]); 
     copyFile("/hpc-common/software/sw_qa/scripts/hy049n18g201_linT64.dat","hy049n18g201_linT64.dat");
     createFileFromStr("aurora-03.inp", helios_aurora_03_input);
     createFileFromStr("aurora-31.inp", helios_aurora_31_inputs_[c_i]);
     createFileFromStr("zenith-31.inp", helios_zenith_31_inputs_[c_i]);
-    createHeliosPbs(helios_pbs);
-    fresult_ << module_name_version(getPbsScripts()[c_i].getModules()[getPbsScripts()[c_i].getModules().size()-1]) << "\t" << helios_dir << "\t" << getPbsScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
-    script_cmd_result = subPbsScript(flog_, helios_pbs);
+    createHeliosJob(helios_pbs);
+    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << helios_dir << "\t" << getJobScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
+    script_cmd_result = subJobScript(flog_, helios_pbs);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

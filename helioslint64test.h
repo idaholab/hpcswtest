@@ -41,7 +41,7 @@ namespace hpcswtest {
 class HeliosLinT64Test: public HeliosTest {
 
   public:
-    HeliosLinT64Test(const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, const std::string &);
+    HeliosLinT64Test(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &);
     virtual ~HeliosLinT64Test(void) {};
     virtual void runTest(void) override;
 
