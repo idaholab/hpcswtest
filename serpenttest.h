@@ -40,7 +40,7 @@ namespace hpcswtest {
 class SerpentTest: public AppTest {
 
   public:
-    SerpentTest(const jobscript::PbsScript &, const std::string &);
+    SerpentTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~SerpentTest(void) {};
     virtual void runTest(void) override;
 

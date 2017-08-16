@@ -33,7 +33,7 @@ Author: Cormac Garvey
 namespace hpcswtest {
 
 
-LibTest::LibTest(const std::string &s, const jobscript::PbsScript &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, int n_c_lib_srcs, int n_cpp_lib_srcs, int n_f_lib_srcs, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): SrcTest(s, p_s, c_n, cpp_n, f_n, n_c_lib_srcs, n_cpp_lib_srcs, n_f_lib_srcs, c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l) {}
+LibTest::LibTest(const std::string &s, const jobscript::JOBSCRIPT &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, int n_c_lib_srcs, int n_cpp_lib_srcs, int n_f_lib_srcs, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): SrcTest(s, p_s, c_n, cpp_n, f_n, n_c_lib_srcs, n_cpp_lib_srcs, n_f_lib_srcs, c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l) {}
 
 
 void LibTest::setLinkLibs(const std::string &s) {

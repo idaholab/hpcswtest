@@ -42,7 +42,7 @@ print ("Hello Python")
 }; // vector python3_inputs_
 
 
-Python3Test::Python3Test(const jobscript::PbsScript &p_s, const std::vector<std::string> &p_ms, const std::string &p_t): Python2Test(p_s, p_ms, p_t),
+Python3Test::Python3Test(const jobscript::JOBSCRIPT &p_s, const std::vector<std::string> &p_ms, const std::string &p_t): Python2Test(p_s, p_ms, p_t),
                                                                                                                          log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                                                          result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                                                          flog_(log_file_name_,std::ios_base::app),
@@ -65,15 +65,15 @@ void Python3Test::runTest() {
   }
   fresult_ << std::ctime(&date_result) << std::endl;
   fresult_ << getTestName() << " tests run on " << getHostName() << std::endl;
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
-  modules_load(flog_, getPbsScripts()[0].getModules(), modules_load_result);
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
+  modules_load(flog_, getJobScripts()[0].getModules(), modules_load_result);
   int c_i = 0;
   for (auto python3_input: python3_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], python3_input);
-    runPythonTest(flog_, fresult_, getPbsScripts()[c_i].getModules(), getInputFileNames()[c_i]); 
+    runPythonTest(flog_, fresult_, getJobScripts()[c_i].getModules(), getInputFileNames()[c_i]); 
     ++c_i;
   }
-  runPythonModulesTest(flog_, fresult_, getPbsScripts()[0].getModules(), getPythonModules());
+  runPythonModulesTest(flog_, fresult_, getJobScripts()[0].getModules(), getPythonModules());
 }
 
 

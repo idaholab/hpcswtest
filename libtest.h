@@ -36,7 +36,7 @@ namespace hpcswtest {
 class LibTest: public SrcTest {
 
 	public:
-		LibTest(const std::string &, const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, int, int, int, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &);
+		LibTest(const std::string &, const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, int, int, int, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &);
 		virtual ~LibTest(void) {};
     virtual void runTest(void) override;
 		void setLinkLibs(const std::string &);

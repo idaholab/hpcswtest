@@ -40,7 +40,7 @@ namespace hpcswtest {
 class AbaqusTest: public AppTest {
 
   public:
-    AbaqusTest(const jobscript::PbsScript &, const std::string &);
+    AbaqusTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~AbaqusTest(void) {};
     virtual void runTest(void) override;
 

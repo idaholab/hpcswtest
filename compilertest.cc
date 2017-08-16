@@ -82,7 +82,7 @@ R"(
 
 
 
-CompilerTest::CompilerTest(const jobscript::PbsScript &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): SrcTest("compiler",  p_s, c_n, cpp_n, f_n, c_srcs_.size(), cpp_srcs_.size(), f_srcs_.size(), c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l),
+CompilerTest::CompilerTest(const jobscript::JOBSCRIPT &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): SrcTest("compiler",  p_s, c_n, cpp_n, f_n, c_srcs_.size(), cpp_srcs_.size(), f_srcs_.size(), c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l),
                                                                              log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                              result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                              flog_(log_file_name_,std::ios_base::app),
@@ -107,12 +107,9 @@ void CompilerTest::runTest(void) {
   int c_i = 0;
   if (getCName() != "none") {
   for (auto c_src: c_srcs_) {
-//    std::cout << "(CompilerTest::runTest, before compileTest)" << std::endl;
-    cmd_result = compileTest(flog_, getCPbsScripts()[c_i], getCSrc(c_i), getCName(), getCFlags(), getCSrcName(c_i), getCExeName(c_i), getCLinkLibs());
-//    std::cout << "(CompilerTest::runTest, after compileTest)" << std::endl;
-//    checkCompileResult(cmd_result, getCName(), getCPbsScripts()[c_i].getModules()[getCPbsScripts()[c_i].getModules().size()-1].first, getCPbsScripts()[c_i].getModules()[getCPbsScripts()[c_i].getModules().size()-1].second, getCPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    checkCompileResult(cmd_result, getCName(), findPrimaryModule(getCPbsScripts()[c_i].getModules()).first, findPrimaryModule(getCPbsScripts()[c_i].getModules()).second, getCPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getCPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getCJobScripts()[c_i], getCSrc(c_i), getCName(), getCFlags(), getCSrcName(c_i), getCExeName(c_i), getCLinkLibs());
+    checkCompileResult(cmd_result, getCName(), findPrimaryModule(getCJobScripts()[c_i].getModules()).first, findPrimaryModule(getCJobScripts()[c_i].getModules()).second, getCJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getCJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }
@@ -120,9 +117,9 @@ void CompilerTest::runTest(void) {
   c_i = 0;
   if (getCppName() != "none") {
   for (auto cpp_src: cpp_srcs_) {
-    cmd_result = compileTest(flog_, getCppPbsScripts()[c_i], getCppSrc(c_i), getCppName(), getCppFlags(), getCppSrcName(c_i), getCppExeName(c_i), getCppLinkLibs());
-    checkCompileResult(cmd_result, getCppName(), findPrimaryModule(getCppPbsScripts()[c_i].getModules()).first, findPrimaryModule(getCppPbsScripts()[c_i].getModules()).second, getCppPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getCppPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getCppJobScripts()[c_i], getCppSrc(c_i), getCppName(), getCppFlags(), getCppSrcName(c_i), getCppExeName(c_i), getCppLinkLibs());
+    checkCompileResult(cmd_result, getCppName(), findPrimaryModule(getCppJobScripts()[c_i].getModules()).first, findPrimaryModule(getCppJobScripts()[c_i].getModules()).second, getCppJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getCppJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }
@@ -130,9 +127,9 @@ void CompilerTest::runTest(void) {
   c_i = 0;
   if (getFName() != "none") {
   for (auto f_src: f_srcs_) {
-    cmd_result = compileTest(flog_, getFPbsScripts()[c_i], getFSrc(c_i), getFName(), getFFlags(), getFSrcName(c_i), getFExeName(c_i), getFLinkLibs());
-    checkCompileResult(cmd_result, getFName(), findPrimaryModule(getFPbsScripts()[c_i].getModules()).first, findPrimaryModule(getFPbsScripts()[c_i].getModules()).second, getFPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getFPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getFJobScripts()[c_i], getFSrc(c_i), getFName(), getFFlags(), getFSrcName(c_i), getFExeName(c_i), getFLinkLibs());
+    checkCompileResult(cmd_result, getFName(), findPrimaryModule(getFJobScripts()[c_i].getModules()).first, findPrimaryModule(getFJobScripts()[c_i].getModules()).second, getFJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getFJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

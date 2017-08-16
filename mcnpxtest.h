@@ -40,7 +40,7 @@ namespace hpcswtest {
 class McnpxTest: public AppTest {
 
   public:
-    McnpxTest(const jobscript::PbsScript &, const std::string &);
+    McnpxTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~McnpxTest(void) {};
     virtual void runTest(void) override;
 

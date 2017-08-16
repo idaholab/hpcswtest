@@ -31,7 +31,6 @@ Author: Cormac Garvey
 
 #include "hpcswtest.h"
 #include "helper.h"
-#include "pbsscript.h"
 
 
 namespace  hpcswtest {
@@ -40,31 +39,31 @@ namespace  hpcswtest {
 class AppTest: public HpcSwTest {
 
 	public:
-		AppTest(const std::string &, const std::string &, const jobscript::PbsScript &, int, const std::string &);
-		AppTest(const std::string &, const std::string &, const jobscript::PbsScript &, int);
+		AppTest(const std::string &, const std::string &, const jobscript::JOBSCRIPT &, int, const std::string &);
+		AppTest(const std::string &, const std::string &, const jobscript::JOBSCRIPT &, int);
 		virtual ~AppTest(void) {};
 		virtual void runTest(void) override;
 		void setRunCmd(const std::string &);
 		std::string getRunCmd(void) const;
     std::vector<std::string> getInputFileNames(void) const;
-    std::vector<jobscript::PbsScript> getPbsScripts(void) const;
+    std::vector<jobscript::JOBSCRIPT> getJobScripts(void) const;
 
   protected:
     virtual std::vector<std::string> calcInputNames(const std::string &, int, const std::string &) const;
-    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::PbsScript &, const std::string &) const;
+    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const;
 
 	private:
-    std::vector<jobscript::PbsScript> calcPbsScripts(const std::string &, const jobscript::PbsScript &, const std::string &) const;
-    std::vector<jobscript::PbsScript> calcPbsScripts(const std::string &, const jobscript::PbsScript &) const;
-    std::string calcStarccmSubArgs(const jobscript::PbsScript &, const std::string &, const std::string &) const;
-    std::string calcSubArgs(const jobscript::PbsScript &, const std::string &, const std::string &) const;
-    std::string calcAbaqusSubArgs(const jobscript::PbsScript &, const std::string &, const std::string &) const;
-    std::string calcGaussianSubArgs(const jobscript::PbsScript &, const std::string &, const std::string &) const;
-    std::string calcVaspSubArgs(const jobscript::PbsScript &, const std::string &) const;
-    std::string calcExeArgs(const jobscript::PbsScript &, const std::string &) const;
+    std::vector<jobscript::JOBSCRIPT> calcJobScripts(const std::string &, const jobscript::JOBSCRIPT &, const std::string &) const;
+    std::vector<jobscript::JOBSCRIPT> calcJobScripts(const std::string &, const jobscript::JOBSCRIPT &) const;
+    std::string calcStarccmSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
+    std::string calcSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
+    std::string calcAbaqusSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
+    std::string calcGaussianSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
+    std::string calcVaspSubArgs(const jobscript::JOBSCRIPT &, const std::string &) const;
+    std::string calcExeArgs(const jobscript::JOBSCRIPT &, const std::string &) const;
 		std::string run_cmd_;
     std::vector<std::string> input_file_names_;
-    std::vector<jobscript::PbsScript> pbs_scripts_;
+    std::vector<jobscript::JOBSCRIPT> job_scripts_;
 
 }; // class AppTest
 

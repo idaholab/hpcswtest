@@ -425,7 +425,7 @@ end)"
 }; // vector scale_inputs_
 
 
-Scale62Test::Scale62Test(const jobscript::PbsScript &p_s, const std::string &s_t): ScaleTest(p_s, s_t),
+Scale62Test::Scale62Test(const jobscript::JOBSCRIPT &p_s, const std::string &s_t): ScaleTest(p_s, s_t),
                                                        log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                        result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                        flog_(log_file_name_,std::ios_base::app),
@@ -444,12 +444,12 @@ void Scale62Test::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto scale_input: scale_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], scale_input);
-    fresult_ << module_name_version(getPbsScripts()[c_i].getModules()[getPbsScripts()[c_i].getModules().size()-1]) << "\t" << getPbsScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
-    script_cmd_result = subPbsScript(flog_, getPbsScripts()[c_i]);
+    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << getJobScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
+    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

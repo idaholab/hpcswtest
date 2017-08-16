@@ -54,7 +54,7 @@ std::string getClusterName(void);
 void checkSubmitResult(const std::string &, std::ofstream &, std::ofstream &);
 std::string removeSuffixExt(std::string);
 void createFileFromStr(std::string, std::string);
-std::string subPbsScript(std::ofstream &, jobscript::PbsScript &);
+std::string subJobScript(std::ofstream &, jobscript::JOBSCRIPT &);
 std::string replaceStr(std::string, const std::string, std::string);
 void makeDir(std::string);
 void changeDir(std::string);

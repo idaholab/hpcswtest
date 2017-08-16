@@ -42,7 +42,7 @@ namespace hpcswtest {
 class SrcTest : public HpcSwTest {
 
   public:
-    SrcTest(const std::string &, const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, int, int, int, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &);
+    SrcTest(const std::string &, const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, int, int, int, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &);
     virtual ~SrcTest() {};
     virtual void runTest(void) override;
     void setCName(const std::string &);
@@ -72,9 +72,9 @@ class SrcTest : public HpcSwTest {
     std::string getCLinkLibs(void) const;
     std::string getCppLinkLibs(void) const;
     std::string getFLinkLibs(void) const;
-    std::vector<jobscript::PbsScript> getCPbsScripts(void) const;
-    std::vector<jobscript::PbsScript> getCppPbsScripts(void) const;
-    std::vector<jobscript::PbsScript> getFPbsScripts(void) const;
+    std::vector<jobscript::JOBSCRIPT> getCJobScripts(void) const;
+    std::vector<jobscript::JOBSCRIPT> getCppJobScripts(void) const;
+    std::vector<jobscript::JOBSCRIPT> getFJobScripts(void) const;
 
   protected:
     virtual std::vector<std::string> calcCSrcNames(int) const;
@@ -84,14 +84,14 @@ class SrcTest : public HpcSwTest {
     virtual std::vector<std::string> calcCppExeNames(int) const;
     virtual std::vector<std::string> calcFExeNames(int) const;
     std::string compileCmd(const modules::modules_type &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &) const;
-    std::string compileTest(std::ofstream &, const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &) const;
+    std::string compileTest(std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &) const;
     void checkCompileResult(const std::string &, const std::string &, const std::string &, const std::string &, const std::string &, std::ofstream &, std::ofstream &) const;
-    virtual std::string srcExeTest(std::ofstream &flog, jobscript::PbsScript &pbs_script) const;
+    virtual std::string srcExeTest(std::ofstream &flog, jobscript::JOBSCRIPT &pbs_script) const;
 
   private:
-    std::vector<jobscript::PbsScript> calcCPbsScripts(const jobscript::PbsScript &p_s) const;
-    std::vector<jobscript::PbsScript> calcCppPbsScripts(const jobscript::PbsScript &p_s) const;
-    std::vector<jobscript::PbsScript> calcFPbsScripts(const jobscript::PbsScript &p_s) const;
+    std::vector<jobscript::JOBSCRIPT> calcCJobScripts(const jobscript::JOBSCRIPT &p_s) const;
+    std::vector<jobscript::JOBSCRIPT> calcCppJobScripts(const jobscript::JOBSCRIPT &p_s) const;
+    std::vector<jobscript::JOBSCRIPT> calcFJobScripts(const jobscript::JOBSCRIPT &p_s) const;
     std::string c_name_;
     std::string cpp_name_;
     std::string f_name_;
@@ -110,9 +110,9 @@ class SrcTest : public HpcSwTest {
     std::vector<std::string> c_exe_args_;
     std::vector<std::string> cpp_exe_args_;
     std::vector<std::string> f_exe_args_;
-    std::vector<jobscript::PbsScript> c_pbs_scripts_;
-    std::vector<jobscript::PbsScript> cpp_pbs_scripts_;
-    std::vector<jobscript::PbsScript> f_pbs_scripts_;
+    std::vector<jobscript::JOBSCRIPT> c_pbs_scripts_;
+    std::vector<jobscript::JOBSCRIPT> cpp_pbs_scripts_;
+    std::vector<jobscript::JOBSCRIPT> f_pbs_scripts_;
 
 }; // class SrcTest
 

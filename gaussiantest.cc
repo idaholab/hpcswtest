@@ -63,7 +63,7 @@ H8OX=51.9632
 }; // vector gaussian_inputs_
 
 
-GaussianTest::GaussianTest(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("gaussian", "", p_s ,gaussian_inputs_.size(), e_n),
+GaussianTest::GaussianTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("gaussian", "", p_s ,gaussian_inputs_.size(), e_n),
                                                      log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                      result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                      flog_(log_file_name_,std::ios_base::app),
@@ -82,12 +82,12 @@ void GaussianTest::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto gaussian_input: gaussian_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], gaussian_input);
-//    script_cmd_result = subPbsScript(flog_, getPbsScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], getInputFileNames()[c_i] + ".out");
+//    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getInputFileNames()[c_i] + ".out");
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

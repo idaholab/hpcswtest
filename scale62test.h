@@ -41,7 +41,7 @@ namespace hpcswtest {
 class Scale62Test: public ScaleTest {
 
   public:
-    Scale62Test(const jobscript::PbsScript &, const std::string &);
+    Scale62Test(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~Scale62Test(void) {};
     virtual void runTest(void) override;
 

@@ -47,7 +47,7 @@ std::vector<std::string> Python2Test::getPythonModules(void) {
 }
 
 
-Python2Test::Python2Test(const jobscript::PbsScript &p_s, const std::vector<std::string> &p_ms, const std::string &p_t): AppTest(p_t, ".py", p_s, python2_inputs_.size()),
+Python2Test::Python2Test(const jobscript::JOBSCRIPT &p_s, const std::vector<std::string> &p_ms, const std::string &p_t): AppTest(p_t, ".py", p_s, python2_inputs_.size()),
                                                                                                                          log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                                                          result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                                                          flog_(log_file_name_,std::ios_base::app),
@@ -60,7 +60,11 @@ void Python2Test::runPythonModulesTest(std::ofstream &flog, std::ofstream &fresu
   std::string python_cmd;
   std::string modules_str = modules_string(modules);
   for (auto python_module: python_modules) {
+#ifdef SLURM
+    python_cmd = " { module purge;" + modules_str + ";" + "python -c \"import " + python_module + "\"; }" + " 2>&1";
+#else
     python_cmd = " { module purge;module load pbs;" + modules_str + ";" + "python -c \"import " + python_module + "\"; }" + " 2>&1";
+#endif
     flog << "Execute : " << python_cmd << std::endl;
 //    std::cout << "python_cmd = " << python_cmd << std::endl;
     result = exec(python_cmd.c_str());
@@ -83,7 +87,11 @@ void Python2Test::runPythonTest(std::ofstream &flog, std::ofstream &fresult, con
   std::string result;
   std::string python_cmd;
   std::string modules_str = modules_string(modules);
+#ifdef SLURM
+  python_cmd = " { module purge;" + modules_str + ";" + "python " + input_file + "; }" + " 2>&1";
+#else
   python_cmd = " { module purge;module load pbs;" + modules_str + ";" + "python " + input_file + "; }" + " 2>&1";
+#endif
   flog << "Execute : " << python_cmd << std::endl;
 //  std::cout << "python_cmd = " << python_cmd << std::endl;
   result = exec(python_cmd.c_str());
@@ -116,15 +124,15 @@ void Python2Test::runTest() {
   }
   fresult_ << std::ctime(&date_result) << std::endl;
   fresult_ << getTestName() << " tests run on " << getHostName() << std::endl;
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
-  modules_load(flog_, getPbsScripts()[0].getModules(), modules_load_result);
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
+  modules_load(flog_, getJobScripts()[0].getModules(), modules_load_result);
   int c_i = 0;
   for (auto python2_input: python2_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], python2_input);
-    runPythonTest(flog_, fresult_, getPbsScripts()[c_i].getModules(), getInputFileNames()[c_i]); 
+    runPythonTest(flog_, fresult_, getJobScripts()[c_i].getModules(), getInputFileNames()[c_i]); 
     ++c_i;
   }
-  runPythonModulesTest(flog_, fresult_, getPbsScripts()[0].getModules(), getPythonModules());
+  runPythonModulesTest(flog_, fresult_, getJobScripts()[0].getModules(), getPythonModules());
 }
 
 

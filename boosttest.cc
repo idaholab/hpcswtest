@@ -92,7 +92,7 @@ const std::vector<std::string> BoostTest::f_boost_srcs_ = {};
 
 
 
-BoostTest::BoostTest(const jobscript::PbsScript &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): LibTest("boost", p_s, c_n, cpp_n, f_n, c_boost_srcs_.size(), cpp_boost_srcs_.size(), f_boost_srcs_.size(), c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l),
+BoostTest::BoostTest(const jobscript::JOBSCRIPT &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): LibTest("boost", p_s, c_n, cpp_n, f_n, c_boost_srcs_.size(), cpp_boost_srcs_.size(), f_boost_srcs_.size(), c_f, cpp_f, f_f, c_l_l, cpp_l_l, f_l_l),
 												log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
 												result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
 												flog_(log_file_name_,std::ios_base::app),
@@ -114,25 +114,25 @@ void BoostTest::runTest() {
   }
   int c_i = 0;
   for (auto c_boost_src: c_boost_srcs_) {
-    cmd_result = compileTest(flog_, getCPbsScripts()[c_i], c_boost_srcs_[c_i], getCName(), getCFlags(), getCSrcName(c_i), getCExeName(c_i), getCLinkLibs());
-    checkCompileResult(cmd_result, getCName(), getCPbsScripts()[c_i].getModules()[getCPbsScripts()[c_i].getModules().size()-1].first, getCPbsScripts()[c_i].getModules()[getCPbsScripts()[c_i].getModules().size()-1].second, getCPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getCPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getCJobScripts()[c_i], c_boost_srcs_[c_i], getCName(), getCFlags(), getCSrcName(c_i), getCExeName(c_i), getCLinkLibs());
+    checkCompileResult(cmd_result, getCName(), getCJobScripts()[c_i].getModules()[getCJobScripts()[c_i].getModules().size()-1].first, getCJobScripts()[c_i].getModules()[getCJobScripts()[c_i].getModules().size()-1].second, getCJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getCJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }
   c_i = 0;
   for (auto cpp_boost_src: cpp_boost_srcs_) {
-    cmd_result = compileTest(flog_, getCppPbsScripts()[c_i], cpp_boost_srcs_[c_i], getCppName(), getCppFlags(), getCppSrcName(c_i), getCppExeName(c_i), getCppLinkLibs());
-    checkCompileResult(cmd_result, getCppName(), getCppPbsScripts()[c_i].getModules()[getCppPbsScripts()[c_i].getModules().size()-1].first, getCppPbsScripts()[c_i].getModules()[getCppPbsScripts()[c_i].getModules().size()-1].second, getCppPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getCppPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getCppJobScripts()[c_i], cpp_boost_srcs_[c_i], getCppName(), getCppFlags(), getCppSrcName(c_i), getCppExeName(c_i), getCppLinkLibs());
+    checkCompileResult(cmd_result, getCppName(), getCppJobScripts()[c_i].getModules()[getCppJobScripts()[c_i].getModules().size()-1].first, getCppJobScripts()[c_i].getModules()[getCppJobScripts()[c_i].getModules().size()-1].second, getCppJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getCppJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }
   c_i = 0;
   for (auto f_boost_src: f_boost_srcs_) {
-    cmd_result = compileTest(flog_, getFPbsScripts()[c_i], f_boost_srcs_[c_i], getFName(), getFFlags(), getFSrcName(c_i), getFExeName(c_i), getFLinkLibs());
-    checkCompileResult(cmd_result, getFName(), getFPbsScripts()[c_i].getModules()[getFPbsScripts()[c_i].getModules().size()-1].first, getFPbsScripts()[c_i].getModules()[getFPbsScripts()[c_i].getModules().size()-1].second, getFPbsScripts()[c_i].getJobName(), flog_, fresult_);
-    script_cmd_result = srcExeTest(flog_, getFPbsScripts()[c_i]);
+    cmd_result = compileTest(flog_, getFJobScripts()[c_i], f_boost_srcs_[c_i], getFName(), getFFlags(), getFSrcName(c_i), getFExeName(c_i), getFLinkLibs());
+    checkCompileResult(cmd_result, getFName(), getFJobScripts()[c_i].getModules()[getFJobScripts()[c_i].getModules().size()-1].first, getFJobScripts()[c_i].getModules()[getFJobScripts()[c_i].getModules().size()-1].second, getFJobScripts()[c_i].getJobName(), flog_, fresult_);
+    script_cmd_result = srcExeTest(flog_, getFJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

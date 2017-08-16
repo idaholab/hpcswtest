@@ -41,13 +41,13 @@ namespace hpcswtest {
 class Mc21Test: public AppTest {
 
   public:
-    Mc21Test(const jobscript::PbsScript &);
-    Mc21Test(const jobscript::PbsScript &, const std::string &);
+    Mc21Test(const jobscript::JOBSCRIPT &);
+    Mc21Test(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~Mc21Test(void) {};
     virtual void runTest(void) override;
 
   protected:
-    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::PbsScript &, const std::string &) const override;
+    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const override;
 
   private:
     std::string log_file_name_;

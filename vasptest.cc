@@ -1633,18 +1633,22 @@ END of PSCTR-controll parameters
 }; // vector vasp_potcar_inputs_
 
 
-std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::PbsScript &pbs_script, const std::string &dir_path) const {
+std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
   std::string modules_str;
 
-//  pbs_script.generate();
-  fresult << module_name_version(pbs_script.getModules()[pbs_script.getModules().size()-1]) << "\t" << dir_path << "\t" << pbs_script.getJobName() << " job." << std::endl;
-//  std::cout << pbs_script.getExeName() << " " << pbs_script.getExeArgs() << std::endl;
-  if (modules_load(flog, pbs_script.getModules(), module_load_result)) {
-    modules_str = modules_string(pbs_script.getModules());
-    script_cmd = "module purge;module load pbs;" + modules_str + ";" + pbs_script.getExeName() + " " + pbs_script.getExeArgs() + " 2>&1";
+//  job_script.generate();
+  fresult << module_name_version(job_script.getModules()[job_script.getModules().size()-1]) << "\t" << dir_path << "\t" << job_script.getJobName() << " job." << std::endl;
+//  std::cout << job_script.getExeName() << " " << job_script.getExeArgs() << std::endl;
+  if (modules_load(flog, job_script.getModules(), module_load_result)) {
+    modules_str = modules_string(job_script.getModules());
+#ifdef SLURM
+    script_cmd = "module purge;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#else
+    script_cmd = "module purge;module load pbs;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#endif
     flog << "Submit Command: " << script_cmd << std::endl;
     script_cmd_result = exec(script_cmd.c_str());
   } else {
@@ -1655,14 +1659,14 @@ std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, co
 
 
 
-VaspTest::VaspTest(const jobscript::PbsScript &p_s): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size()),
+VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size()),
                                                      log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                      result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                      flog_(log_file_name_,std::ios_base::app),
                                                      fresult_(result_file_name_,std::ios_base::app) {}
 
 
-VaspTest::VaspTest(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size(), e_n),
+VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size(), e_n),
                                                                              log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                              result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                              flog_(log_file_name_,std::ios_base::app),
@@ -1695,7 +1699,7 @@ void VaspTest::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto vasp_incar_input: vasp_incar_inputs_) {
 //    vasp_dir = "vasp_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(c_i);
@@ -1706,8 +1710,8 @@ void VaspTest::runTest() {
     createFileFromStr("KPOINTS", vasp_kpoints_inputs_[c_i]);
     createFileFromStr("POSCAR", vasp_poscar_inputs_[c_i]);
     createFileFromStr("POTCAR", vasp_potcar_inputs_[c_i]);
-//    script_cmd_result = subPbsScript(flog_, getPbsScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], vasp_dir);
+//    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], vasp_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

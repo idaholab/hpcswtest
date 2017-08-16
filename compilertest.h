@@ -42,7 +42,7 @@ namespace hpcswtest {
 class CompilerTest : public SrcTest {
 
   public:
-    CompilerTest(const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
+    CompilerTest(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
     virtual ~CompilerTest(void) {};
     virtual void runTest(void) override; 
     int NumCSrc(void) const;

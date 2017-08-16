@@ -41,7 +41,7 @@ namespace hpcswtest {
 class Python3Test: public Python2Test {
 
   public:
-    Python3Test(const jobscript::PbsScript &, const std::vector<std::string> &, const std::string &);
+    Python3Test(const jobscript::JOBSCRIPT &, const std::vector<std::string> &, const std::string &);
     virtual ~Python3Test(void) {};
     virtual void runTest(void) override;
 

@@ -271,17 +271,21 @@ endspy)ttt"
 }; // vector cth_inputs_
 
 
-std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::PbsScript &pbs_script, const std::string &dir_path) const {
+std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
   std::string modules_str;
 
-  fresult << module_name_version(pbs_script.getModules()[pbs_script.getModules().size()-1]) << "\t" << dir_path << "\t" << pbs_script.getJobName() << " job." << std::endl;
-//  std::cout << pbs_script.getExeName() << " " << pbs_script.getExeArgs() << std::endl;
-  if (modules_load(flog, pbs_script.getModules(), module_load_result)) {
-    modules_str = modules_string(pbs_script.getModules());
-    script_cmd = "module purge;module load pbs;" + modules_str + ";" + pbs_script.getExeName() + " " + pbs_script.getExeArgs() + " 2>&1";
+  fresult << module_name_version(job_script.getModules()[job_script.getModules().size()-1]) << "\t" << dir_path << "\t" << job_script.getJobName() << " job." << std::endl;
+//  std::cout << job_script.getExeName() << " " << job_script.getExeArgs() << std::endl;
+  if (modules_load(flog, job_script.getModules(), module_load_result)) {
+    modules_str = modules_string(job_script.getModules());
+#ifdef SLURM
+    script_cmd = "module purge;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#else
+    script_cmd = "module purge;module load pbs;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#endif
     flog << "Submit Command: " << script_cmd << std::endl;
     script_cmd_result = exec(script_cmd.c_str());
   } else {
@@ -291,7 +295,7 @@ std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, con
 }
 
 
-CthTest::CthTest(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("cth", "", p_s, cth_inputs_.size(), e_n),
+CthTest::CthTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("cth", "", p_s, cth_inputs_.size(), e_n),
                                                                                  log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                  result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                  flog_(log_file_name_,std::ios_base::app),
@@ -311,7 +315,7 @@ void CthTest::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto cth_input: cth_inputs_) {
     cth_dir = "cth_" + std::to_string(getTestNumber()) + "_" + std::to_string(c_i);
@@ -319,7 +323,7 @@ void CthTest::runTest() {
     makeDir(cth_dir);
     changeDir(cth_dir);
     createFileFromStr(getInputFileNames()[c_i], cth_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], cth_dir);
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], cth_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

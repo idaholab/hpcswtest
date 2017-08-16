@@ -41,7 +41,7 @@ namespace hpcswtest {
 class MatlabTest: public AppTest {
 
   public:
-    MatlabTest(const jobscript::PbsScript &);
+    MatlabTest(const jobscript::JOBSCRIPT &);
     virtual ~MatlabTest(void) {};
     virtual void runTest(void) override;
 

@@ -421,7 +421,7 @@ ene 1MeV   1 1.0E-15 0.625E-06 1.0  20.
 }; // vector serpent_inputs_
 
 
-SerpentTest::SerpentTest(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("serpent", "", p_s, serpent_inputs_.size(), e_n),
+SerpentTest::SerpentTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("serpent", "", p_s, serpent_inputs_.size(), e_n),
                                                                                  log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                  result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                  flog_(log_file_name_,std::ios_base::app),
@@ -440,11 +440,11 @@ void SerpentTest::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto serpent_input: serpent_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], serpent_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], getPbsScripts()[c_i].getJobName());
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getJobScripts()[c_i].getJobName());
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

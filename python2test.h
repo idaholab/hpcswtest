@@ -41,7 +41,7 @@ namespace hpcswtest {
 class Python2Test: public AppTest {
 
   public:
-    Python2Test(const jobscript::PbsScript &, const std::vector<std::string> &, const std::string &);
+    Python2Test(const jobscript::JOBSCRIPT &, const std::vector<std::string> &, const std::string &);
     virtual ~Python2Test(void) {};
     virtual void runTest(void) override;
     std::vector<std::string> getPythonModules(void);

@@ -39469,18 +39469,22 @@ end_material)"
 }; // vector mc21_geometry_inputs_
 
 
-std::string Mc21Test::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::PbsScript &pbs_script, const std::string &dir_path) const {
+std::string Mc21Test::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
   std::string modules_str;
 
-//  pbs_script.generate();
-  fresult << module_name_version(pbs_script.getModules()[pbs_script.getModules().size()-1]) << "\t" << dir_path << "\t" << pbs_script.getJobName() << " job." << std::endl;
-//  std::cout << pbs_script.getExeName() << " " << pbs_script.getExeArgs() << std::endl;
-  if (modules_load(flog, pbs_script.getModules(), module_load_result)) {
-    modules_str = modules_string(pbs_script.getModules());
-    script_cmd = "module purge;module load pbs;" + modules_str + ";" + pbs_script.getExeName() + " " + pbs_script.getExeArgs() + " 2>&1";
+//  job_script.generate();
+  fresult << module_name_version(job_script.getModules()[job_script.getModules().size()-1]) << "\t" << dir_path << "\t" << job_script.getJobName() << " job." << std::endl;
+//  std::cout << job_script.getExeName() << " " << job_script.getExeArgs() << std::endl;
+  if (modules_load(flog, job_script.getModules(), module_load_result)) {
+    modules_str = modules_string(job_script.getModules());
+#ifdef SLURM
+    script_cmd = "module purge;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#else
+    script_cmd = "module purge;module load pbs;" + modules_str + ";" + job_script.getExeName() + " " + job_script.getExeArgs() + " 2>&1";
+#endif
     flog << "Submit Command: " << script_cmd << std::endl;
     script_cmd_result = exec(script_cmd.c_str());
   } else {
@@ -39491,14 +39495,14 @@ std::string Mc21Test::exeAppTest(std::ofstream &flog, std::ofstream &fresult, co
 
 
 
-Mc21Test::Mc21Test(const jobscript::PbsScript &p_s): AppTest("mc21", "", p_s , mc21_inputs_.size()),
+Mc21Test::Mc21Test(const jobscript::JOBSCRIPT &p_s): AppTest("mc21", "", p_s , mc21_inputs_.size()),
                                                      log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                      result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                      flog_(log_file_name_,std::ios_base::app),
                                                      fresult_(result_file_name_,std::ios_base::app) {}
 
 
-Mc21Test::Mc21Test(const jobscript::PbsScript &p_s, const std::string &e_n): AppTest("mc21", "", p_s , mc21_inputs_.size(), e_n),
+Mc21Test::Mc21Test(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("mc21", "", p_s , mc21_inputs_.size(), e_n),
                                                                              log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                              result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                              flog_(log_file_name_,std::ios_base::app),
@@ -39518,7 +39522,7 @@ void Mc21Test::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  std::cout << "Testing: " << module_name_version(getPbsScripts()[0].getModules()[getPbsScripts()[0].getModules().size()-1]) << std::endl;
+  std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
   for (auto mc21_input: mc21_inputs_) {
     mc21_dir = "mc21_" + std::to_string(getTestNumber()) + "_" + std::to_string(c_i);
@@ -39527,8 +39531,8 @@ void Mc21Test::runTest() {
     createFileFromStr(getInputFileNames()[c_i], mc21_input);
     createFileFromStr("geometry_input", mc21_geometry_inputs_[c_i]);
     createFileFromStr("material_input", mc21_material_inputs_[c_i]);
-//    script_cmd_result = subPbsScript(flog_, getPbsScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getPbsScripts()[c_i], mc21_dir);
+//    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], mc21_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

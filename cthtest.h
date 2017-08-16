@@ -40,12 +40,12 @@ namespace hpcswtest {
 class CthTest: public AppTest {
 
   public:
-    CthTest(const jobscript::PbsScript &, const std::string &);
+    CthTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~CthTest(void) {};
     virtual void runTest(void) override;
 
   protected:
-    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::PbsScript &, const std::string &) const override;
+    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const override;
 
   private:
     std::string log_file_name_;

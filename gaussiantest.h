@@ -41,13 +41,10 @@ namespace hpcswtest {
 class GaussianTest: public AppTest {
 
   public:
-    GaussianTest(const jobscript::PbsScript &);
-    GaussianTest(const jobscript::PbsScript &, const std::string &);
+    GaussianTest(const jobscript::JOBSCRIPT &);
+    GaussianTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~GaussianTest(void) {};
     virtual void runTest(void) override;
-
-//  protected:
-//    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::PbsScript &, const std::string &) const override;
 
   private:
     std::string log_file_name_;

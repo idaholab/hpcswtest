@@ -39,7 +39,7 @@ namespace hpcswtest {
 class MpiTest: public SrcTest {
 
 public:
-	MpiTest(const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
+	MpiTest(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
 	virtual ~MpiTest(void) {};
 	virtual void runTest(void) override;
 //	virtual TestResult checkResult(void) const override;

@@ -28,7 +28,11 @@ Author: Cormac Garvey
 #ifndef HPCSWTEST_HPCSWTEST_H_
 #define HPCSWTEST_HPCSWTEST_H_
 
+#ifdef SLURM
+#include "slurmscript.h"
+#else
 #include "pbsscript.h"
+#endif
 
 #include <string>
 #include <vector>

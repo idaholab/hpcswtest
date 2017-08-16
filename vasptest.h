@@ -41,15 +41,15 @@ namespace hpcswtest {
 class VaspTest: public AppTest {
 
   public:
-    VaspTest(const jobscript::PbsScript &);
-    VaspTest(const jobscript::PbsScript &, const std::string &);
+    VaspTest(const jobscript::JOBSCRIPT &);
+    VaspTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~VaspTest(void) {};
     virtual void runTest(void) override;
 //    void setTestNumber(int);
 //    int getTestNumber(void);
 
   protected:
-    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::PbsScript &, const std::string &) const override;
+    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const override;
 
   private:
     std::string log_file_name_;

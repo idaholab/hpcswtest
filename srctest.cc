@@ -36,60 +36,71 @@ Author: Cormac Garvey
 namespace hpcswtest {
 
 
-std::vector<jobscript::PbsScript> SrcTest::calcCPbsScripts(const jobscript::PbsScript &p_s_o) const {
+std::vector<jobscript::JOBSCRIPT> SrcTest::calcCJobScripts(const jobscript::JOBSCRIPT &p_s_o) const {
   modules::modules_type ms_tmp(p_s_o.getModules());
-  std::vector<jobscript::PbsScript> p_s_o_tmp;
+  std::vector<jobscript::JOBSCRIPT> p_s_o_tmp;
   int ic = 0;
-//  std::cout << "Enter CompilerTest::calcCPbsScripts" << std::endl;
+//  std::cout << "Enter CompilerTest::calcCJobScripts" << std::endl;
   for (auto c_e_n: c_exe_names_) {
-    jobscript::PbsScript pbs_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
- //    jobscript::PbsScript pbs_script("c_script"+ std::to_string(ic) + ".pbs", "exename","",m_o_tmp, p_s_o.getTotalNumCores(),p_s_o.getTotalNumProcs(),p_s_o.getWallTime(),p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
-     p_s_o_tmp.push_back(pbs_script);
+#ifdef SLURM
+    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime());
+#else
+    jobscript::PbsScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+#endif
+     p_s_o_tmp.push_back(job_script);
      ++ic;
   }                                                                          
-//  std::cout << "Exit CompilerTest::calcCPbsScripts" << std::endl;            
+//  std::cout << "Exit CompilerTest::calcCJobScripts" << std::endl;            
   return p_s_o_tmp;
 }
 
 
-std::vector<jobscript::PbsScript> SrcTest::calcCppPbsScripts(const jobscript::PbsScript &p_s_o) const {
+std::vector<jobscript::JOBSCRIPT> SrcTest::calcCppJobScripts(const jobscript::JOBSCRIPT &p_s_o) const {
   modules::modules_type ms_tmp(p_s_o.getModules());
-  std::vector<jobscript::PbsScript> p_s_o_tmp;
+  std::vector<jobscript::JOBSCRIPT> p_s_o_tmp;
   int ic = 0;
-//  std::cout << "Enter CompilerTest::calcCppPbsScripts" << std::endl;
+//  std::cout << "Enter CompilerTest::calcCppJobScripts" << std::endl;
   for (auto cpp_e_n: cpp_exe_names_) {
-    jobscript::PbsScript pbs_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
-     p_s_o_tmp.push_back(pbs_script);
+#ifdef SLURM
+    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime());
+#else
+    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+#endif
+     p_s_o_tmp.push_back(job_script);
      ++ic;
   }                                                                          
-//  std::cout << "Exit CompilerTest::calcCppPbsScripts" << std::endl;            
+//  std::cout << "Exit CompilerTest::calcCppJobScripts" << std::endl;            
   return p_s_o_tmp;
 }
 
 
-std::vector<jobscript::PbsScript> SrcTest::calcFPbsScripts(const jobscript::PbsScript &p_s_o) const {
+std::vector<jobscript::JOBSCRIPT> SrcTest::calcFJobScripts(const jobscript::JOBSCRIPT &p_s_o) const {
   modules::modules_type ms_tmp(p_s_o.getModules());
-  std::vector<jobscript::PbsScript> p_s_o_tmp;
+  std::vector<jobscript::JOBSCRIPT> p_s_o_tmp;
   int ic = 0;
-//  std::cout << "Enter CompilerTest::calcFPbsScripts" << std::endl;
+//  std::cout << "Enter CompilerTest::calcFJobScripts" << std::endl;
   for (auto f_e_n: f_exe_names_) {
-    jobscript::PbsScript pbs_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
-     p_s_o_tmp.push_back(pbs_script);
+#ifdef SLURM
+    jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime());
+#else
+    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+#endif
+     p_s_o_tmp.push_back(job_script);
      ++ic;
   }                                                                          
-//  std::cout << "Exit CompilerTest::calcFPbsScripts" << std::endl;            
+//  std::cout << "Exit CompilerTest::calcFJobScripts" << std::endl;            
   return p_s_o_tmp;
 }
 
 
-SrcTest::SrcTest(const std::string &s, const jobscript::PbsScript &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, int n_c_srcs, int n_cpp_srcs, int n_f_srcs, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): 
+SrcTest::SrcTest(const std::string &s, const jobscript::JOBSCRIPT &p_s, const std::string &c_n, const std::string &cpp_n, const std::string &f_n, int n_c_srcs, int n_cpp_srcs, int n_f_srcs, const std::string &c_f, const std::string &cpp_f, const std::string &f_f, const std::string &c_l_l, const std::string &cpp_l_l, const std::string &f_l_l): 
                                                                                                    HpcSwTest(s),
                                                                                                    c_name_(c_n),
                                                                                                    cpp_name_(cpp_n),
                                                                                                    f_name_(f_n),
-                                                                                                   c_pbs_scripts_(calcCPbsScripts(p_s)),
-                                                                                                   cpp_pbs_scripts_(calcCppPbsScripts(p_s)),
-                                                                                                   f_pbs_scripts_(calcFPbsScripts(p_s)),
+                                                                                                   c_job_scripts_(calcCJobScripts(p_s)),
+                                                                                                   cpp_job_scripts_(calcCppJobScripts(p_s)),
+                                                                                                   f_job_scripts_(calcFJobScripts(p_s)),
                                                                                                    c_src_names_(calcCSrcNames(n_c_srcs)),
                                                                                                    cpp_src_names_(calcCppSrcNames(n_cpp_srcs)),
                                                                                                    f_src_names_(calcFSrcNames(n_f_srcs)),
@@ -331,18 +342,18 @@ std::string SrcTest::getFLinkLibs(void) const {
 }
 
 
-std::vector<jobscript::PbsScript> SrcTest::getCPbsScripts(void) const {
-  return c_pbs_scripts_;
+std::vector<jobscript::JOBSCRIPT> SrcTest::getCJobScripts(void) const {
+  return c_job_scripts_;
 }
 
 
-std::vector<jobscript::PbsScript> SrcTest::getCppPbsScripts(void) const {
-  return cpp_pbs_scripts_;
+std::vector<jobscript::JOBSCRIPT> SrcTest::getCppJobScripts(void) const {
+  return cpp_job_scripts_;
 }
 
 
-std::vector<jobscript::PbsScript> SrcTest::getFPbsScripts(void) const {
-  return f_pbs_scripts_;
+std::vector<jobscript::JOBSCRIPT> SrcTest::getFJobScripts(void) const {
+  return f_job_scripts_;
 }
 
 
@@ -358,7 +369,7 @@ std::string SrcTest::compileCmd(const modules::modules_type &modules, const std:
 }
 
 
-std::string SrcTest::compileTest(std::ofstream &flog, const jobscript::PbsScript &pbs_script, const std::string &src, const std::string &compiler_name, const std::string &compiler_flags, const std::string &src_name, const std::string &exe_name, const std::string &link_libs) const {
+std::string SrcTest::compileTest(std::ofstream &flog, const jobscript::JOBSCRIPT &job_script, const std::string &src, const std::string &compiler_name, const std::string &compiler_flags, const std::string &src_name, const std::string &exe_name, const std::string &link_libs) const {
   std::string module_load_result;
   std::string compile_cmd;
   std::string cmd_result;
@@ -367,10 +378,9 @@ std::string SrcTest::compileTest(std::ofstream &flog, const jobscript::PbsScript
 
   std::ofstream fout_c(src_name, std::ios_base::out);
   fout_c << src << std::endl;
-//	flog << "Running Compiler Test: " << pbs_script.getModules()[pbs_script.getModules().size()-1].first << "\t" << pbs_script.getModules()[pbs_script.getModules().size()-1].second << "\t" << compiler_name << "\t" << src_name << std::endl;
-	flog << "Running Compiler Test: " << findPrimaryModule(pbs_script.getModules()).first << "\t" << findPrimaryModule(pbs_script.getModules()).second << "\t" << compiler_name << "\t" << src_name << std::endl;
-  if (modules_load(flog, pbs_script.getModules(), module_load_result)) {
-    compile_cmd = compileCmd(pbs_script.getModules(), compiler_name, compiler_flags, src_name, exe_name, link_libs);
+	flog << "Running Compiler Test: " << findPrimaryModule(job_script.getModules()).first << "\t" << findPrimaryModule(job_script.getModules()).second << "\t" << compiler_name << "\t" << src_name << std::endl;
+  if (modules_load(flog, job_script.getModules(), module_load_result)) {
+    compile_cmd = compileCmd(job_script.getModules(), compiler_name, compiler_flags, src_name, exe_name, link_libs);
     flog << "Compile command: " << compile_cmd << std::endl;
     cmd_result = exec(compile_cmd.c_str());
   } else {
@@ -380,13 +390,13 @@ std::string SrcTest::compileTest(std::ofstream &flog, const jobscript::PbsScript
 }
 
 
-std::string SrcTest::srcExeTest(std::ofstream &flog, jobscript::PbsScript &pbs_script) const {
+std::string SrcTest::srcExeTest(std::ofstream &flog, jobscript::JOBSCRIPT &job_script) const {
   std::string script_cmd_result;
   std::string script_cmd;
 
-  pbs_script.generate();
-//  std::cout << pbs_script.getJobScriptName() << std::endl;
-  script_cmd = "qsub -P hpc " + pbs_script.getJobScriptName() + " 2>&1";
+  job_script.generate();
+//  std::cout << job_script.getJobScriptName() << std::endl;
+  script_cmd = "qsub -P hpc " + job_script.getJobScriptName() + " 2>&1";
   flog << "Submit Command: " << script_cmd << std::endl;
   script_cmd_result = exec(script_cmd.c_str());
   return script_cmd_result;

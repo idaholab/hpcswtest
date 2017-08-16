@@ -40,7 +40,7 @@ namespace hpcswtest {
 class BoostTest: public LibTest {
 
 	public:
-		BoostTest(const jobscript::PbsScript &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
+		BoostTest(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &c_f="-O2", const std::string &cpp_f="-O2", const std::string &f_f="-O2", const std::string &c_l_l="-lm", const std::string &cpp_l_l="-lm", const std::string &f_l_l="-lm");
 		virtual ~BoostTest(void) {};
 		virtual void runTest(void) override;
 

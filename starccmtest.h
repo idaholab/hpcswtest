@@ -40,7 +40,7 @@ namespace hpcswtest {
 class StarccmTest: public AppTest {
 
   public:
-    StarccmTest(const jobscript::PbsScript &, const std::string &);
+    StarccmTest(const jobscript::JOBSCRIPT &, const std::string &);
     virtual ~StarccmTest(void) {};
     virtual void runTest(void) override;
 
