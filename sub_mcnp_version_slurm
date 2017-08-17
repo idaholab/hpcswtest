@@ -1,0 +1,213 @@
+#!/bin/bash
+
+NAME=mcnp5
+upper_NAME=`echo ${NAME} | tr '[a-z]' '[A-Z]'`
+EXE_NAME=${NAME}.mpi
+VERSION=1.60
+VERSIONSUFFIX=
+MPI_CMD=srun
+MPI_ARGS="--mpi=pmi2"
+MPIEXEC_OSC=
+SUBMIT_JOB=1
+TOOLCHAIN=imvmklt-2.5.0
+EXTRA_MODULE_NAME1=use.exp_ctl
+EXTRA_MODULE_NAME2=
+MODULE_NAME=${upper_NAME}/${VERSION}-${TOOLCHAIN}${VERSIONSUFFIX}
+#mvapich2
+MPI_ENV_VAR='--export=TMPDIR,PATH,LD_LIBRARY_PATH,DATAPATH'
+#openmpi
+#MPI_ENV_VAR='-x PATH -x LD_LIBRARY_PATH -x DATAPATH'
+#
+export DATAPATH=${DATAPATH:-"/hpc-common/data/mcnp/mcnpdata-1.0/MCNP_DATA"}
+#
+#source /hpc-common/software/sub_scripts/common_sub_fns.sh
+source /home/garvct/my_sw_development/pbs_job_submit/common_sub_fns.sh
+
+function usage ()
+{
+     echo
+     echo "sub_${NAME}_${VERSION}"
+     echo      "usage: sub_${NAME}_${VERSION} <-i inputfile> <-w HH:MM:SS> <-P project> [<-x xsdir>] [<-n mpiprocs>] [<-q queue>] [<-N mpipernode>] [<-j job_name>] [<-m memory_per_process>] [<-J job_array_range>] [<-F job_array_filename>] [<-W depends_on_jobid>] [<-s scratch,ramdisk,localdisk>] [<-t cpu_type>] [<-D>] [<-g>] [<-h>]"
+     echo      "Submits an ${NAME} version ${VERSION} job to the cluster via SLURM."
+     echo      " Where:"
+     echo      " -i inputfile  : Selects the Input file.( Default: none)"
+     echo      " -w HH:MM:SS   : Selects the Job Walltime.( Default: none)"
+     echo      " -P project    : Selects the project this job is associated with.( Default: none)"
+     echo      " -x xsdir      : location of xsdir file (fullpath) ( Default: ${DATAPATH}/xsdir )"
+     echo      " -n mpiprocs   : Selects the number of parallel MPI processes to use.( Default: 1)"
+     echo      " -q queue      : Selects the Scheduler queue to use.( Default: general)"
+     echo      " -N mpipernode : Selects the maximum number of parallel mpi processes to use in each node.( Default: ${CORES_PER_NODE})"
+     echo      " -j jobname    : Selects the name of job.( Default: input file name)"
+     echo      " -m memory_per_process : Selects the Memory per process.( Default: Slurm defaults, use units K,M,G or T)"
+     echo      " -J job_array_range : Selects the Scheduler job array range (e.g 1-10)( Default: None)"
+     echo      " -F job_array_filename : Selects the Scheduler job array Filename. Each line of file contains"
+     echo      "                             the full path to the input file. (Default: None)"
+     echo      " -W depend_on_jobid : This job runs after jobid is complete. (Default: none)"
+     echo      " -s scratch,ramdisk,localdisk : Job runs in scratch(panasas parallel filesystem)," 
+     echo      "                                ramdisk(memory where available) or localdisk (locally attached disk where available). (Default: Run from current location)"
+     echo      " -t cpu_type   : Applicable on falcon cluster only, requests the cpu type (\"haswell\" requests haswell processors, \"broadwell\" requests broadwell processors (default "haswell")" 
+     echo      " -D            : Selects the debug option (performance basic system checks, tracks memory usage, process placement etc)( Default: off)"
+     echo      " -g            : Generate job script only, but do not submit (Default: Generate and submit)"
+     echo      " -h            : Selects help.( Default: none)"
+     echo
+     echo "NOTE: To add extra SLURM options (e.g --mail-type=BEGIN,END --mail-user=garvct), use the environmental variable SLURM_EXTRA_ARGS"
+     echo       'e.g. export SLURM_EXTRA_ARGS="--mail-type=BEGIN,END --mail-user=garvct"'
+     echo       " To add extra MCNP command line arguments use the MCNP_EXTRA_ARGS environmental variables."
+     echo       'e.g. export MCNP_EXTRA_ARGS="rssa=bin_source_file"'
+     echo
+}
+
+
+while getopts "i:w:P:x:n:q:N:j:m:J:F:W:s:t:DghX" opt; do
+  case $opt in
+    i)
+      INPUT=$OPTARG
+      ;;
+    w)
+      WALLTIME=$OPTARG
+      ;;
+    P)
+      PROJECT=$OPTARG
+      ;;
+    x)
+      XSDIR=$OPTARG
+      EXE_ARGS=$EXE_ARGS" x=$XSDIR"
+      ;;
+    n)
+      MPIPROCS=$OPTARG
+      ;;
+    q)
+      QUEUE=$OPTARG
+      ;;
+    N)
+      MPI_PER_NODE=$OPTARG
+      MPI_PER_NODE_SET=$OPTARG
+      ;;
+    j)
+      JOBNAME=$OPTARG
+      ;;
+    m)
+      MEM_PER_PROCESS=$OPTARG
+      ;;
+    J)
+      JOB_ARRAY_RANGE=$OPTARG
+      ;;
+    F)
+      JOB_ARRAY_FILENAME=$OPTARG
+      ;;
+    W)
+      DEPENDS_ON_JOBID=$OPTARG
+      ;;
+    s)
+      SCRATCH_TYPE=$OPTARG
+      ;;
+    t)
+      CPU_TYPE=$OPTARG
+      ;;
+    D)
+      DEBUG_JOB=1
+      ;;
+    g)
+      SUBMIT_JOB=0
+      ;;
+    h)
+      HELP=1
+      usage
+      exit 0
+      ;;
+    X)
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit
+      ;;
+  esac
+done
+
+slurm_check_command_args
+
+slurm_set_default_jobname
+
+#calc_chunk_new
+
+if [ -n "$SCRATCH_TYPE" ]
+then
+   get_scratch_dir $SCRATCH_TYPE
+fi
+
+
+echo "#!/bin/bash"                                                                                          >  $JOBNAME.sbatch 
+slurm_tasks $JOBNAME.sbatch
+slurm_set_defaults $JOBNAME.sbatch
+slurm_depends_on $JOBNAME.sbatch
+slurm_jobarray $JOBNAME.sbatch
+echo  "#SBATCH --export=DATAPATH"                                                                           >> $JOBNAME.sbatch
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+echo  "echo \$SLURM_JOB_NODELIST"                                                                           >> $JOBNAME.sbatch
+echo  "echo \"DATAPATH=\$DATAPATH\""                                                                        >> $JOBNAME.sbatch
+if [ -n "$MPIEXEC_OSC" ]
+then
+echo  "export DATAPATH=\$DATAPATH"                                                                          >> $JOBNAME.sbatch
+fi
+
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+
+load_modules $JOBNAME.sbatch
+
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+echo  "echo \"The following SLURM extra args (SLURM_EXTRA_ARGS) will be used: $SLURM_EXTRA_ARGS\""            >> $JOBNAME.sbatch
+echo  "echo \"The following MCNP extra args (MCNP_EXTRA_ARGS) will be used: $MCNP_EXTRA_ARGS\""             >> $JOBNAME.sbatch
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+
+slurm_create_nodefile $JOBNAME.sbatch
+slurm_debug_job $JOBNAME.sbatch
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+slurm_setup_run_in_scratch $JOBNAME.sbatch $INPUT
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+slurm_setup_jobarray $JOBNAME.sbatch
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+
+full_mcnp_path=`which ${NAME} 2> /dev/null`
+#echo "full_mcnp_path=$full_mcnp_path"
+if [ -n "$JOB_ARRAY_RANGE" ]
+then
+   EXE_ARGS="i=\$input_name n=\$input_name."$EXE_ARGS
+else
+   EXE_ARGS="i=$INPUT n=$INPUT."$EXE_ARGS
+fi
+if [ -z "$MPIEXEC_OSC" ] && [ -z "$DEBUG_JOB" ]
+then
+   MPI_ARGS="${MPI_ARGS} ${MPI_ENV_VAR}"
+fi
+if [ $MPIPROCS -eq 1 -a -f "${full_mcnp_path}" ]
+then
+   MPI_CMD=""
+   MPI_ARGS=""
+fi
+if [ $MPIPROCS -eq 1 -a -f "${full_mcnp_path}" ]
+then
+   EXE_NAME=${NAME}
+fi
+if [ -z "$DEBUG_JOB" ]
+then
+   echo "${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${MCNP_EXTRA_ARGS}"                                 >> $JOBNAME.sbatch
+else
+   echo "job_tracker.py \"${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${MCNP_EXTRA_ARGS}\""              >> $JOBNAME.sbatch
+fi
+
+echo  "#"                                                                                                   >> $JOBNAME.sbatch
+
+slurm_finish_jobarray_and_scratch $JOBNAME.sbatch
+
+if [ $SUBMIT_JOB -eq 1 ]
+then
+   if [ -f $JOBNAME.o -o -f $JOBNAME.r -o -f $JOBNAME.s ]
+   then
+      echo "Error: You cannot submit/run MCNP because the following files exist in your working directory,$JOBNAME.o,$JOBNAME.r,$JOBNAME.s"
+      echo "Remove these files and re-submit your job."
+      exit 1
+   fi
+   sbatch $SLURM_EXTRA_ARGS $JOBNAME.sbatch
+fi

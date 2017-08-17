@@ -1,0 +1,195 @@
+#!/bin/bash
+
+NAME=gaussian
+upper_NAME=`echo ${NAME} | tr '[a-z]' '[A-Z]'`
+EXE_NAME=g09
+VERSION=09_E.01
+SUBMIT_JOB=1
+EXTRA_MODULE_NAME1=use.restricted
+EXTRA_MODULE_NAME2=
+MODULE_NAME=${NAME}/${VERSION}
+OUTPUT=output.log
+#
+#
+source /hpc-common/software/sub_scripts/common_sub_fns.sh
+#source /home/garvct/my_sw_development/pbs_job_submit/common_sub_fns.sh
+
+
+function usage ()
+{
+     echo
+     echo "sub_${NAME}_${VERSION}"
+     echo      "usage: sub_${NAME}_${VERSION} <-i inputfile> <-o outputfile> <-n lindaprocs> <-N lindaprocspernode> <-T threads> <-w HH:MM:SS> <-P project> [<-q queue>] [<-j PBS_job_name>] [<-m PBS_memory>] [<-J pbs job_array_range>] [<-F job_array_filename>] [<-W depends_on_jobid>] [<-s scratch,ramdisk,localdisk>] [<-t cpu_type>] [<-D>] [<-g>] [<-h>]"
+     echo      "Submits an ${NAME} version ${VERSION} job to the cluster via PBS Pro."
+     echo      " Where:"
+     echo      " -i inputfile  : Selects the Input file.( Default: none)"
+     echo      " -o outputfile : Selects the Output file.( Default: output)"
+     echo      " -n lindaprocs : Selects the number of parallel Linda processes to use.( Default: 1)"
+     echo      " -N lindaprocspernode : Selects the maximum number of parallel linda processes to use in each node.( Default: ${CORES_PER_NODE})"
+     echo      " -T threads    : Selects the number of Shared Memory parallel threads.( Default: 1)"
+     echo      " -w HH:MM:SS   : Selects the PBS Job Walltime.( Default: none)"
+     echo      " -P project    : Selects the project this job is associated with.( Default: none)"
+     echo      " -q queue      : Selects the PBS queue to use.( Default: general)"
+     echo      " -j jobname    : Selects the name of PBS job.( Default: input file name)"
+     echo      " -m PBS_memory : Selects the PBS Memory per Node.( Default: PBS defaults)"
+     echo      " -J PBS_job_array_range : Selects the PBS job array range (e.g 1-10)( Default: None)"
+     echo      " -F PBS_job_array_filename : Selects the PBS job array Filename. Each line of file contains a"
+     echo      "                             the full path to the input file. (Default: None)"
+     echo      " -W depend_on_jobid : This job runs after jobid is complete. (Default: none)"
+     echo      " -s scratch,ramdisk,localdisk : Job runs in scratch(panasas parallel filesystem),"
+     echo      "                                ramdisk(memory where available) or localdisk (locally attached disk where available). (Default: Run from current location)"
+     echo      " -t cpu_type   : Applicable on falcon cluster only, requests the cpu type (\"haswell\" requests haswell processors, \"broadwell\" requests broadwell processors (default "haswell")"
+     echo      " -D            : Selects the debug option (performance basic system checks, tracks memory usage, process placement etc)( Default: off)"
+     echo      " -g            : Generate PBS script only, but do not submit (Default: Generate and submit)"
+     echo      " -h            : Selects help.( Default: none)"
+     echo
+     echo "NOTE: To add extra PBS options (e.g -M email_address -m be), use the environmental variable PBS_EXTRA_ARGS"
+     echo       'e.g. export PBS_EXTRA_ARGS="-M cormac.garvey@inl.gov -m be"'
+     echo       " To add extra Gaussian command line arguments use the GAUSSIAN_EXTRA_ARGS environmental variables."
+     echo
+}
+
+
+while getopts "i:o:n:N:T:w:P:q:j:m:J:F:W:s:t:DghX" opt; do
+  case $opt in
+    i)
+      INPUT=$OPTARG
+      ;;
+    o)
+      OUTPUT=$OPTARG
+      ;;
+    n)
+      MPIPROCS=$OPTARG
+      ;;
+    N)
+      MPI_PER_NODE=$OPTARG
+      MPI_PER_NODE_SET=$OPTARG
+      ;;
+    T)
+      THREADS=$OPTARG
+      ;;
+    w)
+      WALLTIME=$OPTARG
+      ;;
+    P)
+      PROJECT=$OPTARG
+      ;;
+    q)
+      QUEUE=$OPTARG
+      ;;
+    j)
+      JOBNAME=$OPTARG
+      ;;
+    m)
+      PBS_MEM=$OPTARG
+      ;;
+    J)
+      PBS_JOB_ARRAY_RANGE=$OPTARG
+      ;;
+    F)
+      PBS_JOB_ARRAY_FILENAME=$OPTARG
+      ;;
+    W)
+      DEPENDS_ON_JOBID=$OPTARG
+      ;;
+    s)
+      SCRATCH_TYPE=$OPTARG
+      ;;
+    t)
+      CPU_TYPE=$OPTARG
+      ;;
+    D)
+      DEBUG_JOB=1
+      ;;
+    g)
+      SUBMIT_JOB=0
+      ;;
+    h)
+      HELP=1
+      usage
+      exit 0
+      ;;
+    X)
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit
+      ;;
+  esac
+done
+
+
+check_command_args
+set_default_jobname
+calc_chunk_new
+
+if [ -n "$SCRATCH_TYPE" ]
+then
+   get_scratch_dir $SCRATCH_TYPE
+fi
+
+
+echo  "#!/bin/bash"                                                                                          > $JOBNAME.pbs
+pbs_select $JOBNAME.pbs
+pbs_set_defaults $JOBNAME.pbs
+pbs_depends_on $JOBNAME.pbs
+pbs_jobarray $JOBNAME.pbs
+
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+echo  "cat \$PBS_NODEFILE"                                                                                  >> $JOBNAME.pbs
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+load_modules $JOBNAME.pbs
+
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+echo  "echo \"The following PBS extra args (PBS_EXTRA_ARGS) will be used: $PBS_EXTRA_ARGS\""                >> $JOBNAME.pbs
+echo  "echo \"The following GAUSSIAN extra args (GAUSSIAN_EXTRA_ARGS) will be used: $GAUSSIAN_EXTRA_ARGS\"" >> $JOBNAME.pbs
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+echo  "cd \$PBS_O_WORKDIR"                                                                                  >> $JOBNAME.pbs
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+debug_job $JOBNAME.pbs
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+setup_run_in_scratch $JOBNAME.pbs $INPUT
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+if [ $MPIPROCS -gt 1 ]
+then
+echo  "for line in \`sort \$PBS_NODEFILE | uniq -c | awk '{ printf(\"%s:%s\n\", \$2, \$1); }'\`; do if [ -z \$GAU_HOSTS ]; then GAU_HOSTS=\$line; else GAU_HOSTS=\$GAU_HOSTS\",\"\$line;fi done;"  >> $JOBNAME.pbs
+echo  "echo \"GAU_HOSTS=\$GAU_HOSTS\""                                                                      >> $JOBNAME.pbs
+fi
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+setup_jobarray $JOBNAME.pbs
+echo  "#"                                                                                                   >> $JOBNAME.pbs
+
+EXE_ARGS="-p=\"$THREADS\""
+if [ $MPIPROCS -gt 1 ]
+then
+   EXE_ARGS=$EXE_ARGS" -w=\"\$GAU_HOSTS\""
+fi
+if [ -n "$PBS_JOB_ARRAY_RANGE" ]
+then
+   echo "dos2unix \$input_name"                                                                             >> $JOBNAME.pbs 
+   EXE_ARGS=$EXE_ARGS" < \$input_name > \$input_name.log"
+else
+   echo "dos2unix $INPUT"                                                                                   >> $JOBNAME.pbs 
+   EXE_ARGS=$EXE_ARGS" < $INPUT > $OUTPUT"
+fi
+
+if [ -z "$DEBUG_JOB" ]
+then
+   echo "time ${EXE_NAME} ${GAUSSIAN_EXTRA_ARGS} ${EXE_ARGS}"                                                    >> $JOBNAME.pbs
+else
+   echo "job_tracker.py \"${EXE_NAME} ${GAUSSIAN_EXTRA_ARGS} ${EXE_ARGS}\""                                 >> $JOBNAME.pbs
+fi
+
+finish_jobarray_and_scratch $JOBNAME.pbs
+
+if [ $SUBMIT_JOB -eq 1 ]
+then
+   qsub $PBS_EXTRA_ARGS $JOBNAME.pbs
+fi

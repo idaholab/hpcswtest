@@ -1,0 +1,176 @@
+#!/bin/bash
+
+NAME=serpent
+upper_NAME=`echo ${NAME} | tr '[a-z]' '[A-Z]'`
+EXE_NAME=sss2
+VERSION=2.1.27
+VERSIONSUFFIX=
+MPI_CMD=srun
+MPI_ARGS="--mpi=pmi2"
+SUBMIT_JOB=1
+TOOLCHAIN=goolf-5.5.7
+EXTRA_MODULE_NAME1=use.exp_ctl
+EXTRA_MODULE_NAME2=
+MODULE_NAME=${NAME}/${VERSION}-${TOOLCHAIN}${VERSIONSUFFIX}
+#
+source /hpc-common/software/sub_scripts/common_sub_fns.sh
+#source /home/garvct/my_sw_development/pbs_job_submit/common_sub_fns.sh
+
+function usage ()
+{
+     echo
+     echo "sub_serpent_${VERSION}"
+     echo      "usage: sub_serpent_${VERSION} <-i inputfile> <-w HH:MM:SS> <-P project> [<-n mpiproc>] [<-o ompthreads>] [<-q queue>] [<-N mpipernode>] [<-j job_name>] [<-m memory_per_process>] [<-J job_array_range>] [<-F job_array_filename>] [<-W depends_on_jobid>] [<-s scratch,ramdisk,localdisk>] [<-t cputype>] [<-D>] [-g] [<-h>]"
+     echo      "Submits a Serpent version $VERSION job to the Fission cluster via SLURM."
+     echo      " Where:"
+     echo      " -i inputfile  : Selects the Input file.( Default: none)"
+     echo      " -w HH:MM:SS   : Selects the Job Walltime.( Default: none)"
+     echo      " -P project    : Selects the project this job is associated with.( Default: none)"
+     echo      " -n mpiprocs   : Selects the number of MPI processes to use.( Default: 1)"
+     echo      " -o ompthreads : Selects the number of OpenMP threads to use.( Default: 1)"
+     echo      " -q queue      : Selects the queue to use.( Default: general)"
+     echo      " -N mpipernode : Selects the maximum number of mpi processes to use in each node.( Default: ${MPI_PER_NODE})"
+     echo      " -j jobname    : Selects the name of job.( Default: input file name)"
+     echo      " -m memory_per_process : Selects the Memory per process.( Default: SLURM defaults)"
+     echo      " -J job_array_range : Selects the job array range (e.g 1-10)( Default: None)"
+     echo      " -F job_array_filename : Selects the job array Filename. Each line of file contains"
+     echo      "                             the full path to the input file. (Default: None)"
+     echo      " -W depend_on_jobid : This job runs after jobid is complete. (Default: none)"
+     echo      " -s scratch,ramdisk,localdisk : Job runs in scratch(panasas parallel filesystem),"
+     echo      "                                ramdisk(memory where available) or localdisk (locally attached disk where available)."
+     echo      "                                (Default: Run from current location)"
+     echo      " -t cpu_type   : Applicable on falcon cluster only, requests the cpu type (\"haswell\" requests haswell processors, \"broadwell\" requests broadwell processors (default "haswell")"
+     echo      " -D            : Selects the debug option (performance basic system checks, tracks memory usage, process placement etc)( Default: off)"
+     echo      " -g            : Generate Job script only, but do not submit (Default: Generate and submit)"
+     echo      " -h            : Selects help.( Default: none)"
+     echo
+     echo "NOTE: To add extra SLURM options (e.g --mail-type=BEGIN,END --mail-user=garvct), use the environmental variable SLURM_EXTRA_ARGS"
+     echo 'e.g. export SLURM_EXTRA_ARGS="--mail-type=BEGIN,END --mail-user=garvct"'
+     echo
+}
+
+
+while getopts "i:w:P:n:o:q:N:j:m:J:F:W:s:t:DghX" opt; do
+  case $opt in
+    i)
+      INPUT=$OPTARG
+      ;;
+    w)
+      WALLTIME=$OPTARG
+      ;;
+    P)
+      PROJECT=$OPTARG
+      ;;
+    n)
+      MPIPROCS=$OPTARG
+      ;;
+    o)
+      OMPTHREADS=$OPTARG
+      EXE_ARGS=$EXE_ARGS" -omp $OMPTHREADS"
+      ;;
+    q)
+      QUEUE=$OPTARG
+      ;;
+    N)
+      MPI_PER_NODE=$OPTARG
+      MPI_PER_NODE_SET=$OPTARG
+      ;;
+    j)
+      JOBNAME=$OPTARG
+      ;;
+    m)
+      MEM_PER_PROCESS=$OPTARG 
+      ;;
+    J)
+      JOB_ARRAY_RANGE=$OPTARG
+      ;;
+    F)
+      JOB_ARRAY_FILENAME=$OPTARG
+      ;;
+    W)
+      DEPENDS_ON_JOBID=$OPTARG
+      ;;
+    s)
+      SCRATCH_TYPE=$OPTARG
+      ;;
+    t)
+      CPU_TYPE=$OPTARG
+      ;;
+    D)
+      DEBUG_JOB=1
+      ;;
+    g)
+      SUBMIT_JOB=0
+      ;;
+    h)
+      HELP=1
+      usage
+      exit 0
+      ;;
+    X)
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit
+      ;;
+  esac
+done
+
+slurm_check_command_args
+
+set_default_jobname
+
+#calc_chunk_new
+
+if [ -n "$SCRATCH_TYPE" ]
+then
+   get_scratch_dir $SCRATCH_TYPE
+fi
+
+
+echo  "#!/bin/bash"                                                                                           > $JOBNAME.sbatch
+slurm_tasks $JOBNAME.sbatch
+slurm_set_defaults $JOBNAME.sbatch
+slurm_depends_on $JOBNAME.sbatch
+slurm_jobarray $JOBNAME.sbatch
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+echo  "echo \$SLURM_JOB_NODELIST"                                                                            >> $JOBNAME.sbatch
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+
+load_modules $JOBNAME.sbatch
+
+echo  "echo \"The following SLURM extra args (SLURM_EXTRA_ARGS) will be used: $SLURM_EXTRA_ARGS\""           >> $JOBNAME.sbatch
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+
+slurm_create_nodefile $JOBNAME.sbatch
+slurm_debug_job $JOBNAME.sbatch
+
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+
+slurm_setup_run_in_scratch $JOBNAME.sbatch $INPUT
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+slurm_setup_jobarray $JOBNAME.sbatch
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+if [ -n "$JOB_ARRAY_RANGE" ]
+then
+   EXE_ARGS="\$input_name"$EXE_ARGS
+else
+   EXE_ARGS="$INPUT"$EXE_ARGS
+fi
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+if [ -z "$DEBUG_JOB" ]
+then
+   echo "${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${SERPENT_EXTRA_ARGS}"                               >> $JOBNAME.sbatch
+else
+   echo "job_tracker.py \"${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${SERPENT_EXTRA_ARGS}\""            >> $JOBNAME.sbatch
+fi
+echo  "#"                                                                                                    >> $JOBNAME.sbatch
+
+slurm_finish_jobarray_and_scratch $JOBNAME.sbatch
+
+if [ $SUBMIT_JOB -eq 1 ]
+then
+   sbatch $SLURM_EXTRA_ARGS $JOBNAME.sbatch
+fi

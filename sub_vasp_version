@@ -1,0 +1,170 @@
+#!/bin/bash
+
+NAME=vasp
+upper_NAME=`echo ${NAME} | tr '[a-z]' '[A-Z]'`
+EXE_NAME=vasp
+VERSION=5.3.2
+VERSIONSUFFIX=
+MPI_CMD=mpirun
+SUBMIT_JOB=1
+TOOLCHAIN=ictcet-4.5.0
+EXTRA_MODULE_NAME1=use.restricted
+EXTRA_MODULE_NAME2=
+MODULE_NAME=${upper_NAME}/${VERSION}-${TOOLCHAIN}${VERSIONSUFFIX}
+
+source /hpc-common/software/sub_scripts/common_sub_fns.sh
+#source /home/garvct/my_sw_development/pbs_job_submit/common_sub_fns.sh
+
+
+function usage ()
+{
+     echo
+     echo "sub_vasp_${VERSION}"
+     echo      "usage: sub_vasp_${VERSION} [<-n mpiprocs>] [<-w HH:MM:SS>] <-P project> [<-q queue>] [<-N mpipernode>] [<-j PBS_jobname>] [<-W depends_on_jobid>] [<-m PBS_memory>] [<-F job_array_filename>] [<-J pbs job_array_range>] [<-s scratch,ramdisk,localdisk>] [<-t cputype>] [<-D>] [<-l>] [<-c>] [<-g>] [<-h>]"
+     echo      "Submits a VASP ${VERSION} job to the Fission cluster via PBS Pro."
+     echo      " Where:"
+     echo      " -n mpiprocs   : Selects the number of mpi parallel processes to use.( Default: 1)"
+     echo      " -w HH:MM:SS   : Selects the PBS Job Walltime.( Default: 24:00:00)"
+     echo      " -P project    : Selects the project this job is associated with.( Default: none)"
+     echo      " -q queue      : Selects the PBS queue to use.( Default: general)"
+     echo      " -N mpipernode : Selects the maximum number of mpi processes to use in each node.( Default: ${MPI_PER_NODE})"
+     echo      " -j jobname    : Selects the name of PBS Job.( Default: vasp)"
+     echo      " -W depend_on_jobid : This job runs after jobid is complete. (Default: none)"
+     echo      " -m PBS_memory : Selects the PBS Memory per Node.( Default: PBS default)"
+     echo      " -F PBS_job_array_filename : Selects the PBS job array Filename. Each line of the file contains"
+     echo      "                             the full path to the directory containing the input files. (Default: None)"
+     echo      " -J PBS_job_array_range : Selects the PBS job array range (e.g 1-10)( Default: None)"
+     echo      " -s scratch,ramdisk,localdisk : Job runs in scratch(panasas parallel filesystem),"
+     echo      "                                ramdisk(memory where available) or localdisk (locally attached disk where available). (Default: Run from current location)"
+     echo      " -t cpu_type   : Applicable on falcon cluster only, requests the cpu type (\"haswell\" requests haswell processors, \"broadwell\" requests broadwell processors (default     "haswell")"
+     echo      " -D            : Selects the debug option (performance basic system checks, tracks memory usage, process placement etc)( Default: off)"
+     echo      " -l            : Selects special MD vasp executable (LVDW=.true.).( Default: vasp)"
+     echo      " -c            : Selects Non-collinear vasp executable.( Default: vasp)"
+     echo      " -g            : Generate PBS script only, but do not submit (Default: Generate and submit)"
+     echo      " -h            : Selects help.( Default: none)"
+     echo
+     echo "       To add extra PBS options (e.g -M email_address -m be), use the environmental variable PBS_EXTRA_ARGS"
+     echo        'e.g. export PBS_EXTRA_ARGS="-M cormac.garvey@inl.gov -m be"'
+}
+
+while getopts "w:P:n:q:N:j:W:m:F:J:s:t:DlcghX" opt; do
+  case $opt in
+    w)
+      WALLTIME=$OPTARG
+      ;;
+    P)
+      PROJECT=$OPTARG
+      ;;
+    n)
+      MPIPROCS=$OPTARG
+      ;;
+    q)
+      QUEUE=$OPTARG
+      ;;
+    N)
+      MPI_PER_NODE=$OPTARG
+      MPI_PER_NODE_SET=$OPTARG
+      ;;
+    j)
+      JOBNAME=$OPTARG
+      ;;
+    W)
+      DEPENDS_ON_JOBID=$OPTARG
+      ;;
+    m)
+      PBS_MEM=$OPTARG
+      ;;
+    J)
+      PBS_JOB_ARRAY_RANGE=$OPTARG
+      ;;
+    F)
+      PBS_JOB_ARRAY_FILENAME=$OPTARG
+      ;;
+    s)
+      SCRATCH_TYPE=$OPTARG
+      ;;
+    t)
+      CPU_TYPE=$OPTARG
+      ;;
+    D)
+      DEBUG_JOB=1
+      ;;
+    l)
+      EXE_NAME=vasp_tbdyn
+      ;;
+    c)
+      EXE_NAME=vasp_no_ngzhalf
+      ;;
+    g)
+      SUBMIT_JOB=0
+      ;;
+    h)
+      HELP=1
+      usage
+      exit 0
+      ;;
+    X)
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit
+      ;;
+  esac
+done
+
+check_command_args
+
+set_default_jobname
+
+calc_chunk_new
+
+if [ -n "$SCRATCH_TYPE" ]
+then
+   get_scratch_dir $SCRATCH_TYPE
+fi
+
+
+echo  "#!/bin/bash"                                                                                      > $JOBNAME.pbs
+
+pbs_select $JOBNAME.pbs
+pbs_set_defaults $JOBNAME.pbs
+pbs_depends_on $JOBNAME.pbs
+pbs_jobarray $JOBNAME.pbs
+
+echo  "#"                                                                                               >> $JOBNAME.pbs
+echo  "cat \$PBS_NODEFILE"                                                                              >> $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+
+load_modules $JOBNAME.pbs
+
+echo  "#"                                                                                               >> $JOBNAME.pbs
+echo  "export OMP_NUM_THREADS=1"                                                                        >> $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+echo  "echo \"The following PBS extra args (PBS_EXTRA_ARGS) will be used: $PBS_EXTRA_ARGS\""            >> $JOBNAME.pbs
+echo  "echo \"The following VASP extra args (VASP_EXTRA_ARGS) will be used: $VASP_EXTRA_ARGS\""         >> $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+echo  "cd \$PBS_O_WORKDIR"                                                                              >> $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+
+debug_job $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+setup_run_in_scratch $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+setup_jobarray $JOBNAME.pbs
+echo  "#"                                                                                               >> $JOBNAME.pbs
+if [ -z "$DEBUG_JOB" ]
+then
+   echo "${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${VASP_EXTRA_ARGS}"                             >> $JOBNAME.pbs
+else
+   echo "job_tracker.py \"${MPI_CMD} ${MPI_ARGS} ${EXE_NAME} ${EXE_ARGS} ${VASP_EXTRA_ARGS}\""          >> $JOBNAME.pbs
+fi
+echo  "#"                                                                                               >> $JOBNAME.pbs
+
+finish_jobarray_and_scratch $JOBNAME.pbs
+
+if [ $SUBMIT_JOB -eq 1 ]
+then
+   qsub $PBS_EXTRA_ARGS $JOBNAME.pbs
+fi
