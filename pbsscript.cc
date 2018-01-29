@@ -112,7 +112,7 @@ void PbsScript::setDefaultChunkSize(void) {
   if (hostname == "service0" || hostname == "service1" || hostname == "service2" ||
       hostname == "falcon1" || hostname == "falcon2" || hostname == "falconpbs" ||
       hostname == "falconviz") {
-    chunk_size_ = 24;
+    chunk_size_ = 36;
   } else if (hostname == "fpbs" || hostname == "flogin1" || hostname == "flogin2") {
     chunk_size_ = 32;
   } else if (hostname == "bechler") {
