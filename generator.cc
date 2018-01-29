@@ -333,6 +333,16 @@ void Generator::createTestObjects(void) {
         jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
 #endif
         tests_.push_back(new hpcswtest::VaspTest(job_script, run_script));
+      } else if (v.first == "lammps") {
+        getModuleNameVersionJsonData(v2, module_name, module_version);
+        modules::modules_type modules({{module_name, module_version}});
+        getRunScriptJsonData(v2, run_script);
+#ifdef SLURM
+        jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
+#else
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+#endif
+        tests_.push_back(new hpcswtest::LammpsTest(job_script, run_script));
       } else if (v.first == "gaussian") {
         getModuleNameVersionJsonData(v2, module_name, module_version);
         getExtraModJsonData(v2, 1, extra_module_name1, extra_module_version1);

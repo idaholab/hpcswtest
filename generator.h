@@ -41,6 +41,7 @@ Author: Cormac Garvey
 #include "heliostest.h"
 #include "helioslint64test.h"
 #include "vasptest.h"
+#include "lammpstest.h"
 #include "mc21test.h"
 #include "abaqustest.h"
 #include "serpenttest.h"

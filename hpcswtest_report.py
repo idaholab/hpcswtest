@@ -65,6 +65,11 @@ vasp_pbs_job_name = []
 vasp_modules = []
 vasp_run_results = []
 vasp_run_dir = []
+lammps_pbs_job_id = []
+lammps_pbs_job_name = []
+lammps_modules = []
+lammps_run_results = []
+lammps_run_dir = []
 gaussian_pbs_job_id = []
 gaussian_pbs_job_name = []
 gaussian_modules = []
@@ -488,9 +493,9 @@ def collect_vasp_qa_results(f,modules,run_dir,pbs_job_name):
         data = re.split("\s*",line.strip())
         s = re.search("job.$",line.strip())
         if s is not None:
-           modules.append(data[0])
-           run_dir.append(data[1])
-           pbs_job_name.append(data[2])
+           vasp_modules.append(data[0])
+           vasp_run_dir.append(data[1])
+           vasp_pbs_job_name.append(data[2])
 #           print "next line1=",f.next()
            line2 = f.next()
            s2 = re.search('\d+',line2.strip())
@@ -498,6 +503,25 @@ def collect_vasp_qa_results(f,modules,run_dir,pbs_job_name):
               vasp_pbs_job_id.append(s2.group())
            else:
               vasp_pbs_job_id.append("not_run")
+
+
+def collect_lammps_qa_results(f,modules,run_dir,pbs_job_name):
+   
+    for line in f:
+#        print line,
+        data = re.split("\s*",line.strip())
+        s = re.search("job.$",line.strip())
+        if s is not None:
+           lammps_modules.append(data[0])
+           lammps_run_dir.append(data[1])
+           lammps_pbs_job_name.append(data[2])
+#           print "next line1=",f.next()
+           line2 = f.next()
+           s2 = re.search('\d+',line2.strip())
+           if s2 is not None:
+              lammps_pbs_job_id.append(s2.group())
+           else:
+              lammps_pbs_job_id.append("not_run")
 
 
 def collect_lsdyna_qa_results(f,modules,run_dir):
@@ -1336,6 +1360,44 @@ def check_vasp_run_results():
            vasp_run_results.append("failed")
 
 
+def check_lammps_run_results():
+#    print vasp_pbs_job_id
+    for line,line2,line3 in zip(lammps_pbs_job_id, lammps_run_dir, lammps_pbs_job_name):
+#        print line,line2,line3
+        s = re.search('\d+',line.strip())
+        if s is not None:
+           pbs_file = line2 + "/" + line3 + ".o" + s.group()
+#           print "pbs_file=",pbs_file 
+           if os.path.isfile(pbs_file):
+              lammps_file = line2 + "/log.lammps"
+#              print "outcar_file=",outcar_file
+              if os.path.isfile(lammps_file):
+                 lammps_string1 = ""
+                 lammps_string2 = ""
+#                 print "files exists :",lammps_file
+                 f = open(lammps_file,"r")
+                 for line in f:
+#                   print line
+                     data = re.split("\s*",line.strip())
+                     s2 = re.search("MPI task timing breakdown",line.strip())
+                     if s2 is not None:
+                        lammps_string1 = "passed"
+                     s3 = re.search("Total wall time",line.strip())
+                     if s3 is not None:
+                        lammps_string2 = "passed"
+                 if (lammps_string1 == "passed") and (lammps_string2 == "passed"):
+                     lammps_run_results.append("passed")
+                 else:
+                     lammps_run_results.append("failed")
+              else:
+                  lammps_run_results.append("failed")
+           else:
+#              print "Error: File %s does not exist\n" % pbs_file
+              lammps_run_results.append("running")
+        else:
+           lammps_run_results.append("failed")
+
+
 def check_lsdyna_run_results():
 #    print lsdyna_pbs_job_id
     for line,line2 in zip(lsdyna_pbs_job_id,lsdyna_run_dir):
@@ -1915,6 +1977,25 @@ def qa_report():
     print "Total No of VASP QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (vasp_no_passed+vasp_no_failed+vasp_no_check+vasp_no_running,vasp_no_passed,vasp_no_failed,vasp_no_check,vasp_no_running)
     print
     print "".ljust(143,"#")
+    print "Lammps Tests".center(130)
+    print
+    for mod1,jobs,pbs_jobid,pbs_jobname,result in zip(lammps_modules, lammps_run_dir, lammps_pbs_job_id, lammps_pbs_job_name, lammps_run_results):
+        if len(sys.argv) > 1 and re.match("h",sys.argv[1]):
+           if re.search("failed$|check$",result) and re.search("\d+",pbs_jobid):
+              result = html_link_str(jobs+"/"+pbs_jobname, pbs_jobid, result)
+              print mod1.ljust(15),jobs.ljust(8),pbs_jobid.ljust(8),result.rjust(109,'-')
+           else:
+              print mod1.ljust(15),jobs.ljust(8),pbs_jobid.ljust(8),result.rjust(109,'-')
+        else:
+           print mod1.ljust(15),jobs.ljust(8),pbs_jobid.ljust(8),result.rjust(109,'-')
+    lammps_no_passed = lammps_run_results.count("passed")
+    lammps_no_failed = lammps_run_results.count("failed")
+    lammps_no_check  = lammps_run_results.count("check")
+    lammps_no_running  = lammps_run_results.count("running")
+    print
+    print "Total No of LAMMPS QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (lammps_no_passed+lammps_no_failed+lammps_no_check+lammps_no_running,lammps_no_passed,lammps_no_failed,lammps_no_check,lammps_no_running)
+    print
+    print "".ljust(143,"#")
     print "Gaussian Tests".center(130)
     print
     for mod1,pbs_jobid,pbs_jobname,result in zip(gaussian_modules,gaussian_pbs_job_id,gaussian_pbs_job_name,gaussian_run_results):
@@ -2104,10 +2185,10 @@ def qa_report():
     print
     print "".ljust(143,"#")
     print
-    total_no_passed = c_no_passed+mpi_no_passed+blas_no_passed+pbs_no_passed+mcnp_no_passed+vasp_no_passed+gaussian_no_passed+star_no_passed+abaqus_no_passed+matlab_no_passed+python2_no_passed+python3_no_passed+misc_no_passed+lsdyna_no_passed+mcnpx_no_passed+ansys_no_passed+boost_no_passed+helios_no_passed+helioslint64_no_passed+scale_no_passed+scale62_no_passed+serpent_no_passed+cth_no_passed+mc21_no_passed
-    total_no_failed = c_no_failed+mpi_no_failed+blas_no_failed+pbs_no_failed+mcnp_no_failed+vasp_no_failed+gaussian_no_failed+star_no_failed+abaqus_no_failed+matlab_no_failed+python2_no_failed+python3_no_failed+misc_no_failed+lsdyna_no_failed+mcnpx_no_failed+ansys_no_failed+boost_no_failed+helios_no_failed+helioslint64_no_failed+scale_no_failed+scale62_no_failed+serpent_no_failed+cth_no_failed+mc21_no_failed
-    total_no_check = c_no_check+mpi_no_check+blas_no_check+pbs_no_check+mcnp_no_check+vasp_no_check+gaussian_no_check+star_no_check+abaqus_no_check+matlab_no_check+python2_no_check+python3_no_check+misc_no_check+lsdyna_no_check+mcnpx_no_check+ansys_no_check+boost_no_check+helios_no_check+helioslint64_no_check+scale_no_check+scale62_no_check+serpent_no_check+cth_no_check+mc21_no_check
-    total_no_running = c_no_running+mpi_no_running+pbs_no_running+mcnp_no_running+vasp_no_running+gaussian_no_running+star_no_running+abaqus_no_running+matlab_no_running+misc_no_running+lsdyna_no_running+blas_no_running+mcnpx_no_running+ansys_no_running+boost_no_running+helios_no_running+helioslint64_no_running+scale_no_running+scale62_no_running+serpent_no_running+cth_no_running+mc21_no_running
+    total_no_passed = c_no_passed+mpi_no_passed+blas_no_passed+pbs_no_passed+mcnp_no_passed+vasp_no_passed+lammps_no_passed+gaussian_no_passed+star_no_passed+abaqus_no_passed+matlab_no_passed+python2_no_passed+python3_no_passed+misc_no_passed+lsdyna_no_passed+mcnpx_no_passed+ansys_no_passed+boost_no_passed+helios_no_passed+helioslint64_no_passed+scale_no_passed+scale62_no_passed+serpent_no_passed+cth_no_passed+mc21_no_passed
+    total_no_failed = c_no_failed+mpi_no_failed+blas_no_failed+pbs_no_failed+mcnp_no_failed+vasp_no_failed+lammps_no_failed+gaussian_no_failed+star_no_failed+abaqus_no_failed+matlab_no_failed+python2_no_failed+python3_no_failed+misc_no_failed+lsdyna_no_failed+mcnpx_no_failed+ansys_no_failed+boost_no_failed+helios_no_failed+helioslint64_no_failed+scale_no_failed+scale62_no_failed+serpent_no_failed+cth_no_failed+mc21_no_failed
+    total_no_check = c_no_check+mpi_no_check+blas_no_check+pbs_no_check+mcnp_no_check+vasp_no_check+lammps_no_check+gaussian_no_check+star_no_check+abaqus_no_check+matlab_no_check+python2_no_check+python3_no_check+misc_no_check+lsdyna_no_check+mcnpx_no_check+ansys_no_check+boost_no_check+helios_no_check+helioslint64_no_check+scale_no_check+scale62_no_check+serpent_no_check+cth_no_check+mc21_no_check
+    total_no_running = c_no_running+mpi_no_running+pbs_no_running+mcnp_no_running+vasp_no_running+lammps_no_running+gaussian_no_running+star_no_running+abaqus_no_running+matlab_no_running+misc_no_running+lsdyna_no_running+blas_no_running+mcnpx_no_running+ansys_no_running+boost_no_running+helios_no_running+helioslint64_no_running+scale_no_running+scale62_no_running+serpent_no_running+cth_no_running+mc21_no_running
     print 
     print "Total No of QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (total_no_passed+total_no_failed+total_no_check+total_no_running,total_no_passed,total_no_failed,total_no_check,total_no_running)
     print
@@ -2240,6 +2321,12 @@ def main():
        check_mc21_run_results()
     except IOError, e:
        print 'Could not open mc21_results file: skipping'
+    try:
+       f21 = open(hostname + "_lammps_results.out","r")
+       collect_lammps_qa_results(f21, lammps_modules, lammps_run_dir, lammps_pbs_job_name)
+       check_lammps_run_results()
+    except IOError, e:
+       print 'Could not open lammps_results file: skipping'
 
     qa_report()
 
