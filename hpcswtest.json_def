@@ -173,6 +173,10 @@
                                  {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
                                  {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"}
                                 ],
+                   "lammps":  
+		                [
+                                 {"module_name": "lammps", "module_version": "11Aug17-gmvolf-5.5.7", "run_script": "sub_lammps_11Aug17"}
+                                ],
                    "gaussian":
                                 [
                                  {"module_name": "gaussian", "module_version": "03_C.02", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_03_C.02"},
@@ -387,12 +391,6 @@
                                 ],
                    "helios":  
 		                [
-                                 {"module_name": "helios", "module_version": "2.1.1", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.1", "helios_exe_name": "helios-2.1.1", "zenith_exe_name": "zenith-2.1.1"},
-                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
-                                ],
-                   "helioslint64":  
-		                [
-                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
                                 ],
                    "mc21":  
 		                [
@@ -424,6 +422,9 @@
                                  {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
                                  {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
                                  {"module_name": "VASP", "module_version": "5.4.1-ictcet-3.5.0-sol", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"}
+                                ],
+                   "lammps":  
+		                [
                                 ],
                    "matlab":  
 		                [
@@ -548,11 +549,8 @@
                                 ],
                    "helios":  
 		                [
-                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
-                                ],
-                   "helioslint64":  
-		                [
-                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2"}
+                                 {"module_name": "helios", "module_version": "2.1.2", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2", "library_name": "hy049n18g201.dat"},
+                                 {"module_name": "helios", "module_version": "2.1.2_linT64", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "aurora_exe_name": "aurora-2.1.2", "helios_exe_name": "helios-2.1.2", "zenith_exe_name": "zenith-2.1.2", "library_name": "hy049n18g201_linT64.dat"}
                                 ],
                    "serpent":  
 		                [
@@ -563,6 +561,9 @@
                                  {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
                                  {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-no-ngzhalf", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"},
                                  {"module_name": "VASP", "module_version": "5.3.2-ictcet-1.5.0-tbdyn", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.3.2"}
+                                ],
+                   "lammps":  
+		                [
                                 ],
                    "abaqus":  
 		                [
@@ -635,13 +636,13 @@
                    "helios":  
 		                [
                                 ],
-                   "helioslint64":  
-		                [
-                                ],
                    "serpent":  
 		                [
                                 ],
                    "vasp":  
+		                [
+                                ],
+                   "lammps":  
 		                [
                                 ],
                    "abaqus":  
