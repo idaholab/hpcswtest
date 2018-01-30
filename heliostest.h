@@ -41,7 +41,7 @@ namespace hpcswtest {
 class HeliosTest: public AppTest {
 
   public:
-    HeliosTest(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &);
+    HeliosTest(const jobscript::JOBSCRIPT &, const std::string &, const std::string &, const std::string &, const std::string &, const std::string &);
     virtual ~HeliosTest(void) {};
     virtual void runTest(void) override;
     std::string getHeliosExeName(void);
@@ -59,6 +59,7 @@ class HeliosTest: public AppTest {
     std::string helios_exe_name_;
     std::string aurora_exe_name_;
     std::string zenith_exe_name_;
+    std::string library_name_;
 
     const static std::vector<std::string> helios_aurora_03_inputs_;
     const static std::vector<std::string> helios_aurora_31_inputs_;

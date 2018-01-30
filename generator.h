@@ -39,7 +39,6 @@ Author: Cormac Garvey
 #include "scaletest.h"
 #include "scale62test.h"
 #include "heliostest.h"
-#include "helioslint64test.h"
 #include "vasptest.h"
 #include "lammpstest.h"
 #include "mc21test.h"
@@ -73,6 +72,7 @@ class Generator {
     void getCompilerJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &, std::string &);
     void getModuleNameVersionJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &);
     void getRunScriptJsonData(boost::property_tree::ptree::value_type, std::string &);
+    void getLibraryNameJsonData(boost::property_tree::ptree::value_type, std::string &);
     void getExtraModJsonData(boost::property_tree::ptree::value_type, int, std::string &, std::string &);
     void getExeExeArgsJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &);
     void getMpiCmdNameArgsJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &);

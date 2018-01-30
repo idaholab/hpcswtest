@@ -731,7 +731,7 @@ R"(+HELIOS input (almost "short").
 
 !%= aurora-03.hrf !
 
-'BWR-4x4' = CASE( 'hy049n18g201.dat' / 'aurora-31.hrf' /
+'BWR-4x4' = CASE( 'LIBRARY_NAME' / 'aurora-31.hrf' /
                   'BWR-4x4, T=550, v=40, cr=0, pw=25.1, br=70=40 (cr=1)' )
 
 &BWR      = SET ( 'aurora-03.hrf' / SAMPLE; AURORA )                 !Read set!
@@ -922,14 +922,15 @@ std::string HeliosTest::getZenithExeName(void) {
 }
 
 
-HeliosTest::HeliosTest(const jobscript::JOBSCRIPT &p_s, const std::string &a_e_n, const std::string &h_e_n, const std::string &z_e_n, const std::string &h_t): AppTest(h_t, ".inp", p_s, helios_aurora_03_inputs_.size()),
+HeliosTest::HeliosTest(const jobscript::JOBSCRIPT &p_s, const std::string &a_e_n, const std::string &h_e_n, const std::string &z_e_n, const std::string &l_n, const std::string &h_t): AppTest(h_t, ".inp", p_s, helios_aurora_03_inputs_.size()),
                                                                                                                                                                log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                                                                                                                                result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                                                                                                                                flog_(log_file_name_,std::ios_base::app),
                                                                                                                                                                fresult_(result_file_name_,std::ios_base::app),
                                                                                                                                                                aurora_exe_name_(a_e_n),
                                                                                                                                                                helios_exe_name_(h_e_n),
-                                                                                                                                                               zenith_exe_name_(z_e_n) {}
+                                                                                                                                                               zenith_exe_name_(z_e_n),
+                                                                                                                                                               library_name_(l_n) {}
 
 
 void HeliosTest::createHeliosJob(jobscript::JOBSCRIPT &in_job) const {
@@ -953,15 +954,17 @@ void HeliosTest::runTest() {
   }
   std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   int c_i = 0;
+  std::string new_helios_aurora_31_input;
   for (auto helios_aurora_03_input: helios_aurora_03_inputs_) {
     helios_dir = "helios_" + std::to_string(getTestNumber()) + "_" + std::to_string(c_i);
     flog_ << "Run test in directory " << helios_dir << std::endl;
     makeDir(helios_dir);
     changeDir(helios_dir);
     jobscript::JOBSCRIPT helios_job(getJobScripts()[c_i]); 
-    copyFile("/hpc-common/software/sw_qa/scripts/hy049n18g201.dat","hy049n18g201.dat");
+    copyFile("/hpc-common/software/sw_qa/scripts/" + library_name_, library_name_);
+    new_helios_aurora_31_input = replaceStr(helios_aurora_31_inputs_[c_i], "LIBRARY_NAME", library_name_);
     createFileFromStr("aurora-03.inp", helios_aurora_03_input);
-    createFileFromStr("aurora-31.inp", helios_aurora_31_inputs_[c_i]);
+    createFileFromStr("aurora-31.inp", new_helios_aurora_31_input);
     createFileFromStr("zenith-31.inp", helios_zenith_31_inputs_[c_i]);
     createHeliosJob(helios_job);
     fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << helios_dir << "\t" << getJobScripts()[c_i].getJobName() << "\t" << "job." << std::endl;

@@ -70,6 +70,10 @@ void Generator::getRunScriptJsonData(boost::property_tree::ptree::value_type pt,
   run_script =  pt.second.get<std::string>("run_script");
 }
 
+void Generator::getLibraryNameJsonData(boost::property_tree::ptree::value_type pt, std::string &library_name) {
+  library_name =  pt.second.get<std::string>("library_name");
+}
+
 
 void Generator::getExtraModJsonData(boost::property_tree::ptree::value_type pt, int extra_module_num, std::string &extra_module_name, std::string &extra_module_version) {
   extra_module_name =  pt.second.get<std::string>("extra_module_name" + std::to_string(extra_module_num));
@@ -282,32 +286,19 @@ void Generator::createTestObjects(void) {
         std::string aurora_exe_name;
         std::string helios_exe_name;
         std::string zenith_exe_name;
+        std::string library_name;
         getModuleNameVersionJsonData(v2, module_name, module_version);
         getExtraModJsonData(v2, 1, extra_module_name1, extra_module_version1);
         modules::modules_type modules({{extra_module_name1,extra_module_version1},{module_name, module_version}});
 //        getExeExeArgsJsonData(v2, exe_name, exe_args);
         getHeliosExesJsonData(v2, aurora_exe_name, helios_exe_name, zenith_exe_name);
+        getLibraryNameJsonData(v2, library_name);
 #ifdef SLURM
-        jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
+        jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, "0:5:0");
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, "0:5:0");
 #endif
-        tests_.push_back(new hpcswtest::HeliosTest(job_script, aurora_exe_name, helios_exe_name, zenith_exe_name, v.first));
-      } else if (v.first == "helioslint64") {
-        std::string aurora_exe_name;
-        std::string helios_exe_name;
-        std::string zenith_exe_name;
-        getModuleNameVersionJsonData(v2, module_name, module_version);
-        getExtraModJsonData(v2, 1, extra_module_name1, extra_module_version1);
-        modules::modules_type modules({{extra_module_name1,extra_module_version1},{module_name, module_version}});
-//        getExeExeArgsJsonData(v2, exe_name, exe_args);
-        getHeliosExesJsonData(v2, aurora_exe_name, helios_exe_name, zenith_exe_name);
-#ifdef SLURM
-        jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
-#else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
-#endif
-        tests_.push_back(new hpcswtest::HeliosLinT64Test(job_script, aurora_exe_name, helios_exe_name, zenith_exe_name, v.first));
+        tests_.push_back(new hpcswtest::HeliosTest(job_script, aurora_exe_name, helios_exe_name, zenith_exe_name, library_name, v.first));
       } else if (v.first == "mc21") {
         getModuleNameVersionJsonData(v2, module_name, module_version);
         getExtraModJsonData(v2, 1, extra_module_name1, extra_module_version1);
