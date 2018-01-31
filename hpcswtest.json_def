@@ -177,6 +177,10 @@
 		                [
                                  {"module_name": "lammps", "module_version": "11Aug17-gmvolf-5.5.7", "run_script": "sub_lammps_11Aug17"}
                                 ],
+                   "nwchem":  
+		                [
+                                 {"module_name": "NWChem", "module_version": "6.6.revision27746-gmvolf-5.5.7-2015-10-20-Python-2.7.9", "run_script": "sub_nwchem_6.6"}
+                                ],
                    "gaussian":
                                 [
                                  {"module_name": "gaussian", "module_version": "03_C.02", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_03_C.02"},

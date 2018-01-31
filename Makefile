@@ -17,7 +17,7 @@ CPP = g++
 # PBS is enabled by default, to enable SLURM instead of PBS, add -DSLURM to CPPFLAGS.
 CPPFLAGS = -O1 -std=c++11 -static
 JOBSCRIPT_OBJS = jobscript.o pbsscript.o slurmscript.o
-OBJECTS = main.o hpcswtest.o srctest.o compilertest.o mpitest.o libtest.o blastest.o boosttest.o apptest.o mcnptest.o mcnpxtest.o scaletest.o scale62test.o heliostest.o mc21test.o vasptest.o lammpstest.o abaqustest.o starccmtest.o gaussiantest.o matlabtest.o serpenttest.o cthtest.o python2test.o python3test.o helper.o generator.o $(MODULES_OBJS) $(JOBSCRIPT_OBJS)
+OBJECTS = main.o hpcswtest.o srctest.o compilertest.o mpitest.o libtest.o blastest.o boosttest.o apptest.o mcnptest.o mcnpxtest.o scaletest.o scale62test.o heliostest.o mc21test.o vasptest.o lammpstest.o nwchemtest.o abaqustest.o starccmtest.o gaussiantest.o matlabtest.o serpenttest.o cthtest.o python2test.o python3test.o helper.o generator.o $(MODULES_OBJS) $(JOBSCRIPT_OBJS)
 BOOST_LIBS = -lboost_filesystem -lboost_system
 EXECUTABLE = hpcswtest
 
