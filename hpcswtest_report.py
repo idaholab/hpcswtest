@@ -109,11 +109,6 @@ helios_pbs_job_name = []
 helios_modules = []
 helios_run_results = []
 helios_run_dir = []
-helioslint64_pbs_job_id = []
-helioslint64_pbs_job_name = []
-helioslint64_modules = []
-helioslint64_run_results = []
-helioslint64_run_dir = []
 scale_pbs_job_id = []
 scale_pbs_job_name = []
 scale_modules = []
@@ -337,25 +332,6 @@ def collect_helios_qa_results(f,modules,run_dir,pbs_job_name):
               helios_pbs_job_id.append(s2.group())
            else:
               helios_pbs_job_id.append("not_run")
-
-
-def collect_helioslint64_qa_results(f,modules,run_dir,pbs_job_name):
-   
-    for line in f:
-#        print line,
-        data = re.split("\s*",line.strip())
-        s = re.search("job.$",line.strip())
-        if s is not None:
-           modules.append(data[0])
-           run_dir.append(data[1])
-           pbs_job_name.append(data[2])
-#           print "next line1=",f.next()
-           line2 = f.next()
-           s2 = re.search('\d+',line2.strip())
-           if s2 is not None:
-              helioslint64_pbs_job_id.append(s2.group())
-           else:
-              helioslint64_pbs_job_id.append("not_run")
 
 
 def collect_scale_qa_results(f,modules,run_dir):
@@ -1135,33 +1111,6 @@ def check_helios_run_results():
            helios_run_results.append("failed")
 
 
-def check_helioslint64_run_results():
-#    print helios_pbs_job_id
-    for line,line2,line3 in zip(helioslint64_pbs_job_id,helioslint64_run_dir,helioslint64_pbs_job_name):
-#        print line,line2,line3
-        s = re.search('\d+',line.strip())
-        if s is not None:
-           pbs_file = line2 + "/" + line3 + ".o" + s.group()
-#           print "pbs_file=",pbs_file 
-           if os.path.isfile(pbs_file):
-              helios_string1 = ""
-              f = open(pbs_file,"r")
-              for line in f:
-                  data = re.split("\s*",line.strip())
-                  s2 = re.search("ZENITH Successful Completion",line.strip())
-                  if s2 is not None:
-                     helios_string1 = "passed"
-              if helios_string1 == "passed":
-                 helioslint64_run_results.append("passed")
-              else:
-                 helioslint64_run_results.append("failed")
-           else:
-#              print "Error: File %s does not exist\n" % pbs_file
-              helioslint64_run_results.append("running")
-        else:
-           helioslint64_run_results.append("failed")
-
-
 def check_scale_run_results():
 #    print scale_pbs_job_id
     for line,line2 in zip(scale_pbs_job_id,scale_pbs_job_name):
@@ -1762,31 +1711,6 @@ def qa_report():
     print "Total No of HELIOS QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (helios_no_passed+helios_no_failed+helios_no_check+helios_no_running,helios_no_passed,helios_no_failed,helios_no_check,helios_no_running)
     print
     print "".ljust(143,"#")
-    print "HELIOS_linT64 Tests".center(130)
-    print
-    for mod1,jobs,pbs_jobid,pbs_jobname,result in zip(helioslint64_modules,helioslint64_run_dir,helioslint64_pbs_job_id,helioslint64_pbs_job_name,helioslint64_run_results):
-#        print mod1,jobs,pbs_jobid,result
-        if len(sys.argv) > 1 and re.match("h",sys.argv[1]):
-           if re.search("failed$|check$",result) and re.search("\d+",pbs_jobid):
-              if re.search('[0-9]+',pbs_jobid):
-                 result = html_link_str(jobs+"/"+pbs_jobname, pbs_jobid, result)
-#                 os.rename(jobs+"/"+"helios.oe" + pbs_jobid,"helios.oe" + pbs_jobid)
-                 print mod1.ljust(17),jobs.ljust(8),pbs_jobid.ljust(10),result.rjust(105,'-')
-              else:
-                 result = log_link_str("helioslint64_test",result)
-                 print mod1.ljust(17),jobs.ljust(8),pbs_jobid.ljust(10),result.rjust(105,'-')
-           else:
-              print mod1.ljust(17),jobs.ljust(8),pbs_jobid.ljust(10),result.rjust(105,'-')
-        else:
-           print mod1.ljust(17),jobs.ljust(8),pbs_jobid.ljust(10),result.rjust(105,'-')
-    helioslint64_no_passed = helioslint64_run_results.count("passed")
-    helioslint64_no_failed = helioslint64_run_results.count("failed")
-    helioslint64_no_check  = helioslint64_run_results.count("check")
-    helioslint64_no_running  = helios_run_results.count("running")
-    print
-    print "Total No of HELIOS_linT64 QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (helioslint64_no_passed+helioslint64_no_failed+helioslint64_no_check+helioslint64_no_running,helioslint64_no_passed,helioslint64_no_failed,helioslint64_no_check,helioslint64_no_running)
-    print
-    print "".ljust(143,"#")
     print "SCALE Tests".center(130)
     print
     for mod1,pbs_jobid,pbs_jobname,result in zip(scale_modules,scale_pbs_job_id,scale_pbs_job_name,scale_run_results):
@@ -2185,10 +2109,10 @@ def qa_report():
     print
     print "".ljust(143,"#")
     print
-    total_no_passed = c_no_passed+mpi_no_passed+blas_no_passed+pbs_no_passed+mcnp_no_passed+vasp_no_passed+lammps_no_passed+gaussian_no_passed+star_no_passed+abaqus_no_passed+matlab_no_passed+python2_no_passed+python3_no_passed+misc_no_passed+lsdyna_no_passed+mcnpx_no_passed+ansys_no_passed+boost_no_passed+helios_no_passed+helioslint64_no_passed+scale_no_passed+scale62_no_passed+serpent_no_passed+cth_no_passed+mc21_no_passed
-    total_no_failed = c_no_failed+mpi_no_failed+blas_no_failed+pbs_no_failed+mcnp_no_failed+vasp_no_failed+lammps_no_failed+gaussian_no_failed+star_no_failed+abaqus_no_failed+matlab_no_failed+python2_no_failed+python3_no_failed+misc_no_failed+lsdyna_no_failed+mcnpx_no_failed+ansys_no_failed+boost_no_failed+helios_no_failed+helioslint64_no_failed+scale_no_failed+scale62_no_failed+serpent_no_failed+cth_no_failed+mc21_no_failed
-    total_no_check = c_no_check+mpi_no_check+blas_no_check+pbs_no_check+mcnp_no_check+vasp_no_check+lammps_no_check+gaussian_no_check+star_no_check+abaqus_no_check+matlab_no_check+python2_no_check+python3_no_check+misc_no_check+lsdyna_no_check+mcnpx_no_check+ansys_no_check+boost_no_check+helios_no_check+helioslint64_no_check+scale_no_check+scale62_no_check+serpent_no_check+cth_no_check+mc21_no_check
-    total_no_running = c_no_running+mpi_no_running+pbs_no_running+mcnp_no_running+vasp_no_running+lammps_no_running+gaussian_no_running+star_no_running+abaqus_no_running+matlab_no_running+misc_no_running+lsdyna_no_running+blas_no_running+mcnpx_no_running+ansys_no_running+boost_no_running+helios_no_running+helioslint64_no_running+scale_no_running+scale62_no_running+serpent_no_running+cth_no_running+mc21_no_running
+    total_no_passed = c_no_passed+mpi_no_passed+blas_no_passed+pbs_no_passed+mcnp_no_passed+vasp_no_passed+lammps_no_passed+gaussian_no_passed+star_no_passed+abaqus_no_passed+matlab_no_passed+python2_no_passed+python3_no_passed+misc_no_passed+lsdyna_no_passed+mcnpx_no_passed+ansys_no_passed+boost_no_passed+helios_no_passed+scale_no_passed+scale62_no_passed+serpent_no_passed+cth_no_passed+mc21_no_passed
+    total_no_failed = c_no_failed+mpi_no_failed+blas_no_failed+pbs_no_failed+mcnp_no_failed+vasp_no_failed+lammps_no_failed+gaussian_no_failed+star_no_failed+abaqus_no_failed+matlab_no_failed+python2_no_failed+python3_no_failed+misc_no_failed+lsdyna_no_failed+mcnpx_no_failed+ansys_no_failed+boost_no_failed+helios_no_failed+scale_no_failed+scale62_no_failed+serpent_no_failed+cth_no_failed+mc21_no_failed
+    total_no_check = c_no_check+mpi_no_check+blas_no_check+pbs_no_check+mcnp_no_check+vasp_no_check+lammps_no_check+gaussian_no_check+star_no_check+abaqus_no_check+matlab_no_check+python2_no_check+python3_no_check+misc_no_check+lsdyna_no_check+mcnpx_no_check+ansys_no_check+boost_no_check+helios_no_check+scale_no_check+scale62_no_check+serpent_no_check+cth_no_check+mc21_no_check
+    total_no_running = c_no_running+mpi_no_running+pbs_no_running+mcnp_no_running+vasp_no_running+lammps_no_running+gaussian_no_running+star_no_running+abaqus_no_running+matlab_no_running+misc_no_running+lsdyna_no_running+blas_no_running+mcnpx_no_running+ansys_no_running+boost_no_running+helios_no_running+scale_no_running+scale62_no_running+serpent_no_running+cth_no_running+mc21_no_running
     print 
     print "Total No of QA Tests = %d ( Passed = %d Failed = %d Check = %d Running = %d )" % (total_no_passed+total_no_failed+total_no_check+total_no_running,total_no_passed,total_no_failed,total_no_check,total_no_running)
     print
@@ -2251,12 +2175,6 @@ def main():
        check_helios_run_results()
     except IOError, e:
        print 'Could not open helios_results file: skipping'
-    try:
-       f9 = open(hostname + "_helioslint64_results.out","r")
-       collect_helioslint64_qa_results(f9,helioslint64_modules,helioslint64_run_dir,helioslint64_pbs_job_name)
-       check_helioslint64_run_results()
-    except IOError, e:
-       print 'Could not open helioslint64_results file: skipping'
     try:
        f10 = open(hostname + "_vasp_results.out","r")
        collect_vasp_qa_results(f10,vasp_modules,vasp_run_dir,vasp_pbs_job_name)
