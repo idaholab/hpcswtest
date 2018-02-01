@@ -102,8 +102,6 @@ void CompilerTest::runTest(void) {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  fresult_ << std::ctime(&date_result) << std::endl;
-  fresult_ << getTestName() << " tests run on " << getHostName() << std::endl;
   int c_i = 0;
   if (getCName() != "none") {
   for (auto c_src: c_srcs_) {
