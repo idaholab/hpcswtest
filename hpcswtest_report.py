@@ -26,6 +26,7 @@ import os
 import re
 import socket
 import shutil
+import glob
 
 c_results = []
 c_run_results = []
@@ -2204,10 +2205,23 @@ def qa_report():
        print "</html>"
 
 
+def find_results_out_files():
+    results_out_files = []
+    for file in glob.glob('*_results.out'):
+#        print file
+        results_out_files.append(file)
+    return results_out_files
+
+
 def main():
 #    if len(sys.argv) != 2:
 #       sys.exit('Usage: qa_report.py <file no>\n')
 #    print "argv=",sys.argv[0],sys.argv[1]
+    results_out_files = find_results_out_files()
+    print results_out_files
+    for results_out_file in results_out_files:
+        f = open(results_out_file, "r")
+        modules,socollect_results_out(f)
     try:
        f1 = open(hostname + "_compiler_results.out","r")
        collect_compiler_qa_results(f1,c_modules,c_compilers,c_pbs_job_name,c_results)
