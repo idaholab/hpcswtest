@@ -150,7 +150,7 @@ void Generator::createTestObjects(void) {
   char * hpcswtest_queue_env;
   char * cpu_type_env;
   std::string hpcswtest_queue = "hpc_support";
-  std::string cpu_type = "broadwell";
+  std::string cpu_type = "dummy";
 //  std::cout << "(Enter Generator::Generator)" << std::endl;
   std::string cluster_name;
   boost::property_tree::ptree pt;
