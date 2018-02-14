@@ -35,6 +35,9 @@ int main() {
   boost::filesystem::path json_def_file_path("/hpc-common/software/hpcswtest/bin/hpcswtest.json_def");
   std::string json_file_str("hpcswtest.json");
   std::string json_file_path_str;
+  std::ofstream dateHost("datehost.out",std::ios::out);
+  std::time_t date_result = std::time(NULL);
+  char hostname[1024];
 
   json_file_path_str = cur_dir.string() + "/" + json_file_str;
   boost::filesystem::path json_file_path(json_file_path_str);
@@ -45,6 +48,9 @@ int main() {
     json_file_path_str = json_def_file_path.string();
 //    std::cout << json_file_path << " does not exist, so lets use " << json_file_path_str << std::endl;
   }
+  gethostname(hostname, 1023);
+  dateHost << std::ctime(&date_result);
+  dateHost << hostname << std::endl;
 
   hpcswtest::Generator gen(json_file_path_str);
   gen.runTests();
