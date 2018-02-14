@@ -28,7 +28,11 @@ import socket
 import shutil
 import glob
 
+
 NUM_MPI_PROCS = 2
+compile_sw_l = ["compiler", "mpi", "blas", "boost"]
+dir_sw_l = ["vasp", "lammps", "helios", "cth", "mc21", "nwchem"]
+
 check_file_patterns = {"compiler": {
                                    "file_patterns": {
                                                      "pbs_stdout": ["code is working"]
@@ -73,7 +77,7 @@ check_file_patterns = {"compiler": {
                                                    "pbs_stdout": [
                                                                   "^Configuring finished$",
                                                                   "^Saving:",
-                                                                  "^Server process exited with code : 0$"
+                                                                  "^Server process exited with code\s*:*\s+0$"
                                                                  ]
                                                   },
                                  "files_exist": [],
@@ -203,18 +207,13 @@ check_file_patterns = {"compiler": {
                              }
                      }
 
-shmmax_job_id = 0
-global_hostname = ""
-run_date = ""
 
-hostname = socket.gethostname()
-
-if hostname == "falcon1" or hostname == "falcon2" or hostname == "falconpbs":
+g_hostname = socket.gethostname()
+#
+if g_hostname == "falcon1" or g_hostname == "falcon2" or g_hostname == "falconpbs" or g_hostname == "service2":
    clustername = "falcon"
-elif  hostname == "flogin1" or hostname == "flogin2" or hostname == "fpbs":
-   clustername = "fission"
 else:
-   clustername = hostname
+   clustername = g_hostname
 
 
 def concat_files(f1_name, f2_name, f_name):
@@ -230,39 +229,30 @@ def concat_files(f1_name, f2_name, f_name):
        f.write(f2.read())
 
 
-def gaussian_html_link_str(str1,jobid,result):
+def gaussian_html_link_str(str1, jobid, result):
 
     file_o = str1 + ".o" + jobid
     file_e = str1 + ".e" + jobid
     file_out2 = str1 + ".oe" + jobid
-
     file_out = re.split("/",file_out2)[-1]
-
     concat_files(file_o,file_e,file_out)
-
     result = "<a href=\"" + str1 + "\"" + "target=\"_blank\">" + result + "</a>"
-    
     return result
 
 
-def html_link_str(str1,jobid,result):
-
+def html_link_str(str1, jobid, result):
     file_o = str1 + ".o" + jobid
     file_e = str1 + ".e" + jobid
     file_out2 = str1 + ".oe" + jobid
-
     file_out = re.split("/",file_out2)[-1]
-
     concat_files(file_o,file_e,file_out)
-
     result = "<a href=\"" + clustername + "/" + file_out + "\"" + "target=\"_blank\">" + result + "</a>"
-    
     return result
 
 
-def log_link_str(file_str,result):
-    shutil.copy(global_hostname + "_" + file_str + ".log", global_hostname + "_" + file_str + ".txt")
-    link_str = "<a href=\"" + clustername + "/" + global_hostname + "_" + file_str + ".txt" + "\" target=\"_blank\">" + result + "</a>"
+def log_link_str(hostname, file_str, result):
+    shutil.copy(hostname + "_" + file_str + ".log", hostname + "_" + file_str + ".txt")
+    link_str = "<a href=\"" + clustername + "/" + hostname + "_" + file_str + ".txt" + "\" target=\"_blank\">" + result + "</a>"
     return link_str
 
 
@@ -313,7 +303,7 @@ def get_all_result_totals(report_dict):
     return total_tests,total_passed,total_failed,total_checked,total_running
 
 
-def print_report(report_dict):
+def print_report(run_date, hostname, report_dict):
     if len(sys.argv) > 1 and re.match("h",sys.argv[1]):
        gen_html = True
     else:
@@ -322,14 +312,14 @@ def print_report(report_dict):
        print "<html>"
        print "<body>"
        print "<pre>"
-    print "Software Quality Assurance Tests run on ",global_hostname," at",run_date
+    print "\nSoftware Quality Assurance Tests run on ",hostname," at",run_date
     for sw_name in report_dict:
          print '\n{:#^142}\n'.format(sw_name + ' Tests')
          for module,compiler,result,pbs_jobid,dir_name,pbs_jobname,run_result in zip(report_dict[sw_name]["module_names"],report_dict[sw_name]["compiler_names"],report_dict[sw_name]["results"],report_dict[sw_name]["pbs_job_ids"],report_dict[sw_name]["dir_names"],report_dict[sw_name]["pbs_job_names"],report_dict[sw_name]["run_results"]):
 #                print module,compiler,result,pbs_jobid,pbs_jobname,run_result
-             if sw_name == "compiler" or sw_name == "mpi" or sw_name == "boost" or sw_name == "blas":
+             if sw_name in compile_sw_l:
                 if gen_html and re.search("failed$|check$",result):
-                   log_link_str = log_link_str(sw_name+"_test",result)
+                   log_link_str = log_link_str(hostname,sw_name+"_test",result)
                    print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',log_link_str)
                 else:
                    print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',result)
@@ -338,7 +328,7 @@ def print_report(report_dict):
                    print '{:<40}{:<10}{:<4}{:-<76} {:<8}'.format(module,compiler,'Job',pbs_jobid,link_str)
                 else:
                    print '{:<40}{:<10}{:<4}{:-<76} {:<8}'.format(module,compiler,'Job',pbs_jobid,run_result)
-             elif sw_name == "vasp" or sw_name == "helios" or sw_name == "lammps" or sw_name == "cth" or sw_name == "mc21":
+             elif sw_name in dir_sw_l:
                 if gen_html and re.search("failed$|check$",run_result) and re.search("\d+",pbs_jobid):
                    link_str = html_link_str(dir_name+"/"+pbs_jobname, pbs_jobid, run_result)
                    print '{:<40}{:<20}{:-<70} {:<8}'.format(module,dir_name,pbs_jobid,link_str)
@@ -346,7 +336,7 @@ def print_report(report_dict):
                    print '{:<40}{:<20}{:-<70} {:<8}'.format(module,dir_name,pbs_jobid,run_result)
              elif sw_name == "python2" or sw_name == "python3":
                 if gen_html and re.search("failed$|check$",result):
-                   link = log_link_str(sw_name+"_test",result)
+                   link = log_link_str(hostname,sw_name+"_test",result)
                    print '{:<40}{:-<90} {:<8}'.format(module,compiler,link_str)
                 else:
                    print '{:<40}{:-<90} {:<8}'.format(module,compiler,result)
@@ -384,7 +374,6 @@ def find_name(file_name):
     s = re.search('[a-zA-Z0-9]+_([a-zA-Z0-9]+)_results.out',file_name)
     if s is not None:
        sw_name = s.groups(0)
-    print sw_name
     return s.groups(0)[0]
 
 
@@ -483,11 +472,11 @@ def check_file_patterns_found(file_pattern_d, dir_name, job_name, job_id):
         f = open(file_path,"r")
         lines = f.readlines()
         for pattern in file_pattern_d[file]:
-            print "search for pattern.",pattern
+#            print "search for pattern.",pattern
             found = False
             for line in lines:
                 if re.search(pattern,line) is not None:
-                   print "found pattern.",pattern
+#                   print "found pattern.",pattern
                    found = True
                    break
             if not found:
@@ -502,14 +491,14 @@ def check_file_patterns_found_cnt(file_pattern_d, dir_name, job_name, job_id):
         f = open(file_path,"r")
         lines = f.readlines()
         for pattern in file_pattern_d[file]:
-            print "search for pattern.",pattern
+#            print "search for pattern.",pattern
             found = False
             cnt = 0
             run_result = "failed"
             for line in lines:
                 s = re.findall(pattern,line)
                 if s is not None:
-                   print "found pattern.",pattern
+#                   print "found pattern.",pattern
                    cnt = cnt + len(s)
                    found = True
             if cnt < NUM_MPI_PROCS:
@@ -553,29 +542,28 @@ def check_files_size_nonzero(files_check_size_l, dir_name, job_name, job_id):
 
 def check_run_results_dirnames_jobnames_jobids(sw_name, dir_names, pbs_job_names, pbs_job_ids):
     run_results = []
-    print  dir_names, pbs_job_names, pbs_job_ids
     if sw_name == "python2" or sw_name == "python3":
        run_results = [None]*len(dir_names)
     else:
        for dir_name, pbs_job_name, pbs_job_id in zip(dir_names, pbs_job_names, pbs_job_ids):
-           print "pbs_job_id=",pbs_job_id
+#           print "pbs_job_id=",pbs_job_id
            if re.search('\d+',pbs_job_id.strip()) is not None:
               pbs_stdout_file = get_file_name("pbs_stdout", pbs_job_name, pbs_job_id)
-              print "pbs_stdout_file=",pbs_stdout_file
+#              print "pbs_stdout_file=",pbs_stdout_file
               pbs_stdout_filepath = get_file_path(dir_name, pbs_stdout_file)
-              print "pbs_stdout_filepath=",pbs_stdout_filepath
+#              print "pbs_stdout_filepath=",pbs_stdout_filepath
               if os.path.isfile(pbs_stdout_filepath): 
                  if check_file_patterns_found(check_file_patterns[sw_name]["file_patterns"], dir_name, pbs_job_name, pbs_job_id):
                     if sw_name == "mpi":
                        run_result = check_file_patterns_found_cnt(check_file_patterns[sw_name]["file_patterns"], dir_name, pbs_job_name, pbs_job_id)
                     else:
                        run_result = "passed"
-                    print "check_file_patterns_found=passed"
+#                    print "check_file_patterns_found=passed"
                     if check_files_size_nonzero(check_file_patterns[sw_name]["check_file_sizes"], dir_name, pbs_job_name, pbs_job_id):
-                       print "check_files_size_nonzero=check"
+#                       print "check_files_size_nonzero=check"
                        run_result = "check"
                     if not check_files_exist(check_file_patterns[sw_name]["files_exist"], dir_name, pbs_job_name, pbs_job_id):
-                       print "check_files_exist=failed"
+#                       print "check_files_exist=failed"
                        run_result = "failed"
                  else:
                     run_result = "failed"
@@ -592,12 +580,12 @@ def get_compilernames_dirnames_jobnames_results(sw_name, dlist1, dlist2, dlist3)
     dir_names = []
     pbs_job_names = []
     results = []
-    if sw_name == "compiler" or sw_name == "mpi" or sw_name == "boost" or sw_name == "blas":
+    if sw_name in compile_sw_l:
        compiler_names = dlist1
        dir_names = [None]*len(dlist1)
        pbs_job_names = dlist2
        results = dlist3
-    elif sw_name == "vasp" or sw_name == "lammps" or sw_name == "mc21" or sw_name == "helios" or sw_name == "cth" or sw_name == "nwchem":
+    elif sw_name in dir_sw_l:
        compiler_names = [None]*len(dlist1)
        dir_names = dlist1
        pbs_job_names = dlist2
@@ -634,11 +622,17 @@ def update_report_dict(report_dict, sw_name, module_names, compiler_names, dir_n
     return report_dict
 
 
+def get_dateHost():
+    f = open("datehost.out", "r")
+    lines = f.readlines()
+    date = lines[0].strip()
+    host = lines[1].strip()
+    return date,host
+
+
 def main():
     report_dict = {}
-#    if len(sys.argv) != 2:
-#       sys.exit('Usage: qa_report.py <file no>\n')
-#    print "argv=",sys.argv[0],sys.argv[1]
+    run_date,run_hostname = get_dateHost()
     results_out_files = find_results_out_files()
 #    print "results_out_files=",results_out_files
     sw_names = extract_sw_names(results_out_files)
@@ -647,19 +641,13 @@ def main():
 #        print "results_out_file=",results_out_file
         sw_name = find_name(results_out_file)
         f = open(results_out_file, "r")
-#        modules,job_names,compiler_names,dir_names,compile_results = collect_results_out(f)
         modules,dlist1,dlist2,dlist3,pbs_job_ids = collect_results(f, sw_name)
-#        print "modules=",modules
-#        print "dlist1=",dlist1
-#        print "dlist2=",dlist2
-#        print "dlist3=",dlist3
-#        print "pbs_job_ids=",pbs_job_ids
         compiler_names, dir_names, pbs_job_names, results = get_compilernames_dirnames_jobnames_results(sw_name, dlist1, dlist2, dlist3)
         run_results = check_run_results(sw_name,dir_names,pbs_job_names,pbs_job_ids) 
 #        print "run_results=",run_results
         report_dict = update_report_dict(report_dict, sw_name, modules, compiler_names, dir_names, pbs_job_names, pbs_job_ids, results, run_results)
 #    print "report_dict=",report_dict
-    print_report(report_dict)
+    print_report(run_date,run_hostname,report_dict)
 
 
 if __name__ == '__main__':
