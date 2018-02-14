@@ -112,7 +112,6 @@ void Python2Test::runTest() {
   std::string cmd_result;
   std::string script_cmd_result;
   std::string modules_load_result;
-  std::time_t date_result = std::time(NULL);
 //  std::cout << "Execute runTest member function from Python2Test object " << __FILE__ << "\t" <<__LINE__ << std::endl;
   if (!flog_.is_open()) {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << log_file_name_ << std::endl;
@@ -122,8 +121,6 @@ void Python2Test::runTest() {
       std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Opening file " << result_file_name_ << std::endl;
       exit(EXIT_FAILURE);
   }
-  fresult_ << std::ctime(&date_result) << std::endl;
-  fresult_ << getTestName() << " tests run on " << getHostName() << std::endl;
   std::cout << "Testing: " << module_name_version(getJobScripts()[0].getModules()[getJobScripts()[0].getModules().size()-1]) << std::endl;
   modules_load(flog_, getJobScripts()[0].getModules(), modules_load_result);
   int c_i = 0;

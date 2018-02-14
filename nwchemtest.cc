@@ -119,7 +119,7 @@ std::string NwchemTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, 
   std::string modules_str;
 
 //  job_script.generate();
-  fresult << module_name_version(job_script.getModules()[job_script.getModules().size()-1]) << "\t" << dir_path << "\t" << job_script.getJobName() << " job." << std::endl;
+  fresult << module_name_version(job_script.getModules()[job_script.getModules().size()-1]) << "\t" << dir_path << "\t" << job_script.getJobName() << std::endl;
 //  std::cout << job_script.getExeName() << " " << job_script.getExeArgs() << std::endl;
   if (modules_load(flog, job_script.getModules(), module_load_result)) {
     modules_str = modules_string(job_script.getModules());

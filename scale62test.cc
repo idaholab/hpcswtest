@@ -448,7 +448,7 @@ void Scale62Test::runTest() {
   int c_i = 0;
   for (auto scale_input: scale_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], scale_input);
-    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << getJobScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
+    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << getJobScripts()[c_i].getJobName() << std::endl;
     script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;

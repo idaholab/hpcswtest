@@ -87,7 +87,7 @@ void GaussianTest::runTest() {
   for (auto gaussian_input: gaussian_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], gaussian_input);
 //    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getInputFileNames()[c_i] + ".out");
+    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getInputFileNames()[c_i]);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

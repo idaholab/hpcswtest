@@ -967,7 +967,7 @@ void HeliosTest::runTest() {
     createFileFromStr("aurora-31.inp", new_helios_aurora_31_input);
     createFileFromStr("zenith-31.inp", helios_zenith_31_inputs_[c_i]);
     createHeliosJob(helios_job);
-    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << helios_dir << "\t" << getJobScripts()[c_i].getJobName() << "\t" << "job." << std::endl;
+    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << helios_dir << "\t" << getJobScripts()[c_i].getJobName() << "\t" << std::endl;
     script_cmd_result = subJobScript(flog_, helios_job);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
