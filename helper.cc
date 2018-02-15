@@ -145,28 +145,6 @@ std::string module_name_version(modules::module_type m_t) {
 }
 
 
-std::string getClusterName(void) {
-  char hostname[1024];
-  std::string cluster_name_tmp;
-  gethostname(hostname, 1023);
-  cluster_name_tmp = hostname;
-  if (cluster_name_tmp == "service0" || cluster_name_tmp == "service1" || cluster_name_tmp == "service2" ||
-      cluster_name_tmp == "falcon1" || cluster_name_tmp == "falcon2" || cluster_name_tmp == "falconpbs") {
-    cluster_name_tmp = "falcon";
-  } else if (cluster_name_tmp == "flogin1" || cluster_name_tmp == "flogin2" || cluster_name_tmp == "fpbs") {
-    cluster_name_tmp = "fission";
-  } else if (cluster_name_tmp == "bechler") {
-    cluster_name_tmp = "bechler";
-  } else if (cluster_name_tmp == "falconviz") {
-    cluster_name_tmp = "falconviz";
-  } else {
-    std::cout << "Error:(" << __FILE__ <<"," << __LINE__ << ") Do Not recognize hostname " << cluster_name_tmp << std::endl;
-    exit(EXIT_FAILURE);
-  }
-  return cluster_name_tmp;
-}
-
-
 void checkSubmitResult(const std::string &result, std::ofstream &flog, std::ofstream &fresult) {
 //  std::cout << result << std::endl;
 #ifdef SLURM

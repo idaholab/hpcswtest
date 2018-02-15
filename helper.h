@@ -50,7 +50,7 @@ bool module_load(std::ofstream &, modules::module_type, std::string &);
 std::string module_name_version(modules::module_type);
 std::string modules_string(modules::modules_type);
 bool modules_load(std::ofstream &, modules::modules_type, std::string &);
-std::string getClusterName(void);
+//std::string getClusterName(void);
 void checkSubmitResult(const std::string &, std::ofstream &, std::ofstream &);
 std::string removeSuffixExt(std::string);
 void createFileFromStr(std::string, std::string);
