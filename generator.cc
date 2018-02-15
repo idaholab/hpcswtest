@@ -128,6 +128,41 @@ void Generator::getPythonModulesJsonData(boost::property_tree::ptree::value_type
 }
 
 
+std::string Generator::getClusterNameJsonData(boost::property_tree::ptree sc) {
+  std::string clustername;
+  boost::property_tree::ptree cluster_node;
+  bool found = false;
+  char hostname[1024];
+  std::string hostname_str;
+  gethostname(hostname, 1023);
+  hostname_str = hostname;
+  for (const auto  &clusters: sc) {
+      clustername = std::string(clusters.first.data());
+      cluster_node = sc.get_child(std::string(clusters.first.data())+".login_nodes");
+      for (const auto  &c: cluster_node) {
+//          std::cout << "(Generator::getClusterNameJsonData)" << "compare " << hostname_str << " with " << std::string(c.second.data()) << std::endl;
+          if (hostname_str == std::string(c.second.data())) {
+//             std::cout << "(Generator::getClusterNameJsonData)" << "found host" << std::endl;
+             found = true;
+             break;
+          }
+      }
+      if (found) break;
+  }
+  if (!found) {
+     std::cout << "Warning: Could not determine what cluster you are testing on, check your json file." << std::endl;
+  }
+  return clustername;
+}
+
+
+int Generator::getPbsMaxChunkSizeJsonData(std::string clustername, boost::property_tree::ptree sc) {
+    int pbs_max_chunk_size;
+    pbs_max_chunk_size = sc.get<int>(clustername+".pbs_max_chunk_size");
+    return  pbs_max_chunk_size;
+}
+
+
 void Generator::createTestObjects(void) {
   std::string module_name;
   std::string module_version;
@@ -154,6 +189,8 @@ void Generator::createTestObjects(void) {
 //  std::cout << "(Enter Generator::Generator)" << std::endl;
   std::string cluster_name;
   boost::property_tree::ptree pt;
+  boost::property_tree::ptree sc;
+  int pbs_max_chunk_size;
   if (hpcswtest_queue_env = std::getenv("HPCSWTEST_QUEUE")) {
      hpcswtest_queue = hpcswtest_queue_env;
   }
@@ -161,9 +198,15 @@ void Generator::createTestObjects(void) {
      cpu_type = cpu_type_env;
   }
 //  std::cout << "(Generator::Generator) json_file_name_ = " << json_file_name_ << std::endl;
-  cluster_name = getClusterName();
-//  std::cout << "(Generator::Generator) cluster_name = " << cluster_name << std::endl;
   boost::property_tree::read_json(json_file_name_, pt);
+  sc = pt.get_child("system_configuration");
+  cluster_name = Generator::getClusterNameJsonData(sc);
+//  std::cout << "(Generator::Generator) cluster_name = " << cluster_name << std::endl;
+#ifndef SLURM
+  pbs_max_chunk_size = Generator::getPbsMaxChunkSizeJsonData(cluster_name, sc);
+//  std::cout << "(Generator::Generator) pbs_max_chunk_size = " << pbs_max_chunk_size << std::endl;
+#endif
+
   for (auto v: pt.get_child(cluster_name)) {
 //    std::cout << "(Generator::Generator) Test key= " << v.first << std::endl;
     for (auto v2: pt.get_child(cluster_name + "." + v.first)) {
@@ -176,7 +219,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules,1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules,1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules,1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
 //        std::cout << "(generator) after job_script object generated" << std::endl;
         tests_.push_back(new hpcswtest::CompilerTest(job_script, c_name, cpp_name, f_name, c_flags, cpp_flags, f_flags, c_link_libs, cpp_link_libs, f_link_libs));
@@ -192,7 +235,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::McnpTest(job_script, run_script));
       } else if (v.first == "mcnpx") {
@@ -205,7 +248,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::McnpxTest(job_script, run_script));
       } else if (v.first == "mpi") {
@@ -217,7 +260,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, mpi_cmd_name, mpi_cmd_args, "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, mpi_cmd_name, mpi_cmd_args, "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, mpi_cmd_name, mpi_cmd_args, "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::MpiTest(job_script, c_name, cpp_name, f_name, c_flags, cpp_flags, f_flags, c_link_libs, cpp_link_libs, f_link_libs));
       } else if (v.first == "blas") {
@@ -226,7 +269,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::BlasTest(job_script, c_name, cpp_name, f_name, c_flags, cpp_flags, f_flags, c_link_libs, cpp_link_libs, f_link_libs));
       } else if (v.first == "boost") {
@@ -235,7 +278,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::BoostTest(job_script, c_name, cpp_name, f_name, c_flags, cpp_flags, f_flags, c_link_libs, cpp_link_libs, f_link_libs));
       } else if (v.first == "scale") {
@@ -246,7 +289,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::ScaleTest(job_script, v.first));
       } else if (v.first == "scale62") {
@@ -257,7 +300,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::Scale62Test(job_script, v.first));
       } else if (v.first == "serpent") {
@@ -268,7 +311,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 4, 2, "", "", "", "", "", "", hpcswtest_queue, "0:10:00");
 #else
-        jobscript::PbsScript job_script(modules, 4, 2, "", "", "", "", "", "", hpcswtest_queue, cpu_type, "0:10:00");
+        jobscript::PbsScript job_script(modules, 4, 2, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size, "0:10:00");
 #endif
         tests_.push_back(new hpcswtest::SerpentTest(job_script, run_script));
       } else if (v.first == "cth") {
@@ -279,7 +322,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::CthTest(job_script, run_script));
       } else if (v.first == "helios") {
@@ -296,7 +339,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, "0:5:0");
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, "0:5:0");
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size, "0:5:0");
 #endif
         tests_.push_back(new hpcswtest::HeliosTest(job_script, aurora_exe_name, helios_exe_name, zenith_exe_name, library_name, v.first));
       } else if (v.first == "mc21") {
@@ -309,7 +352,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 12, 12, "", "", "", "", "", "", hpcswtest_queue, "0:10:00");
 #else
-        jobscript::PbsScript job_script(modules, 12, 12, "", "", "", "", "", "", hpcswtest_queue, cpu_type, "0:10:00");
+        jobscript::PbsScript job_script(modules, 12, 12, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size, "0:10:00");
 #endif
         tests_.push_back(new hpcswtest::Mc21Test(job_script, run_script));
       } else if (v.first == "vasp") {
@@ -321,7 +364,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::VaspTest(job_script, run_script));
       } else if (v.first == "lammps") {
@@ -331,7 +374,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::LammpsTest(job_script, run_script));
       } else if (v.first == "nwchem") {
@@ -341,7 +384,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::NwchemTest(job_script, run_script));
       } else if (v.first == "gaussian") {
@@ -352,7 +395,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::GaussianTest(job_script, run_script));
       } else if (v.first == "abaqus") {
@@ -362,7 +405,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::AbaqusTest(job_script, run_script));
       } else if (v.first == "starccm") {
@@ -372,7 +415,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 2, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::StarccmTest(job_script, run_script));
       } else if (v.first == "matlab") {
@@ -382,7 +425,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", exe_name, exe_args, "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::MatlabTest(job_script));
       } else if (v.first == "python2") {
@@ -393,7 +436,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::Python2Test(job_script, python_modules, v.first));
       } else if (v.first == "python3") {
@@ -404,7 +447,7 @@ void Generator::createTestObjects(void) {
 #ifdef SLURM
         jobscript::SlurmScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue);
 #else
-        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type);
+        jobscript::PbsScript job_script(modules, 1, 1, "", "", "", "", "", "", hpcswtest_queue, cpu_type, pbs_max_chunk_size);
 #endif
         tests_.push_back(new hpcswtest::Python3Test(job_script, python_modules, v.first));
       } else {

@@ -79,6 +79,8 @@ class Generator {
     void getMpiCmdNameArgsJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &);
     void getHeliosExesJsonData(boost::property_tree::ptree::value_type, std::string &, std::string &, std::string &);
     void getPythonModulesJsonData(boost::property_tree::ptree::value_type, std::vector<std::string> &);
+    std::string getClusterNameJsonData(boost::property_tree::ptree);
+    int getPbsMaxChunkSizeJsonData(std::string, boost::property_tree::ptree);
     std::string json_file_name_;
     std::vector<HpcSwTest *> tests_;
 
