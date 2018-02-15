@@ -45,7 +45,7 @@ std::vector<jobscript::JOBSCRIPT> SrcTest::calcCJobScripts(const jobscript::JOBS
 #ifdef SLURM
     jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getWallTime());
 #else
-    jobscript::PbsScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+    jobscript::PbsScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), c_e_n, "", "c_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "c_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getChunkSize(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
 #endif
      p_s_o_tmp.push_back(job_script);
      ++ic;
@@ -64,7 +64,7 @@ std::vector<jobscript::JOBSCRIPT> SrcTest::calcCppJobScripts(const jobscript::JO
 #ifdef SLURM
     jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getWallTime());
 #else
-    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), cpp_e_n, "", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "cpp_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getChunkSize(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
 #endif
      p_s_o_tmp.push_back(job_script);
      ++ic;
@@ -83,7 +83,7 @@ std::vector<jobscript::JOBSCRIPT> SrcTest::calcFJobScripts(const jobscript::JOBS
 #ifdef SLURM
     jobscript::SlurmScript job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".sbatch", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getWallTime());
 #else
-    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
+    jobscript::JOBSCRIPT job_script(ms_tmp, p_s_o.getTotalNumProcs(), p_s_o.getMaxNumProcsPerNode(), p_s_o.getMpiCmdName(), p_s_o.getMpiCmdArgs(), f_e_n, "", "f_script_" + std::to_string(getTestObjectCount()) + "_" +  std::to_string(ic) + ".pbs", "f_script_" + std::to_string(getTestObjectCount()) + "_" + std::to_string(ic), p_s_o.getQueueName(), p_s_o.getCpuType(), p_s_o.getChunkSize(), p_s_o.getWallTime(), p_s_o.getPbsArrangement(), p_s_o.getPbsSharing());
 #endif
      p_s_o_tmp.push_back(job_script);
      ++ic;

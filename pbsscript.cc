@@ -31,12 +31,13 @@ Author: Cormac Garvey
 namespace jobscript {
 
 
-PbsScript::PbsScript(modules::modules_type ms, int t_n_p, int m_n_p_p_n, std::string m_c_n, std::string m_c_a, std::string e_n, std::string e_a, std::string j_s_n, std::string j_n, std::string q_n, std::string c_t, std::string w_t, PbsArrangement p_a, PbsSharing p_s): JobScript(t_n_p, m_n_p_p_n, m_c_n, m_c_a, e_n, e_a, j_s_n, j_n, q_n, w_t, ms),
+PbsScript::PbsScript(modules::modules_type ms, int t_n_p, int m_n_p_p_n, std::string m_c_n, std::string m_c_a, std::string e_n, std::string e_a, std::string j_s_n, std::string j_n, std::string q_n, std::string c_t, int c_s, std::string w_t, PbsArrangement p_a, PbsSharing p_s): JobScript(t_n_p, m_n_p_p_n, m_c_n, m_c_a, e_n, e_a, j_s_n, j_n, q_n, w_t, ms),
                                                                                                                                                                                                                       f_pbs_script_(j_s_n,std::ios_base::out),
                                                                                                                                                                                                                       cpu_type_(c_t),
+                                                                                                                                                                                                                      chunk_size_(c_s),
                                                                                                                                                                                                                       pbs_arrangement_(p_a), 
                                                                                                                                                                                                                       pbs_sharing_(p_s) {
-  setDefaultChunkSize();        
+//  setDefaultChunkSize();        
 //  generate();
 }
 
@@ -107,7 +108,7 @@ std::string PbsScript::getPbsSharingStr(void) const {
 }
 
 
-void PbsScript::setDefaultChunkSize(void) {
+/*void PbsScript::setDefaultChunkSize(void) {
   std::string hostname = getHostName();
   if (hostname == "service0" || hostname == "service1" || hostname == "service2" ||
       hostname == "falcon1" || hostname == "falcon2" || hostname == "falconpbs" ||
@@ -121,7 +122,7 @@ void PbsScript::setDefaultChunkSize(void) {
     std::cerr << "Error: (" << __FILE__ << "," << __LINE__ << ") Do not recognize hostname = " << hostname << std::endl;
     exit(EXIT_FAILURE);
   }
-}
+} */
 
 
 std::string PbsScript::getCpuType(void) const {

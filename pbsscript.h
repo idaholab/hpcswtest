@@ -43,7 +43,7 @@ class PbsScript: public JobScript {
   public:
     enum PbsArrangement {kFree, kPack, kScatter};
     enum PbsSharing {kExcl, kShared};
-    PbsScript(modules::modules_type ms = {{}}, int t_n_p=1, int m_n_p_p_n=1, std::string m_c_n="", std::string m_c_a="", std::string e_n="exe_dummy", std::string e_a="exe_dummy_args", std::string j_s_n="job.pbs", std::string j_n="job", std::string q_n="hpc_support", std::string c_t="broadwell", std::string w_t="0:02:00", PbsArrangement p_a=kFree, PbsSharing p_s=kExcl);
+    PbsScript(modules::modules_type ms = {{}}, int t_n_p=1, int m_n_p_p_n=1, std::string m_c_n="", std::string m_c_a="", std::string e_n="exe_dummy", std::string e_a="exe_dummy_args", std::string j_s_n="job.pbs", std::string j_n="job", std::string q_n="hpc_support", std::string c_t="broadwell", int c_s=1, std::string w_t="0:02:00", PbsArrangement p_a=kFree, PbsSharing p_s=kExcl);
 //    PbsScript(std::string, std::string, std::string, modules::Modules m_o);
     PbsScript(const PbsScript &);
 //    PbsScript(void) = default;
@@ -57,7 +57,7 @@ class PbsScript: public JobScript {
     void generate(void) override;
 
   private:
-    void setDefaultChunkSize(void);
+ //   void setDefaultChunkSize(void);
     std::ofstream f_pbs_script_;
     int chunk_size_;
     std::string cpu_type_;
