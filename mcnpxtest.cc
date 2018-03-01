@@ -122,11 +122,18 @@ mgopt f 30
 }; // vector mcnpx_inputs_
 
 
-McnpxTest::McnpxTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("x", "", p_s, mcnpx_inputs_.size(), e_n),
-                                                                               log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                               result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                               flog_(log_file_name_,std::ios_base::app),
-                                                                               fresult_(result_file_name_,std::ios_base::app) {}
+McnpxTest::McnpxTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("x", "", p_s, mcnpx_inputs_.size(), s_a_n),
+                                                                                 log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                                 result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                                 flog_(log_file_name_,std::ios_base::app),
+                                                                                 fresult_(result_file_name_,std::ios_base::app) {}
+
+
+McnpxTest::McnpxTest(const jobscript::JOBSCRIPT &p_s): AppTest("x", "", p_s, mcnpx_inputs_.size()),
+                                                       log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                       result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                       flog_(log_file_name_,std::ios_base::app),
+                                                       fresult_(result_file_name_,std::ios_base::app) {}
 
 
 void McnpxTest::runTest() {
@@ -145,7 +152,7 @@ void McnpxTest::runTest() {
   int c_i = 0;
   for (auto mcnpx_input: mcnpx_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], mcnpx_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getJobScripts()[c_i].getJobName());
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

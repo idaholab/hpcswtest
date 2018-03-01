@@ -87,8 +87,8 @@ timestep	0.005
 run		50000)"
 }; // vector lammps_inputs_
 
-
-std::string LammpsTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
+/*
+std::string LammpsTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
@@ -111,21 +111,21 @@ std::string LammpsTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, 
   }
   return script_cmd_result;
 }
-
+*/
 
 
 LammpsTest::LammpsTest(const jobscript::JOBSCRIPT &p_s): AppTest("lammps", "", p_s ,lammps_inputs_.size()),
-                                                     log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                     result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                     flog_(log_file_name_,std::ios_base::app),
-                                                     fresult_(result_file_name_,std::ios_base::app) {}
+                                                         log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                         result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                         flog_(log_file_name_,std::ios_base::app),
+                                                         fresult_(result_file_name_,std::ios_base::app) {}
 
 
-LammpsTest::LammpsTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("lammps", "", p_s ,lammps_inputs_.size(), e_n),
-                                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                             flog_(log_file_name_,std::ios_base::app),
-                                                                             fresult_(result_file_name_,std::ios_base::app) {}
+LammpsTest::LammpsTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("lammps", "", p_s ,lammps_inputs_.size(), s_a_n),
+                                                                                   log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                                   result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                                   flog_(log_file_name_,std::ios_base::app),
+                                                                                   fresult_(result_file_name_,std::ios_base::app) {}
 
 
 void LammpsTest::runTest() {
@@ -148,7 +148,7 @@ void LammpsTest::runTest() {
     makeDir(lammps_dir);
     changeDir(lammps_dir);
     createFileFromStr(getInputFileNames()[c_i], lammps_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], lammps_dir);
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i, lammps_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

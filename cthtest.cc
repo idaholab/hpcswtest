@@ -271,7 +271,7 @@ endspy)ttt"
 }; // vector cth_inputs_
 
 
-std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
+/*std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
@@ -293,13 +293,20 @@ std::string CthTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, con
   }
   return script_cmd_result;
 }
+*/
+
+CthTest::CthTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("cth", "", p_s, cth_inputs_.size(), s_a_n),
+                                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                             flog_(log_file_name_,std::ios_base::app),
+                                                                             fresult_(result_file_name_,std::ios_base::app) {}
 
 
-CthTest::CthTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("cth", "", p_s, cth_inputs_.size(), e_n),
-                                                                                 log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                                 result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                                 flog_(log_file_name_,std::ios_base::app),
-                                                                                 fresult_(result_file_name_,std::ios_base::app) {}
+CthTest::CthTest(const jobscript::JOBSCRIPT &p_s): AppTest("cth", "", p_s, cth_inputs_.size()),
+                                                   log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                   result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                   flog_(log_file_name_,std::ios_base::app),
+                                                   fresult_(result_file_name_,std::ios_base::app) {}
 
 
 void CthTest::runTest() {
@@ -323,7 +330,7 @@ void CthTest::runTest() {
     makeDir(cth_dir);
     changeDir(cth_dir);
     createFileFromStr(getInputFileNames()[c_i], cth_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], cth_dir);
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i, cth_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

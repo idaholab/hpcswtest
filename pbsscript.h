@@ -58,7 +58,7 @@ class PbsScript: public JobScript {
 
   private:
  //   void setDefaultChunkSize(void);
-    std::ofstream f_pbs_script_;
+//    std::ofstream f_pbs_script_;
     int chunk_size_;
     std::string cpu_type_;
     PbsArrangement pbs_arrangement_;

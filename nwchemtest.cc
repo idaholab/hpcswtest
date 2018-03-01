@@ -111,8 +111,8 @@ end
 task scf)"
 }; // vector nwchem_inputs_
 
-
-std::string NwchemTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
+/*
+std::string NwchemTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
@@ -135,21 +135,21 @@ std::string NwchemTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, 
   }
   return script_cmd_result;
 }
-
+*/
 
 
 NwchemTest::NwchemTest(const jobscript::JOBSCRIPT &p_s): AppTest("nwchem", "", p_s ,nwchem_inputs_.size()),
-                                                     log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                     result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                     flog_(log_file_name_,std::ios_base::app),
-                                                     fresult_(result_file_name_,std::ios_base::app) {}
+                                                         log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                         result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                         flog_(log_file_name_,std::ios_base::app),
+                                                         fresult_(result_file_name_,std::ios_base::app) {}
 
 
-NwchemTest::NwchemTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("nwchem", "", p_s ,nwchem_inputs_.size(), e_n),
-                                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                             flog_(log_file_name_,std::ios_base::app),
-                                                                             fresult_(result_file_name_,std::ios_base::app) {}
+NwchemTest::NwchemTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("nwchem", "", p_s ,nwchem_inputs_.size(), s_a_n),
+                                                                                   log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                                   result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                                   flog_(log_file_name_,std::ios_base::app),
+                                                                                   fresult_(result_file_name_,std::ios_base::app) {}
 
 
 void NwchemTest::runTest() {
@@ -172,7 +172,7 @@ void NwchemTest::runTest() {
     makeDir(nwchem_dir);
     changeDir(nwchem_dir);
     createFileFromStr(getInputFileNames()[c_i], nwchem_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], nwchem_dir);
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i, nwchem_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

@@ -47,11 +47,19 @@ e
 }; // vector matlab_inputs_
 
 
+MatlabTest::MatlabTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("matlab", ".m", p_s, matlab_inputs_.size(), s_a_n),
+                                                                            log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                            result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                            flog_(log_file_name_,std::ios_base::app),
+                                                                            fresult_(result_file_name_,std::ios_base::app) {}
+
+
 MatlabTest::MatlabTest(const jobscript::JOBSCRIPT &p_s): AppTest("matlab", ".m", p_s, matlab_inputs_.size()),
                                                          log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
                                                          result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
                                                          flog_(log_file_name_,std::ios_base::app),
                                                          fresult_(result_file_name_,std::ios_base::app) {}
+
 
 
 void MatlabTest::runTest() {
@@ -70,8 +78,8 @@ void MatlabTest::runTest() {
   int c_i = 0;
   for (auto matlab_input: matlab_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], matlab_input);
-    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << getJobScripts()[c_i].getJobName() << std::endl;
-    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
+//    fresult_ << module_name_version(getJobScripts()[c_i].getModules()[getJobScripts()[c_i].getModules().size()-1]) << "\t" << getJobScripts()[c_i].getJobName() << std::endl;
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

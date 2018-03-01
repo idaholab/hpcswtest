@@ -31,17 +31,18 @@ Author: Cormac Garvey
 namespace jobscript {
 
 
+//                                                                                                                                                                                                                                                                                      f_pbs_script_(j_s_n,std::ios_base::out),
 PbsScript::PbsScript(modules::modules_type ms, int t_n_p, int m_n_p_p_n, std::string m_c_n, std::string m_c_a, std::string e_n, std::string e_a, std::string j_s_n, std::string j_n, std::string q_n, std::string c_t, int c_s, std::string w_t, PbsArrangement p_a, PbsSharing p_s): JobScript(t_n_p, m_n_p_p_n, m_c_n, m_c_a, e_n, e_a, j_s_n, j_n, q_n, w_t, ms),
-                                                                                                                                                                                                                      f_pbs_script_(j_s_n,std::ios_base::out),
-                                                                                                                                                                                                                      cpu_type_(c_t),
-                                                                                                                                                                                                                      chunk_size_(c_s),
-                                                                                                                                                                                                                      pbs_arrangement_(p_a), 
-                                                                                                                                                                                                                      pbs_sharing_(p_s) {
+                                                                                                                                                                                                                                                                                      cpu_type_(c_t),
+                                                                                                                                                                                                                                                                                      chunk_size_(c_s),
+                                                                                                                                                                                                                                                                                      pbs_arrangement_(p_a), 
+                                                                                                                                                                                                                                                                                      pbs_sharing_(p_s) {
 //  setDefaultChunkSize();        
 //  generate();
 }
 
-PbsScript::PbsScript(const PbsScript & p_s): JobScript(p_s), f_pbs_script_(p_s.getJobScriptName(),std::ios_base::app) {
+//PbsScript::PbsScript(const PbsScript & p_s): JobScript(p_s), f_pbs_script_(p_s.getJobScriptName(),std::ios_base::app) {
+PbsScript::PbsScript(const PbsScript & p_s): JobScript(p_s) {
 //  f_pbs_script_ = p_s.f_pbs_script_;
   chunk_size_ = p_s.chunk_size_;
   cpu_type_ = p_s.cpu_type_;
@@ -134,23 +135,25 @@ void PbsScript::generate(void) {
   int select_size;
 //  std::vector<module_type> m = modules_.getModules();
   auto m = getModules();
+  std::ofstream f_pbs_script(getJobScriptName(),std::ios_base::out);
+
   select_size = getTotalNumProcs() / getMaxNumProcsPerNode();
-  f_pbs_script_ << "#PBS -N " << getJobName() << std::endl;
-  f_pbs_script_ << "#PBS -q " << getQueueName() << std::endl;
+  f_pbs_script << "#PBS -N " << getJobName() << std::endl;
+  f_pbs_script << "#PBS -q " << getQueueName() << std::endl;
 //  if (getTotalNumCores() <= getChunkSize()) {
-  f_pbs_script_ << "#PBS -l select=" << select_size << ":ncpus=" << getChunkSize() << ":mpiprocs=" << getMaxNumProcsPerNode() << ":cputype=" << getCpuType()<< std::endl;
+  f_pbs_script << "#PBS -l select=" << select_size << ":ncpus=" << getChunkSize() << ":mpiprocs=" << getMaxNumProcsPerNode() << ":cputype=" << getCpuType()<< std::endl;
 //  }
-  f_pbs_script_ << "#PBS -l walltime=" << getWallTime() << std::endl;
-  f_pbs_script_ << "#PBS -l place=" << getPbsArrangementStr() << ":" << getPbsSharingStr() << std::endl;
-  f_pbs_script_ << "source /etc/profile.d/modules.sh" << std::endl;
+  f_pbs_script << "#PBS -l walltime=" << getWallTime() << std::endl;
+  f_pbs_script << "#PBS -l place=" << getPbsArrangementStr() << ":" << getPbsSharingStr() << std::endl;
+  f_pbs_script << "source /etc/profile.d/modules.sh" << std::endl;
   for (auto m_p: m) {
-    f_pbs_script_ << "module load " << m_p.first << "/" << m_p.second << std::endl;
+    f_pbs_script << "module load " << m_p.first << "/" << m_p.second << std::endl;
   }
-  f_pbs_script_ << "cd $PBS_O_WORKDIR" << std::endl;
+  f_pbs_script << "cd $PBS_O_WORKDIR" << std::endl;
   if (getMpiCmdName() == "") {
-    f_pbs_script_ << getExeName() << " " << getExeArgs() << std::endl;
+    f_pbs_script << getExeName() << " " << getExeArgs() << std::endl;
   } else {
-    f_pbs_script_ << getMpiCmdName() << " " << getMpiCmdArgs() << " " << getExeName() << " " << getExeArgs() << std::endl;
+    f_pbs_script << getMpiCmdName() << " " << getMpiCmdArgs() << " " << getExeName() << " " << getExeArgs() << std::endl;
   }
 }
  

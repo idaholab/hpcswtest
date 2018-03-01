@@ -41,6 +41,7 @@ namespace hpcswtest {
 class MatlabTest: public AppTest {
 
   public:
+    MatlabTest(const jobscript::JOBSCRIPT &, const std::string &);
     MatlabTest(const jobscript::JOBSCRIPT &);
     virtual ~MatlabTest(void) {};
     virtual void runTest(void) override;

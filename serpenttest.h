@@ -41,6 +41,7 @@ class SerpentTest: public AppTest {
 
   public:
     SerpentTest(const jobscript::JOBSCRIPT &, const std::string &);
+    SerpentTest(const jobscript::JOBSCRIPT &);
     virtual ~SerpentTest(void) {};
     virtual void runTest(void) override;
 

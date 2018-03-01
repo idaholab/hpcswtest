@@ -41,6 +41,7 @@ class AbaqusTest: public AppTest {
 
   public:
     AbaqusTest(const jobscript::JOBSCRIPT &, const std::string &);
+    AbaqusTest(const jobscript::JOBSCRIPT &);
     virtual ~AbaqusTest(void) {};
     virtual void runTest(void) override;
 

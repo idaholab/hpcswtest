@@ -1632,8 +1632,8 @@ END of PSCTR-controll parameters
  End of Dataset)"
 }; // vector vasp_potcar_inputs_
 
-
-std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, const jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
+/*
+std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, jobscript::JOBSCRIPT &job_script, const std::string &dir_path) const {
   std::string script_cmd_result;
   std::string module_load_result;
   std::string script_cmd;
@@ -1656,7 +1656,7 @@ std::string VaspTest::exeAppTest(std::ofstream &flog, std::ofstream &fresult, co
   }
   return script_cmd_result;
 }
-
+*/
 
 
 VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size()),
@@ -1666,11 +1666,11 @@ VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s): AppTest("vasp", "", p_s ,va
                                                      fresult_(result_file_name_,std::ios_base::app) {}
 
 
-VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size(), e_n),
-                                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                             flog_(log_file_name_,std::ios_base::app),
-                                                                             fresult_(result_file_name_,std::ios_base::app) {}
+VaspTest::VaspTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("vasp", "", p_s ,vasp_incar_inputs_.size(), s_a_n),
+                                                                               log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                               result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                               flog_(log_file_name_,std::ios_base::app),
+                                                                               fresult_(result_file_name_,std::ios_base::app) {}
 
 /*
 void VaspTest::setTestNumber(int t_n) {
@@ -1711,7 +1711,7 @@ void VaspTest::runTest() {
     createFileFromStr("POSCAR", vasp_poscar_inputs_[c_i]);
     createFileFromStr("POTCAR", vasp_potcar_inputs_[c_i]);
 //    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], vasp_dir);
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i, vasp_dir);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     changeDir("..");
     ++c_i;

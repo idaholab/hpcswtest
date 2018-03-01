@@ -60,12 +60,26 @@ end of input
 }; // vector mcnp_inputs_
 
 
-McnpTest::McnpTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("m", "", p_s, mcnp_inputs_.size(), e_n),
-                                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                                             flog_(log_file_name_,std::ios_base::app),
-                                                                             fresult_(result_file_name_,std::ios_base::app) {}
+McnpTest::McnpTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("m", "", p_s, mcnp_inputs_.size(), s_a_n),
+                                                                               log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                               result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                               flog_(log_file_name_,std::ios_base::app),
+                                                                               fresult_(result_file_name_,std::ios_base::app) {}
 
+
+McnpTest::McnpTest(const jobscript::JOBSCRIPT &p_s): AppTest("m", "", p_s, mcnp_inputs_.size()),
+                                                     log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                     result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                     flog_(log_file_name_,std::ios_base::app),
+                                                     fresult_(result_file_name_,std::ios_base::app) {}
+
+/*
+McnpTest::McnpTest(const std::string s_a_n): AppTest("m", "", s_a_n, calcSubAppArgs(), mcnp_inputs_.size()),
+                                                     log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                     result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                     flog_(log_file_name_,std::ios_base::app),
+                                                     fresult_(result_file_name_,std::ios_base::app) {}
+*/
 
 void McnpTest::runTest() {
   std::string cmd_result;
@@ -83,7 +97,7 @@ void McnpTest::runTest() {
   int c_i = 0;
   for (auto mcnp_input: mcnp_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], mcnp_input);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getJobScripts()[c_i].getJobName());
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

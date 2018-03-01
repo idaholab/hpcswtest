@@ -41,29 +41,37 @@ class AppTest: public HpcSwTest {
 	public:
 		AppTest(const std::string &, const std::string &, const jobscript::JOBSCRIPT &, int, const std::string &);
 		AppTest(const std::string &, const std::string &, const jobscript::JOBSCRIPT &, int);
+//		AppTest(const std::string &, const std::string &, const std::string &, const std::string &, int);
 		virtual ~AppTest(void) {};
 		virtual void runTest(void) override;
 		void setRunCmd(const std::string &);
 		std::string getRunCmd(void) const;
     std::vector<std::string> getInputFileNames(void) const;
     std::vector<jobscript::JOBSCRIPT> getJobScripts(void) const;
+    std::string getSubAppName(void) const;
+    std::vector<std::string> getSubAppArgs(void) const;
 
   protected:
     virtual std::vector<std::string> calcInputNames(const std::string &, int, const std::string &) const;
-    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const;
+    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, jobscript::JOBSCRIPT &, const std::string &) const;
+    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, int);
+    virtual std::string exeAppTest(std::ofstream &, std::ofstream &, int, std::string &);
 
 	private:
+    std::string sub_app_name_;
     std::vector<jobscript::JOBSCRIPT> calcJobScripts(const std::string &, const jobscript::JOBSCRIPT &, const std::string &) const;
     std::vector<jobscript::JOBSCRIPT> calcJobScripts(const std::string &, const jobscript::JOBSCRIPT &) const;
+    std::vector<std::string> calcSubAppArgs(const std::string &, const jobscript::JOBSCRIPT &) const;
     std::string calcStarccmSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
     std::string calcSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
     std::string calcAbaqusSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
     std::string calcGaussianSubArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
     std::string calcVaspSubArgs(const jobscript::JOBSCRIPT &, const std::string &) const;
-    std::string calcExeArgs(const jobscript::JOBSCRIPT &, const std::string &) const;
+    std::string calcExeArgs(const jobscript::JOBSCRIPT &, const std::string &, const std::string &) const;
 		std::string run_cmd_;
     std::vector<std::string> input_file_names_;
     std::vector<jobscript::JOBSCRIPT> job_scripts_;
+    std::vector<std::string> sub_app_args_;
 
 }; // class AppTest
 

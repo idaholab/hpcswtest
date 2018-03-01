@@ -110,12 +110,14 @@
                                  {"module_name": "MCNP5", "module_version": "1.40-imvmklt-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.40"},
                                  {"module_name": "MCNP5", "module_version": "1.60-imvmklt-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp5_1.60"},
                                  {"module_name": "MCNP6", "module_version": "1.0-imvmklt-1.5.0",  "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.0"},
+                                 {"module_name": "MCNP6", "module_version": "1.0-imvmklt-1.5.0",  "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "mpi_cmd_name": "mpirun", "exe_name": "mcnp6.mpi", "exe_args": "i=INPUT_NAME n=JOB_NAME."},
                                  {"module_name": "MCNP6", "module_version": "1.1b-imvmklt-2.5.0",  "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnp6_1.1b"}
                                 ],
                    "mcnpx":  
 		                [
                                  {"module_name": "MCNPX", "module_version": "2.6.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.6.0"},
-                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"}
+                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_mcnpx_2.7.0"},
+                                 {"module_name": "MCNPX", "module_version": "2.7.0-ictcet-2.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "mpi_cmd_name": "mpirun", "mpi_cmd_args": "-genv DATAPATH /hpc-common/data/mcnp/mcnpdata-1.0/MCNP_DATA", "exe_name": "mcnpx.mpi", "exe_args": "i=INPUT_NAME n=JOB_NAME."}
                                 ],
                    "scale":  
 		                [
@@ -143,16 +145,19 @@
                                  {"module_name": "serpent", "module_version": "2.1.26-goolf-5.5.7-readinput", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.26"},
                                  {"module_name": "serpent", "module_version": "2.1.27_SC-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27_SC"},
                                  {"module_name": "serpent", "module_version": "2.1.27-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.27"},
-                                 {"module_name": "serpent", "module_version": "2.1.28-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.28"}
+                                 {"module_name": "serpent", "module_version": "2.1.28-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_serpent_2.1.28"},
+                                 {"module_name": "serpent", "module_version": "2.1.28-goolf-5.5.7", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "mpi_cmd_name": "mpiexec", "exe_name": "sss2", "exe_args": "INPUT_NAME -omp 1"}
                                 ],
                    "cth":  
 		                [
-                                 {"module_name": "cth", "module_version": "11.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_cth_11.2"}
+                                 {"module_name": "cth", "module_version": "11.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "run_script": "sub_cth_11.2"},
+                                 {"module_name": "cth", "module_version": "11.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "extra_module_name2": "none", "extra_module_version2": "none", "mpi_cmd_name": "mpirun", "exe_name": "mpicth", "exe_args": "i=INPUT_NAME"}
                                 ],
                    "mc21":  
 		                [
                                  {"module_name": "mc21", "module_version": "5.00.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_5.00.01"},
-                                 {"module_name": "mc21", "module_version": "6.01.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_6.01.01"}
+                                 {"module_name": "mc21", "module_version": "6.01.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "run_script": "sub_mc21_6.01.01"},
+                                 {"module_name": "mc21", "module_version": "6.01.01", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "mpi_cmd_name": "mpirun", "exe_name": "mc21HostStart mc21.06.01.01.INL", "exe_args": "-input INPUT_NAME"}
                                 ],
                    "vasp":  
 		                [
@@ -166,33 +171,39 @@
                                  {"module_name": "VASP", "module_version": "5.4.1-ictcet-4.5.0-sol", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.1"},
                                  {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-std", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
                                  {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-gam", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
-                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"}
+                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_vasp_5.4.4"},
+                                 {"module_name": "VASP", "module_version": "5.4.4-ictcet-4.5.0-ncl", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "mpi_cmd_name": "mpirun", "exe_name": "vasp"}
                                 ],
                    "lammps":  
 		                [
-                                 {"module_name": "lammps", "module_version": "11Aug17-gmvolf-5.5.7", "run_script": "sub_lammps_11Aug17"}
+                                 {"module_name": "lammps", "module_version": "11Aug17-gmvolf-5.5.7", "run_script": "sub_lammps_11Aug17"},
+                                 {"module_name": "lammps", "module_version": "11Aug17-gmvolf-5.5.7", "mpi_cmd_name": "mpirun", "exe_name": "lmp_inl", "exe_args": "-in INPUT_NAME"}
                                 ],
                    "nwchem":  
 		                [
-                                 {"module_name": "NWChem", "module_version": "6.6.revision27746-gmvolf-5.5.7-2015-10-20-Python-2.7.9", "run_script": "sub_nwchem_6.6"}
+                                 {"module_name": "NWChem", "module_version": "6.6.revision27746-gmvolf-5.5.7-2015-10-20-Python-2.7.9", "run_script": "sub_nwchem_6.6"},
+                                 {"module_name": "NWChem", "module_version": "6.6.revision27746-gmvolf-5.5.7-2015-10-20-Python-2.7.9", "mpi_cmd_name": "mpirun", "exe_name": "nwchem", "exe_args": "INPUT_NAME"}
                                 ],
                    "gaussian":
                                 [
                                  {"module_name": "gaussian", "module_version": "03_C.02", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_03_C.02"},
-                                 {"module_name": "gaussian", "module_version": "09_E.01", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_09_E.01"}
+                                 {"module_name": "gaussian", "module_version": "09_E.01", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "run_script": "sub_gaussian_09_E.01"},
+                                 {"module_name": "gaussian", "module_version": "16", "extra_module_name1": "use.restricted", "extra_module_version1": "none", "exe_name": "g16", "exe_args": "-p=\"1\" < INPUT_NAME > JOB_NAME.out"}
                                 ],
                    "abaqus":  
 		                [
                                  {"module_name": "ABAQUS", "module_version": "6.12.2", "run_script": "sub_abaqus_6.12.2"},
                                  {"module_name": "ABAQUS", "module_version": "6.13.2", "run_script": "sub_abaqus_6.13.2"},
                                  {"module_name": "ABAQUS", "module_version": "6.14.2", "run_script": "sub_abaqus_6.14.2"},
-                                 {"module_name": "ABAQUS", "module_version": "2016", "run_script": "sub_abaqus_2016"}
+                                 {"module_name": "ABAQUS", "module_version": "2016", "run_script": "sub_abaqus_2016"},
+                                 {"module_name": "ABAQUS", "module_version": "2016", "exe_args": "int cpus=2 mp_mode=mpi job=JOB_NAME input=INPUT_NAME"}
                                 ],
                    "starccm":  
 		                [
                                  {"module_name": "STARCCM", "module_version": "10.02.010-R8", "run_script": "sub_starccm+_10.02.010-R8"},
                                  {"module_name": "STARCCM", "module_version": "11.04.010-R8", "run_script": "sub_starccm+_11.04.010-R8"},
-                                 {"module_name": "STARCCM", "module_version": "11.06.011-R8", "run_script": "sub_starccm+_11.06.011-R8"}
+                                 {"module_name": "STARCCM", "module_version": "11.06.011-R8", "run_script": "sub_starccm+_11.06.011-R8"},
+                                 {"module_name": "STARCCM", "module_version": "11.06.011-R8", "exe_name": "starccm+", "exe_args": "-batchsystem pbs -rsh ssh -batch INPUT_NAME Heated_Fin.sim"}
                                 ],
                    "matlab":  
 		                [

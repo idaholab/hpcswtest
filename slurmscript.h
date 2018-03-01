@@ -32,7 +32,7 @@ class SlurmScript: public JobScript {
     void generate(void) override;
 
   private:
-    std::ofstream f_slurm_script_;
+//    std::ofstream f_slurm_script_;
 
 }; // class SlurmScript
 

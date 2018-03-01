@@ -41,6 +41,7 @@ class StarccmTest: public AppTest {
 
   public:
     StarccmTest(const jobscript::JOBSCRIPT &, const std::string &);
+    StarccmTest(const jobscript::JOBSCRIPT &);
     virtual ~StarccmTest(void) {};
     virtual void runTest(void) override;
 

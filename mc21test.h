@@ -46,8 +46,8 @@ class Mc21Test: public AppTest {
     virtual ~Mc21Test(void) {};
     virtual void runTest(void) override;
 
-  protected:
-    std::string exeAppTest(std::ofstream &, std::ofstream &, const jobscript::JOBSCRIPT &, const std::string &) const override;
+//  protected:
+//    std::string exeAppTest(std::ofstream &, std::ofstream &, jobscript::JOBSCRIPT &, const std::string &) const override;
 
   private:
     std::string log_file_name_;

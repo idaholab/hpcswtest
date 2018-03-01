@@ -63,11 +63,18 @@ H8OX=51.9632
 }; // vector gaussian_inputs_
 
 
-GaussianTest::GaussianTest(const jobscript::JOBSCRIPT &p_s, const std::string &e_n): AppTest("gaussian", "", p_s ,gaussian_inputs_.size(), e_n),
-                                                     log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
-                                                     result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
-                                                     flog_(log_file_name_,std::ios_base::app),
-                                                     fresult_(result_file_name_,std::ios_base::app) {}
+GaussianTest::GaussianTest(const jobscript::JOBSCRIPT &p_s, const std::string &s_a_n): AppTest("gaussian", "", p_s ,gaussian_inputs_.size(), s_a_n),
+                                                                                       log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                                                       result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                                                       flog_(log_file_name_,std::ios_base::app),
+                                                                                       fresult_(result_file_name_,std::ios_base::app) {}
+
+
+GaussianTest::GaussianTest(const jobscript::JOBSCRIPT &p_s): AppTest("gaussian", "", p_s ,gaussian_inputs_.size()),
+                                                             log_file_name_(getHostName() + "_" + getTestName() + "_test.log"),
+                                                             result_file_name_(getHostName() + "_" + getTestName() + "_results.out"),
+                                                             flog_(log_file_name_,std::ios_base::app),
+                                                             fresult_(result_file_name_,std::ios_base::app) {}
 
 
 void GaussianTest::runTest() {
@@ -87,7 +94,7 @@ void GaussianTest::runTest() {
   for (auto gaussian_input: gaussian_inputs_) {
     createFileFromStr(getInputFileNames()[c_i], gaussian_input);
 //    script_cmd_result = subJobScript(flog_, getJobScripts()[c_i]);
-    script_cmd_result = exeAppTest(flog_, fresult_, getJobScripts()[c_i], getInputFileNames()[c_i]);
+    script_cmd_result = exeAppTest(flog_, fresult_, c_i);
     checkSubmitResult(script_cmd_result, flog_, fresult_);
     ++c_i;
   }

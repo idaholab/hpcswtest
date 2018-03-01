@@ -41,6 +41,7 @@ class McnpTest: public AppTest {
 
   public:
     McnpTest(const jobscript::JOBSCRIPT &, const std::string &);
+    McnpTest(const jobscript::JOBSCRIPT &);
     virtual ~McnpTest(void) {};
     virtual void runTest(void) override;
 
