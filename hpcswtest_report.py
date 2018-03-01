@@ -314,6 +314,7 @@ def print_report(run_date, hostname, report_dict):
        print "<pre>"
     print "\nSoftware Quality Assurance Tests run on ",hostname," at",run_date
     for sw_name in report_dict:
+#         print "sw_name=",sw_name
          print '\n{:#^142}\n'.format(sw_name + ' Tests')
          for module,compiler,result,pbs_jobid,dir_name,pbs_jobname,run_result in zip(report_dict[sw_name]["module_names"],report_dict[sw_name]["compiler_names"],report_dict[sw_name]["results"],report_dict[sw_name]["pbs_job_ids"],report_dict[sw_name]["dir_names"],report_dict[sw_name]["pbs_job_names"],report_dict[sw_name]["run_results"]):
 #                print module,compiler,result,pbs_jobid,pbs_jobname,run_result
@@ -469,7 +470,11 @@ def check_file_patterns_found(file_pattern_d, dir_name, job_name, job_id):
     for file in file_pattern_d:
         file_name = get_file_name(file, job_name, job_id)
         file_path = get_file_path(dir_name, file_name)
-        f = open(file_path,"r")
+        try:
+            f = open(file_path,"r")
+        except IOError, e:
+            print "Error: could not open file", e
+            return False
         lines = f.readlines()
         for pattern in file_pattern_d[file]:
 #            print "search for pattern.",pattern
