@@ -1,4 +1,4 @@
-# HPC Software Stack Testing Framework
+hpcswtest.json_def# HPC Software Stack Testing Framework
 
 The HPC Software stack testing framework (hpcswtest) is used in the INL Scientific Computing Department to test the basic sanity and integrity of the HPC Software stack (Compilers, MPI, Numerical libraries and Applications) and to quickly discover hard failures. As a by-product it will indirectly check the HPC infrastructure (network, PBS and licensing servers). Hpcswtest is primarily written in c++11, with some supporting scripts written in python2. A json file defines all the tests to be run (i.e typically each line contains the module name and version), PBS scripts for the tests are generated and submitted to the PBS pro scheduling system. When the tests have complete a python script (i.e hpcswtest_report.py) is provided to check the results and generate a report.
 An example json file is provided (hpcswtest.json_def).
@@ -23,11 +23,16 @@ make
 To build SLURM version, modify Makefile, add -DSLURM to CPPFLAGS, then make.
 
 
+Environmental variables
+-----------------------
+HPCSWTEST_QUEUE - Define job scheduling queue to use.
+HPCSWTEST_BASE_DIR - Directory location of default json file defining the tests to run (hpcswtest.json_def)
+
+
 Testing Procedure
 ----------------
-Create a directory, execute hpcswtest executable inside created directory. Set the environmental variable, HPCSWTEST_QUEUE to the queue you want to use.
-If file "hpcswtest.json" is not contained in your current working directory then the default json file (i.e hpcswtest.json_def) will 
-be used to execute tests.
+Create a directory, execute hpcswtest executable inside created directory. Modify the "system_configuration" section in the default json file. Set the environmental variable, HPCSWTEST_BASE_DIR to location of hpcswtest.json_def file and HPCSWTEST_QUEUE to the queue you want to use.
+If file "hpcswtest.json" is not contained in your current working directory then the default json file (i.e hpcswtest.json_def) will be used to execute tests.
 
 When all tests have completed, run hpcswtest_report.py inside your current working directory to create a report showing what tests passed/failed.
 
