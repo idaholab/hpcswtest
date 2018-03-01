@@ -1,4 +1,4 @@
-hpcswtest.json_def# HPC Software Stack Testing Framework
+# HPC Software Stack Testing Framework
 
 The HPC Software stack testing framework (hpcswtest) is used in the INL Scientific Computing Department to test the basic sanity and integrity of the HPC Software stack (Compilers, MPI, Numerical libraries and Applications) and to quickly discover hard failures. As a by-product it will indirectly check the HPC infrastructure (network, PBS and licensing servers). Hpcswtest is primarily written in c++11, with some supporting scripts written in python2. A json file defines all the tests to be run (i.e typically each line contains the module name and version), PBS scripts for the tests are generated and submitted to the PBS pro scheduling system. When the tests have complete a python script (i.e hpcswtest_report.py) is provided to check the results and generate a report.
 An example json file is provided (hpcswtest.json_def).
