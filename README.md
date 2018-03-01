@@ -26,6 +26,7 @@ To build SLURM version, modify Makefile, add -DSLURM to CPPFLAGS, then make.
 Environmental variables
 -----------------------
 HPCSWTEST_QUEUE - Define job scheduling queue to use.
+
 HPCSWTEST_BASE_DIR - Directory location of default json file defining the tests to run (hpcswtest.json_def)
 
 
