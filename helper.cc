@@ -187,7 +187,7 @@ void createFileFromStr(std::string file_name, std::string content) {
 std::string subJobScript(std::ofstream &flog, jobscript::JOBSCRIPT &job_script) {
   std::string script_cmd_result;
   std::string script_cmd;
-
+//  std::cout << "(subJobScript)" << "current working dir = " << getCwd() << std::endl;
   job_script.generate();
 #ifdef SLURM
   script_cmd = "sbatch " + job_script.getJobScriptName() + " 2>&1";
@@ -231,6 +231,12 @@ void copyFile(std::string source_path, std::string dest_path) {
   if (!boost::filesystem::exists(dest_path)) {
     boost::filesystem::copy(source_path, dest_path);
   }
+}
+
+
+boost::filesystem::path getCwd() {
+  boost::filesystem::path full_path(boost::filesystem::current_path());
+  return full_path; 
 }
 
 

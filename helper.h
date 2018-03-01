@@ -60,6 +60,7 @@ void makeDir(std::string);
 void changeDir(std::string);
 void copyFile(std::string, std::string);
 void modifyFile(std::string, std::vector<std::string>, std::vector<std::string>);
+boost::filesystem::path getCwd(void);
 bool strSizeZero(std::string);
 void removeNoneModules(modules::modules_type &);
 modules::module_type findPrimaryModule(const modules::modules_type &); 
