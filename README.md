@@ -6,12 +6,12 @@ An example json file is provided (hpcswtest.json_def).
 
 Tests Supported
 ---------------
-MPI libraries, Compilers, BLAS libraries, Boost, VASP, gaussian, abaqus, starccm+, matlab, ansys, lsdyna, cth, helios, mcnp, mcnpx, serpent, scale, mc21, python2, python3
+MPI libraries, Compilers, BLAS libraries, Boost, VASP, gaussian, abaqus, starccm+, matlab, ansys, lsdyna, cth, helios, mcnp, mcnpx, serpent, scale, mc21, lammps, nwchem, python2, python3
 
 
 Building Dependencies
 ---------------------
-Software was built with GCC 4.9.3 compilers and Boost c++ libraries version 1.60.
+Software was built with GCC 4.9.3 compilers and boost c++ libraries version 1.60. Python 2.7.12+ required.
 
 
 Building Procedure
@@ -19,6 +19,8 @@ Building Procedure
 Modify Makefile as appropriate, and type
 
 make
+
+To build SLURM version, modify Makefile, add -DSLURM to CPPFLAGS, then make.
 
 
 Testing Procedure
