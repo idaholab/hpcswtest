@@ -32,12 +32,22 @@ Author: Cormac Garvey
 
 int main() {
   boost::filesystem::path cur_dir=boost::filesystem::current_path();
-  boost::filesystem::path json_def_file_path("/hpc-common/software/hpcswtest/bin/hpcswtest.json_def");
+//  boost::filesystem::path json_def_file_path("/hpc-common/software/hpcswtest/bin/hpcswtest.json_def");
   std::string json_file_str("hpcswtest.json");
   std::string json_file_path_str;
   std::ofstream dateHost("datehost.out",std::ios::out);
   std::time_t date_result = std::time(NULL);
   char hostname[1024];
+  char * hpcswtest_base_dir_env;
+  std::string hpcswtest_base_dir = "/hpc-common/software/hpcswtest/bin";
+  if (hpcswtest_base_dir_env = std::getenv("HPCSWTEST_BASE_DIR")) {
+    hpcswtest_base_dir = hpcswtest_base_dir_env;
+  }
+  boost::filesystem::path json_def_file_path(hpcswtest_base_dir+"/hpcswtest.json_def");
+  if (!boost::filesystem::exists(json_def_file_path)) {
+    std::cerr << "Error: File does not exist, " << json_def_file_path << std::endl;
+    exit(EXIT_FAILURE);
+  }
 
   json_file_path_str = cur_dir.string() + "/" + json_file_str;
   boost::filesystem::path json_file_path(json_file_path_str);
