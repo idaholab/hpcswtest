@@ -121,12 +121,12 @@
                                 ],
                    "scale":  
 		                [
-                                 {"module_name": "scale", "module_version": "6.1.3", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                 {"module_name": "scale", "module_version": "6.1.3", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INPUT_NAME"}
                                 ],
                    "scale62":  
 		                [
-                                 {"module_name": "scale", "module_version": "6.2-serial", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"},
-                                 {"module_name": "scale", "module_version": "6.2-goolf-4.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                 {"module_name": "scale", "module_version": "6.2-serial", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INPUT_NAME"},
+                                 {"module_name": "scale", "module_version": "6.2-goolf-4.5.0", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INPUT_NAME"}
                                 ],
                    "helios":  
 		                [
@@ -207,7 +207,7 @@
                                 ],
                    "matlab":  
 		                [
-                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INPUT_NAME"}
                                 ],
                    "python2":  
 		                [
@@ -389,8 +389,8 @@
 				],
                    "scale":  
 		                [
-                                 {"module_name": "scale", "module_version": "6.1", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"},
-                                 {"module_name": "scale", "module_version": "6.1.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INFILE"}
+                                 {"module_name": "scale", "module_version": "6.1", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INPUT_NAME"},
+                                 {"module_name": "scale", "module_version": "6.1.2", "extra_module_name1": "use.exp_ctl", "extra_module_version1": "none", "exe_name": "scalerte", "exe_args": "INPUT_NAME"}
                                 ],
                    "serpent":  
 		                [
@@ -438,7 +438,7 @@
                                 ],
                    "matlab":  
 		                [
-                                 {"module_name": "MATLAB", "module_version": "2013a", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                 {"module_name": "MATLAB", "module_version": "2013a", "exe_name": "matlab", "exe_args": "-nosplash < INPUT_NAME"}
                                 ],
                    "python2":  
 		                [
@@ -588,7 +588,7 @@
                                 ],
                    "matlab":  
 		                [
-                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INPUT_NAME"}
                                 ],
                    "python2":  
 		                [
@@ -669,8 +669,8 @@
                                 ],
                    "matlab":  
 		                [
-                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"},
-                                 {"module_name": "MATLAB", "module_version": "2016a", "exe_name": "matlab", "exe_args": "-nosplash < INFILE"}
+                                 {"module_name": "MATLAB", "module_version": "2014b", "exe_name": "matlab", "exe_args": "-nosplash < INPUT_NAME"},
+                                 {"module_name": "MATLAB", "module_version": "2016a", "exe_name": "matlab", "exe_args": "-nosplash < INPUT_NAME"}
                                 ],
                    "python2":  
 		                [
