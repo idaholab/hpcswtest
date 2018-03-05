@@ -2,7 +2,8 @@ Dependencies
 ------------
 1) c++11 compiler.
 2) Boost c++ library
-3) Linux OS.
+3) Python 2.7.12+
+4) Linux OS.
 
 
 Tesing configuration
@@ -14,7 +15,6 @@ Boost c++ library: 1.60
 
 Building instructions
 ---------------------
-1) Modify path to default json file (defines tests to run) in main.cc
-2) Modify PBS specific data for your site in pbsscript.cc
-3) make
+1) To build PBS pro version, type make
+2) To build SLURM version, modify Makefile, add -DSLURM to CPPFLAGS, type make.
 
