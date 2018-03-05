@@ -57,6 +57,11 @@ your processors. The other sections of the json file correspond to the clusters 
 Most application tests can use the provided automated submission scripts to generate the scheduler job syntax or have the testing framework generate the scheduler syntax directly for you. If "run_script" is defined then the defined run_script will be used to generate the job scheduler script syntax, otherwise the framework will generate the job run scripts directly, using the "mpi_cmd_name", "mpi_cmd_args", "exe_name" and "exe_args" definitions.
 
 
+Testing verification and checks
+-------------------------------
+The script hpcswtest_report.py is used to check the test results and generate a report. The following types of checks can be defined in hpcswtest_report.py (Check for regular expression pattern(s) in file(s), check if file exists and check the file size of file(s)). These checks can be defined in the check_file_patterns python dictionary defined at the top of the hpcswtst_report.py file. (See the section Template variables for information on template variables such as pbs_stdout).
+
+
 This project is supported by [Idaho National Laboratory](https://www.inl.gov/).
 
 
