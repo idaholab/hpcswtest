@@ -27,7 +27,8 @@ Environmental variables
 -----------------------
 HPCSWTEST_QUEUE - Define job scheduling queue to use.
 
-HPCSWTEST_BASE_DIR - Directory location of default json file defining the tests to run (hpcswtest.json_def)
+HPCSWTEST_BASE_DIR - Directory location of default json file defining the tests to run (hpcswtest.json_def) (If hpcswtest.json is
+contained in your current working directory then this environmental variable will be ignored and hpcswtest.json will be used to define what tests to run.)
 
 
 Testing Procedure
