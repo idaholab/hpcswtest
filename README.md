@@ -38,6 +38,15 @@ If file "hpcswtest.json" is not contained in your current working directory then
 When all tests have completed, run hpcswtest_report.py inside your current working directory to create a report showing what tests passed/failed.
 
 
+Template variables
+------------------
+There are a couple of template variables defined in the input json file (hpcswtest.json_def) and report script (hpcswtest_report.py) for your convenience.
+
+INPUT_NAME - Will substitute the appropriate input file name generated internally for the testing framework (json file).
+JOB_NAME - Will subsitute the appropriate scheduler job name generated internally by the testing framework (json file).
+pbs_stdout - Will substitute the appropriate scheduler stdout file name generated internally by the testing framework (hpcswtest_report.py).
+pbs_stderr - Will substitute the appropriate scheduler stderr file name generated internally by the testing framework (hpcswtest_report.py).
+
 
 This project is supported by [Idaho National Laboratory](https://www.inl.gov/).
 
