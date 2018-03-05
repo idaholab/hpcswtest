@@ -1,6 +1,6 @@
 # HPC Software Stack Testing Framework
 
-The HPC Software stack testing framework (hpcswtest) is used in the INL Scientific Computing Department to test the basic sanity and integrity of the HPC Software stack (Compilers, MPI, Numerical libraries and Applications) and to quickly discover hard failures. As a by-product it will indirectly check the HPC infrastructure (network, PBS and licensing servers). Hpcswtest is primarily written in c++11, with some supporting scripts written in python2. A json file defines all the tests to be run (i.e typically each line contains the module name and version), PBS scripts for the tests are generated and submitted to the PBS pro scheduling system. When the tests have complete a python script (i.e hpcswtest_report.py) is provided to check the results and generate a report.
+The HPC Software stack testing framework (hpcswtest) is used in the INL Scientific Computing Department to test the basic sanity and integrity of the HPC Software stack (Compilers, MPI, Numerical libraries and Applications) and to quickly discover hard failures. As a by-product it will indirectly check the HPC infrastructure (network, PBS and licensing servers). Hpcswtest is primarily written in c++11, with some supporting scripts written in python2. A json file defines all the tests to be run (i.e typically each line contains the module name and version), Job scheduler scripts for the tests are generated and submitted to the scheduling system (PBS pro and SLURM are supported). When the tests have complete a python script (i.e hpcswtest_report.py) is provided to check the results and generate a report.
 An example json file is provided (hpcswtest.json_def).
 
 
@@ -46,6 +46,14 @@ INPUT_NAME - Will substitute the appropriate input file name generated internall
 JOB_NAME - Will subsitute the appropriate scheduler job name generated internally by the testing framework (json file).
 pbs_stdout - Will substitute the appropriate scheduler stdout file name generated internally by the testing framework (hpcswtest_report.py).
 pbs_stderr - Will substitute the appropriate scheduler stderr file name generated internally by the testing framework (hpcswtest_report.py).
+
+
+Json Input file (hpcswtest.json_def) file format
+------------------------------------------------
+At the top of the json file contains a section called "system configuration", modify it for your environment, identifying 
+what clusters to test, the names of login-nodes for each cluster and if using PBS pro as your scheduler, the chunk-size for
+your processors. The other sections of the json file correspond to the clusters you will testing.
+Most application tests can use the provided automated submission scripts to generate the scheduler job syntax or have the testing framework generate the scheduler syntax directly for you. If "run_script" is defined then the defined run_script will be used to generate the job scheduler script syntax, otherwise the framework will generate the job run scripts directly, using the "mpi_cmd_name", "mpi_cmd_args", "exe_name" and "exe_args" definitions.
 
 
 This project is supported by [Idaho National Laboratory](https://www.inl.gov/).
