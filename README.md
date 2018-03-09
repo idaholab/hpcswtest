@@ -62,6 +62,12 @@ Testing verification and checks
 The script hpcswtest_report.py is used to check the test results and generate a report. The following types of checks can be defined in hpcswtest_report.py (Check for regular expression pattern(s) in file(s), check if file exists and check the file size of file(s)). These checks can be defined in the check_file_patterns python dictionary defined at the top of the hpcswtst_report.py file. (See the section Template variables for information on template variables such as pbs_stdout).
 
 
+Troubleshooting
+---------------
+If you get test failures you can check the *.log files to see what went wrong. There is a single log file for each application.
+To re-run a failued test, create a json file (hpcswtest.json) in your current working directory containing the tests you want to run. (Note if hpcswtest.json exists in your testing directory the default hpcswtest json file (hpcswtest.json_def) is not used.)
+
+
 This project is supported by [Idaho National Laboratory](https://www.inl.gov/).
 
 
