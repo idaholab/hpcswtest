@@ -320,7 +320,7 @@ def print_report(run_date, hostname, report_dict):
 #                print module,compiler,result,pbs_jobid,pbs_jobname,run_result
              if sw_name in compile_sw_l:
                 if gen_html and re.search("failed$|check$",result):
-                   log_link_str = log_link_str(hostname,sw_name+"_test",result)
+                   link_str = log_link_str(hostname,sw_name+"_test",result)
                    print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',log_link_str)
                 else:
                    print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',result)
