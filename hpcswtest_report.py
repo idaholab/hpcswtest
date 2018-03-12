@@ -321,7 +321,7 @@ def print_report(run_date, hostname, report_dict):
              if sw_name in compile_sw_l:
                 if gen_html and re.search("failed$|check$",result):
                    link_str = log_link_str(hostname,sw_name+"_test",result)
-                   print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',log_link_str)
+                   print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',link_str)
                 else:
                    print '{:<40}{:<10}{:-<80} {:<8}'.format(module,compiler,'Compile',result)
                 if gen_html and re.search("failed$|check$",run_result) and re.search("\d+",pbs_jobid):
@@ -337,7 +337,7 @@ def print_report(run_date, hostname, report_dict):
                    print '{:<40}{:<20}{:-<70} {:<8}'.format(module,dir_name,pbs_jobid,run_result)
              elif sw_name == "python2" or sw_name == "python3":
                 if gen_html and re.search("failed$|check$",result):
-                   link = log_link_str(hostname,sw_name+"_test",result)
+                   link_str = log_link_str(hostname,sw_name+"_test",result)
                    print '{:<40}{:-<90} {:<8}'.format(module,compiler,link_str)
                 else:
                    print '{:<40}{:-<90} {:<8}'.format(module,compiler,result)
