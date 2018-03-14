@@ -53,7 +53,7 @@ Json Input file (hpcswtest.json_def) file format
 ------------------------------------------------
 At the top of the json file contains a section called "system configuration", modify it for your environment, identifying 
 what clusters to test, the names of login-nodes for each cluster and if using PBS pro as your scheduler, the chunk-size for
-your processors. The other sections of the json file correspond to the clusters you will testing.
+your processors. The other sections of the json file correspond to the clusters you will be testing.
 Most application tests can use the provided automated submission scripts to generate the scheduler job syntax or have the testing framework generate the scheduler syntax directly for you. If "run_script" is defined then the defined run_script will be used to generate the job scheduler script syntax, otherwise the framework will generate the job run scripts directly, using the "mpi_cmd_name", "mpi_cmd_args", "exe_name" and "exe_args" definitions.
 
 
